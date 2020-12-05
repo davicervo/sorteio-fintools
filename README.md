@@ -1,8 +1,10 @@
-# sorteio-fintools
+# Sorteio-FINTOOLS
 
-<p align="center">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQIAOtqQ5is5vwbcEn0ZahZfMxz1QIeAYtFfnLdkCXu1sqAGbnX" width="300">
- </p>
+<p style="text-align: center;">
+    <a href="" target="_blank">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQIAOtqQ5is5vwbcEn0ZahZfMxz1QIeAYtFfnLdkCXu1sqAGbnX" width="300">
+    </a>
+</p>
 
 ## Desenvolvido em:
 Laravel Versão 7.*
