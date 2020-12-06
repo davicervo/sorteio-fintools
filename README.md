@@ -18,5 +18,6 @@ Laravel Versão 7.*
 1. composer install (pode levar alguns minutos)
 2. criar arquivo .env com base no arquivo .env.example
 3. php artisan key:generate
+4. php artisan migrate --seed
 
-Obs.: * Executar apenas na primeira vez que baixar o projeto
+Obs.: Executar apenas na primeira vez que baixar o projeto
