@@ -22,14 +22,14 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
-// TODO - adicionar autenticação.
-Route::prefix('brindes')->group(function () {
-    Route::get('', 'BrindeController@index');
-    Route::get('criar', 'BrindeController@create');
-    Route::post('salvar', 'BrindeController@store');
-    Route::get('{uid}/visualizar', 'BrindeController@show');
-    Route::get('{uid}/editar', 'BrindeController@edit');
-    Route::patch('{uid}/atualizar', 'BrindeController@update');
-    Route::delete('{uid}/deletar', 'BrindeController@destroy');
+Route::group(['middleware' => ['auth']], function () {
+    Route::prefix('brindes')->group(function () {
+        Route::get('', 'BrindeController@index')->name('brindes.index');
+        Route::get('criar', 'BrindeController@create');
+        Route::post('salvar', 'BrindeController@store');
+        Route::get('{uid}/visualizar', 'BrindeController@show');
+        Route::get('{uid}/editar', 'BrindeController@edit');
+        Route::patch('{uid}/atualizar', 'BrindeController@update');
+        Route::delete('{uid}/deletar', 'BrindeController@destroy');
+    });
 });

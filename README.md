@@ -1,9 +1,7 @@
 # Sorteio-FINTOOLS
 
 <p style="text-align: center;">
-    <a href="" target="_blank">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQIAOtqQ5is5vwbcEn0ZahZfMxz1QIeAYtFfnLdkCXu1sqAGbnX" width="300">
-    </a>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQIAOtqQ5is5vwbcEn0ZahZfMxz1QIeAYtFfnLdkCXu1sqAGbnX" width="300">
 </p>
 
 ## Desenvolvido em:
