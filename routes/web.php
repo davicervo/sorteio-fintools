@@ -32,4 +32,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::patch('{uid}/atualizar', 'BrindeController@update');
         Route::get('{uid}/deletar', 'BrindeController@destroy')->name('brindes.destroy');
     });
+
+    Route::resource('sorteios', 'SorteioController');
 });
