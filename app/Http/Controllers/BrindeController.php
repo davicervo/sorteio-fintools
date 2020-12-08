@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brinde;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BrindeController extends Controller
 {
 
+    // ok
     public function index()
     {
         $brindes = Brinde::all();
         return view('brinde.index', [ "brindes" => $brindes ]);
     }
 
+    // ok
     public function create()
     {
         return view('brinde.create');
@@ -31,7 +32,7 @@ class BrindeController extends Controller
                 "created_by" => Auth::user()->name
             ]
         );
-        return response()->json(["status" => "success", "msg" => "Brinde criado com sucesso."]);
+        return redirect()->to('/brindes')->with('message', 'Brinde criado com sucesso.');
     }
 
     public function show(string $uid)
@@ -56,8 +57,9 @@ class BrindeController extends Controller
         $brinde->descricao = $request->descricao;
         $brinde->updated_by = Auth::user()->name;
         $brinde->save();
-        return response()->json(["status" => "success", "msg" => "Brinde alterado com sucesso."]);
+        return redirect()->to("/brindes/$uid/editar")->with('message', 'Brinde alterado com sucesso.');
     }
+
 
 
     public function destroy(string $uid)
@@ -66,7 +68,7 @@ class BrindeController extends Controller
         $brinde->deleted_by = Auth::user()->name;
         $brinde->save();
         $brinde->delete();
-        return response()->json(["status" => "success", "msg" => "Brinde removido com sucesso."]);
+        return redirect()->to('/brindes')->with('message', 'Brinde removido com sucesso.');
     }
 }
 
