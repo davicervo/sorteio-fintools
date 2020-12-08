@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Funcionario;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\UuidTrait;
 
 class Departamento extends Model
 {
