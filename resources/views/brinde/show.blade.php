@@ -3,20 +3,18 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+        <div class="col-sm-8">
 
-                <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
+            Nome: <a href="{{ route('brindes.show', $brinde->brinde_uid) }}">{{ $brinde->nome }}</a><br>
+            Descrição: {{ $brinde->descricao }}<br>
+            Sorteio: {{ $brinde->sorteio_uid }}<br>
+            Ganhador: {{ $brinde->funcionario_uid }}<br>
+            Imagem: <br>
+            Criador: <br>
+            Data de criação: <br>
+            Data de atualização: <br>
+            Data de remoção: <br>
 
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
         </div>
     </div>
 </div>

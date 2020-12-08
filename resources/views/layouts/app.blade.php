@@ -34,12 +34,20 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('brindes.index') }}">{{ __('Brindes') }}</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="brindesDropdown"
+                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ __('Brindes') }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="brindesDropdown">
+                                <a class="dropdown-item" href="{{ route('brindes.index') }}">Listar</a>
+                                <a class="dropdown-item" href="{{ route('brindes.create') }}">Criar</a>
+                            </div>
                         </li>
                     </ul>
 

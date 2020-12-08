@@ -4,10 +4,12 @@ namespace App\Models;
 
 use App\Models\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Brinde extends Model
 {
     use UuidTrait;
+    use SoftDeletes;
 
     public $incrementing = false;
     protected $primaryKey = 'brinde_uid';

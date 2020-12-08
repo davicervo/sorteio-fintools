@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brinde;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BrindeController extends Controller
 {
@@ -21,7 +23,15 @@ class BrindeController extends Controller
 
     public function store(Request $request)
     {
-        Brinde::create($request->all());
+        // TODO - adicionar imagem.
+        Brinde::create(
+            [
+                "nome" => $request->nome,
+                "descricao" => $request->descricao,
+                "created_by" => Auth::user()->name
+            ]
+        );
+        return response()->json(["status" => "success", "msg" => "Brinde criado com sucesso."]);
     }
 
     public function show(string $uid)
@@ -40,15 +50,23 @@ class BrindeController extends Controller
 
     public function update(string $uid, Request $request)
     {
+        // TODO - adicionar imagem.
         $brinde = Brinde::find($uid);
-        // parâmetros do request
+        $brinde->nome = $request->nome;
+        $brinde->descricao = $request->descricao;
+        $brinde->updated_by = Auth::user()->name;
         $brinde->save();
+        return response()->json(["status" => "success", "msg" => "Brinde alterado com sucesso."]);
     }
 
 
     public function destroy(string $uid)
     {
-        Brinde::destroy($uid);
+        $brinde = Brinde::find($uid);
+        $brinde->deleted_by = Auth::user()->name;
+        $brinde->save();
+        $brinde->delete();
+        return response()->json(["status" => "success", "msg" => "Brinde removido com sucesso."]);
     }
 }
 

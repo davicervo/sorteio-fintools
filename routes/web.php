@@ -25,11 +25,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['auth']], function () {
     Route::prefix('brindes')->group(function () {
         Route::get('', 'BrindeController@index')->name('brindes.index');
-        Route::get('criar', 'BrindeController@create');
+        Route::get('criar', 'BrindeController@create')->name('brindes.create');
         Route::post('salvar', 'BrindeController@store');
-        Route::get('{uid}/visualizar', 'BrindeController@show');
-        Route::get('{uid}/editar', 'BrindeController@edit');
+        Route::get('{uid}/visualizar', 'BrindeController@show')->name('brindes.show');
+        Route::get('{uid}/editar', 'BrindeController@edit')->name('brindes.edit');
         Route::patch('{uid}/atualizar', 'BrindeController@update');
-        Route::delete('{uid}/deletar', 'BrindeController@destroy');
+        Route::get('{uid}/deletar', 'BrindeController@destroy')->name('brindes.destroy');
     });
 });
