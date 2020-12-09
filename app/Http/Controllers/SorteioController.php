@@ -23,7 +23,7 @@ class SorteioController extends Controller
      */
     public function create()
     {
-        //
+        return view('sorteio.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class SorteioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
