@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Sorteio;
 use Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Session;
 
@@ -72,7 +73,7 @@ class SorteioController extends Controller
      */
     public function edit(Sorteio $sorteio): View
     {
-        //
+        return view('sorteio.edit', compact('sorteio'));
     }
 
     /**
@@ -84,7 +85,15 @@ class SorteioController extends Controller
      */
     public function update(SorteioRequest $request, Sorteio $sorteio): RedirectResponse
     {
-        //
+        try {
+            $sorteio->update($request->only(['titulo', 'descricao', 'data_sorteio']));
+
+            return redirect()->route('sorteios.index')->with('success', "Sorteio {$sorteio->titulo} criado com sucesso");
+        } catch (\PDOException $e) {
+            Log::error($e->getMessage());
+
+            return back()->with('success', 'Ocorreu uma falha ao atualizar.');
+        }
     }
 
     /**
