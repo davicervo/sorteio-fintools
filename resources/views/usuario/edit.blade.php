@@ -37,7 +37,8 @@
 
                     @endforeach
 
-                    <button type="submit" class="btn btn-primary">Atualizar</button>
+                    <a href="{{route('usuarios.index')}}" class="btn btn-secondary float-left"><< Voltar</a>
+                    <button type="submit" class="btn btn-primary float-right">Atualizar</button>
                 </form>
             </div>
         </div>

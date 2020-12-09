@@ -35,7 +35,8 @@
 
                     @endforeach
 
-                    <button type="submit" class="btn btn-primary">Criar</button>
+                    <a href="{{route('usuarios.index')}}" class="btn btn-secondary float-left"><< Voltar</a>
+                    <button type="submit" class="btn btn-primary float-right">Criar</button>
                 </form>
             </div>
         </div>

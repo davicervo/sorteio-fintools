@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Usuario\Store;
 use App\Http\Requests\Usuario\Update;
-use App\Models\Brinde;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -13,15 +12,13 @@ use Illuminate\View\View;
 
 class UsuarioController extends Controller
 {
-    protected $view;
+    protected $view = 'usuario';
     protected $model;
     protected $fields;
 
     public function __construct()
     {
         $this->model = new User();
-        $this->view = 'usuario';
-        $this->view = 'usuario';
         $this->fields = [
             [
                 'label' => 'Nome',
@@ -127,11 +124,17 @@ class UsuarioController extends Controller
     // ok
     public function destroy(string $uid)
     {
-        $brinde = Brinde::find($uid);
-        $brinde->deleted_by = Auth::user()->name;
-        $brinde->save();
-        $brinde->delete();
-        return redirect()->to('/brindes')->with('message', 'Brinde removido com sucesso.');
+        if($uid !== 1) {
+            $result = $this->model->find($uid);
+            $result->delete();
+            return redirect()->to('/usuarios')->with('message', 'Usuario removido com sucesso.');
+        }
+        return redirect()->to('/usuarios')->with('message', 'Usuario nao permitido.');
+    }
+
+    public function show(string $uid)
+    {
+        return view($this->view . '.show', [ "dados" => $this->model->find($uid) ]);
     }
 }
 
