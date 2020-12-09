@@ -14,4 +14,6 @@ class Sorteio extends Model
     protected $keyType = 'string';
     protected $table = 'sorteios';
 
+    protected $guarded = ['id'];
+
 }

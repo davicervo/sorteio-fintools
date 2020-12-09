@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Sorteio;
+use Auth;
+use Session;
 
 class SorteioController extends Controller
 {
@@ -34,7 +37,21 @@ class SorteioController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $validatedData = $request->validate([
+            'titulo' => ['required', 'max:255'],
+            'descricao' => ['required'],
+            'data_sorteio' => ['required'],
+        ]);
+
+        $data = $request->input();
+
+        $data['ativo'] = 1; // todo sorteio está ativo por padrão?
+        $data['created_by'] = Auth::user()->id;
+
+        Sorteio::create($data);
+
+        Session::flash('success', 'Sorteio criado com sucesso');
+        return redirect()->route('sorteios.create');
     }
 
     /**
