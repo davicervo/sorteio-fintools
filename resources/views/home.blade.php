@@ -14,7 +14,7 @@
                     </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    Bem vindo ao painel de controle do sorteio!
                 </div>
             </div>
         </div>
