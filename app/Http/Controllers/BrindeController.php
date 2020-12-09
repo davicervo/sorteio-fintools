@@ -59,7 +59,7 @@ class BrindeController extends Controller
     public function show(string $uid)
     {
         $brinde = Brinde::withTrashed()->find($uid);
-        return view('brinde.show', [ "brinde" => $brinde ]);
+        return view('brindes.show', [ "brinde" => $brinde ]);
     }
 
     // ok
