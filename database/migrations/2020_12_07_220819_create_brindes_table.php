@@ -15,8 +15,7 @@ class CreateBrindesTable extends Migration
             $table->uuid('funcionario_uid')->nullable()->default(null);
             $table->string('nome', 255);
             $table->text('descricao')->nullable()->default(null);
-            // Por enquanto, como serão poucas imagens, está como BLOB.
-            $table->binary('imagem')->nullable()->default(null);
+            $table->text('imagem')->nullable()->default(null);
             $table->string('created_by', 100)->nullable()->default(null);
             $table->timestamp('created_at', 0);
             $table->string('updated_by', 100)->nullable()->default(null);

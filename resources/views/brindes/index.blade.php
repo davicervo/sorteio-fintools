@@ -12,6 +12,7 @@
                     <th scope="col">Descrição</th>
                     <th scope="col">Sorteio</th>
                     <th scope="col">Ganhador</th>
+                    <th scope="col">Brinde</th>
                     <th scope="col">Ações</th>
                 </tr>
                 </thead>
@@ -22,6 +23,11 @@
                             <td>{{ $brinde->descricao }}</td>
                             <td>{{ $brinde->sorteio_uid }}</td>
                             <td>{{ $brinde->funcionario_uid }}</td>
+                            <td>
+                                @if(!empty($brinde->imagem))
+                                    <img width="100" height="100" src="{{ asset('imagens/brindes/'.$brinde->imagem) }}"/>
+                                @endif
+                            </td>
                             <td>
                                 <a href="{{ route('brindes.edit', $brinde->brinde_uid) }}">
                                     <button type="button" class="btn btn-primary">
