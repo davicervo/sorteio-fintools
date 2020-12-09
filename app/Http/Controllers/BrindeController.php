@@ -106,6 +106,7 @@ class BrindeController extends Controller
         $brinde = Brinde::find($uid);
         $brinde->deleted_by = Auth::user()->name;
         $this->removeImage($brinde->imagem);
+        $brinde->imagem = null;
         $brinde->save();
         $brinde->delete();
         return redirect()->to('/brindes')->with('message', 'Brinde removido com sucesso.');
