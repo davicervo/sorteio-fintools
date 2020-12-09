@@ -9,5 +9,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BrindeSeeder::class);
         $this->call(DepartamentoSeeder::class);
         $this->call(UsuarioSeeder::class);
+        $this->call(SorteiosSeeder::class);
     }
 }

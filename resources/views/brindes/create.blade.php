@@ -17,7 +17,17 @@
 
                 <div class="form-group">
                     <label for="descricao">Descrição</label>
-                    <textarea class="form-control" id="descricao" rows="5" name="descricao">{{ old('descricao') }}</textarea>
+                    <textarea class="form-control" id="descricao" rows="5" name="descricao" required>{{ old('descricao') }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="sorteio">Sorteio</label>
+                    <select name="sorteio_uid" required>
+                        <option value="">Selecione</option>
+                        @foreach($sorteios as $sorteio)
+                            <option value="{{ $sorteio->sorteio_uid  }}">{{ $sorteio->titulo }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="form-group">

@@ -19,7 +19,7 @@ class SorteiosSeeder extends Seeder
                 'titulo' => $faker->sentence(4, true),
                 'descricao' => $faker->text(200),
                 'data_sorteio' => $faker->date(),
-                'ativo' => $faker->boolean(),
+                'ativo' => $i % 50 === 0 ? true : false,
                 'created_by' => 1,
                 'updated_by' => null,
                 'deleted_by' => null

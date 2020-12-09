@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brinde;
+use App\Models\Sorteio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,8 @@ class BrindeController extends Controller
     public function index()
     {
         $brindes = Brinde::all();
-        return view('brindes.index', [ "brindes" => $brindes ]);
+        $sorteios = Sorteio::where('ativo',1)->get();
+        return view('brindes.index', compact('brindes', 'sorteios'));
     }
 
     // ok
