@@ -8,18 +8,11 @@
             <form method="POST" action="salvar" enctype="multipart/form-data">
                 @csrf
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                @include('messages')
+
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" class="form-control" id="nome" name="nome" value="{{ old('nome') }}">
+                    <input type="text" class="form-control" id="nome" name="nome" value="{{ old('nome') }}" required>
                 </div>
 
                 <div class="form-group">
