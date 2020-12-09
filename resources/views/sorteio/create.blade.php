@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    @include('partials.messages')
     <div class="row justify-content-center">
         <div class="col-sm-8">
 
@@ -18,7 +19,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="data_sorteio">data_sorteio</label>
+                    <label for="data_sorteio">Data do sorteio</label>
                     <input type="date" class="form-control-file" id="data_sorteio" name="data_sorteio">
                 </div>
 
