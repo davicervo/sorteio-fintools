@@ -14,4 +14,10 @@ class Sorteio extends Model
     protected $keyType = 'string';
     protected $table = 'sorteios';
 
+    protected $guarded = ['id'];
+
+    public function getIsAtivoAttribute(){
+        return $this->ativo == 1 ? 'Ativo' : 'Inativo';
+    }
+
 }

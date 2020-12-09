@@ -42,4 +42,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::patch('{id}/atualizar', 'UsuarioController@update')->name('usuarios.update');
         Route::get('{id}/deletar', 'UsuarioController@destroy')->name('usuarios.destroy');
     });
+
+    Route::prefix('sorteios')->group(function () {
+        Route::get('', 'SorteioController@index')->name('sorteios.index');
+        Route::get('criar', 'SorteioController@create')->name('sorteios.create');
+        Route::post('salvar', 'SorteioController@store')->name('sorteios.store');
+        Route::get('{sorteio}/visualizar', 'SorteioController@show')->name('sorteios.show');
+        Route::get('{sorteio}/editar', 'SorteioController@edit')->name('sorteios.edit');
+        Route::patch('{sorteio}/atualizar', 'SorteioController@update')->name('sorteios.update');
+        Route::get('{sorteio}/deletar', 'SorteioController@destroy')->name('sorteios.destroy');
+    });
 });
