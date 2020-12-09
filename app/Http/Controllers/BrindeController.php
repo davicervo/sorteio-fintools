@@ -119,5 +119,12 @@ class BrindeController extends Controller
             \File::delete(public_path("$this->upload_path/$img"));
         }
     }
+
+    public function adicionarGanhador($uidBrinde, $uidFuncionario)
+    {
+        $brinde = Brinde::find($uidBrinde);
+        $brinde->funcionario_uid = $uidFuncionario;
+        $brinde->save();
+    }
 }
 
