@@ -61,7 +61,7 @@ class BrindeController extends Controller
     }
 
 
-
+    // ok
     public function destroy(string $uid)
     {
         $brinde = Brinde::find($uid);
