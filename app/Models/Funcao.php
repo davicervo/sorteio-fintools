@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\Models\Funcionario;
+use App\Models\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Funcao extends Model
