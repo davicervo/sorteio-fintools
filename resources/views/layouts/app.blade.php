@@ -49,6 +49,26 @@
                                 <a class="dropdown-item" href="{{ route('brindes.create') }}">Criar</a>
                             </div>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="brindesDropdown"
+                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Usuários
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="brindesDropdown">
+                                <a class="dropdown-item" href="{{ route('usuarios.index') }}">Listar</a>
+                                <a class="dropdown-item" href="{{ route('usuarios.create') }}">Criar</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="sorteiosDropdown"
+                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ __('Sorteio') }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="sorteiosDropdown">
+                                <a class="dropdown-item" href="{{ route('sorteios.index') }}">Listar</a>
+                                <a class="dropdown-item" href="{{ route('sorteios.create') }}">Criar</a>
+                            </div>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
