@@ -16,10 +16,10 @@ class CreateSorteiosTable extends Migration
             $table->date('data_sorteio');
             $table->boolean('ativo');
             $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('updated_by')->nullable();
             $table->timeStamps();
             $table->softDeletes();
-            $table->integer('deleted_by');
+            $table->integer('deleted_by')->nullable();
             
             // FK's
 
