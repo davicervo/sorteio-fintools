@@ -24,6 +24,7 @@ class BrindeController extends Controller
 
     public function store(Request $request)
     {
+        // TODO - adicionar select para o sorteio
         // TODO - adicionar imagem.
         Brinde::create(
             [
@@ -35,13 +36,14 @@ class BrindeController extends Controller
         return redirect()->to('/brindes')->with('message', 'Brinde criado com sucesso.');
     }
 
+    // TODO adicionar links para sorteio, ganhador se houver e imagem.
     public function show(string $uid)
     {
-        $brinde = Brinde::find($uid);
+        $brinde = Brinde::withTrashed()->find($uid);
         return view('brinde.show', [ "brinde" => $brinde ]);
     }
 
-
+    // ok
     public function edit(string $uid)
     {
         $brinde = Brinde::find($uid);
@@ -51,6 +53,7 @@ class BrindeController extends Controller
 
     public function update(string $uid, Request $request)
     {
+        // TODO - adicionar select para o sorteio
         // TODO - adicionar imagem.
         $brinde = Brinde::find($uid);
         $brinde->nome = $request->nome;

@@ -12,7 +12,7 @@
                 @method('patch')
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" class="form-control" id="nome" name="nome" value="{{ $brinde->nome }}">
+                    <input type="text" class="form-control" id="nome" name="nome" value="{{ $brinde->nome }}" required>
                 </div>
 
                 <div class="form-group">
