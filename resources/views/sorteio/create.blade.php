@@ -10,12 +10,12 @@
                 @csrf
                 <div class="form-group">
                     <label for="titulo">Título</label>
-                    <input type="text" class="form-control" id="titulo" name="titulo">
+                    <input type="text" class="form-control" id="titulo" name="titulo" value="{{ old('titulo') }}">
                 </div>
 
                 <div class="form-group">
                     <label for="descricao">Descrição</label>
-                    <textarea class="form-control" id="descricao" rows="5" name="descricao"></textarea>
+                    <textarea class="form-control" id="descricao" rows="5" name="descricao">{{ old('descricao') }}</textarea>
                 </div>
 
                 <div class="form-group">
