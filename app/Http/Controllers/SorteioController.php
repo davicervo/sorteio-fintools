@@ -16,7 +16,7 @@ class SorteioController extends Controller
      */
     public function index()
     {
-        $sorteios = Sorteio::paginate(10);
+        $sorteios = Sorteio::orderBy('created_at', 'desc')->paginate(10);
         return view('sorteio.index', [
             'sorteios' => $sorteios
         ]);
