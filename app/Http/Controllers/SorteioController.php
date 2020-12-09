@@ -56,10 +56,10 @@ class SorteioController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Sorteio $sorteio
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Sorteio $sorteio)
     {
         //
     }
@@ -67,10 +67,10 @@ class SorteioController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Sorteio $sorteio
+     * @return View
      */
-    public function edit($id)
+    public function edit(Sorteio $sorteio): View
     {
         //
     }
@@ -79,10 +79,10 @@ class SorteioController extends Controller
      * Update the specified resource in storage.
      *
      * @param SorteioRequest $request
-     * @param int $id
+     * @param Sorteio $sorteio
      * @return RedirectResponse
      */
-    public function update(SorteioRequest $request, $id): RedirectResponse
+    public function update(SorteioRequest $request, Sorteio $sorteio): RedirectResponse
     {
         //
     }
@@ -93,7 +93,7 @@ class SorteioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Sorteio $sorteio)
     {
         //
     }

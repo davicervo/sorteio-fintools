@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brinde;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BrindeController extends Controller
 {
 
+    // ok
     public function index()
     {
         $brindes = Brinde::all();
         return view('brinde.index', [ "brindes" => $brindes ]);
     }
 
+    // ok
     public function create()
     {
         return view('brinde.create');
@@ -23,6 +24,7 @@ class BrindeController extends Controller
 
     public function store(Request $request)
     {
+        // TODO - adicionar select para o sorteio
         // TODO - adicionar imagem.
         Brinde::create(
             [
@@ -31,16 +33,17 @@ class BrindeController extends Controller
                 "created_by" => Auth::user()->name
             ]
         );
-        return response()->json(["status" => "success", "msg" => "Brinde criado com sucesso."]);
+        return redirect()->to('/brindes')->with('message', 'Brinde criado com sucesso.');
     }
 
+    // TODO adicionar links para sorteio, ganhador se houver e imagem.
     public function show(string $uid)
     {
-        $brinde = Brinde::find($uid);
+        $brinde = Brinde::withTrashed()->find($uid);
         return view('brinde.show', [ "brinde" => $brinde ]);
     }
 
-
+    // ok
     public function edit(string $uid)
     {
         $brinde = Brinde::find($uid);
@@ -50,23 +53,25 @@ class BrindeController extends Controller
 
     public function update(string $uid, Request $request)
     {
+        // TODO - adicionar select para o sorteio
         // TODO - adicionar imagem.
         $brinde = Brinde::find($uid);
         $brinde->nome = $request->nome;
         $brinde->descricao = $request->descricao;
         $brinde->updated_by = Auth::user()->name;
         $brinde->save();
-        return response()->json(["status" => "success", "msg" => "Brinde alterado com sucesso."]);
+        return redirect()->to("/brindes/$uid/editar")->with('message', 'Brinde alterado com sucesso.');
     }
 
 
+    // ok
     public function destroy(string $uid)
     {
         $brinde = Brinde::find($uid);
         $brinde->deleted_by = Auth::user()->name;
         $brinde->save();
         $brinde->delete();
-        return response()->json(["status" => "success", "msg" => "Brinde removido com sucesso."]);
+        return redirect()->to('/brindes')->with('message', 'Brinde removido com sucesso.');
     }
 }
 
