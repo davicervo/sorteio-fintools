@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SorteioRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Sorteio;
 use Auth;
+use Illuminate\View\View;
 use Session;
 
 class SorteioController extends Controller
@@ -12,11 +15,11 @@ class SorteioController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-        $sorteios = Sorteio::paginate(10);
+        $sorteios = Sorteio::query()->latest()->paginate(10); // ordenando pelo mais recente
         return view('sorteio.index', [
             'sorteios' => $sorteios
         ]);
@@ -25,9 +28,9 @@ class SorteioController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         return view('sorteio.create');
     }
@@ -35,21 +38,14 @@ class SorteioController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param SorteioRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(SorteioRequest $request): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'titulo' => ['required', 'max:255'],
-            'descricao' => ['required'],
-            'data_sorteio' => ['required'],
-        ]);
-
         $data = $request->input();
 
-        $data['ativo'] = 1; // todo sorteio está ativo por padrão?
-        $data['created_by'] = Auth::user()->id;
+        $data['ativo'] = 1; // todo sorteio está ativo por padrão?;
 
         $sorteio = Sorteio::create($data);
 
@@ -82,11 +78,11 @@ class SorteioController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param SorteioRequest $request
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(SorteioRequest $request, $id): RedirectResponse
     {
         //
     }
