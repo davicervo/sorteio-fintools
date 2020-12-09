@@ -78,6 +78,7 @@ class UsuarioController extends Controller
     public function store(Store $request)
     {
         $data = array_filter($request->validated());
+        $data['is_admin'] = array_key_exists('is_admin', $data) ? 1 : 0;
 
         try {
             $this->model->fill($data)->save();
@@ -111,6 +112,7 @@ class UsuarioController extends Controller
     public function update(int $id, Update $request)
     {
         $data = array_filter($request->validated());
+        $data['is_admin'] = array_key_exists('is_admin', $data) ? 1 : 0;
 
         try {
             $this->model->find($id)->fill($data)->save();
