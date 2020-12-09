@@ -16,4 +16,8 @@ class Sorteio extends Model
 
     protected $guarded = ['id'];
 
+    public function getIsAtivoAttribute(){
+        return $this->ativo == 1 ? 'Ativo' : 'Inativo';
+    }
+
 }

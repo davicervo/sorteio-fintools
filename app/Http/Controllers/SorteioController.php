@@ -16,7 +16,10 @@ class SorteioController extends Controller
      */
     public function index()
     {
-        //
+        $sorteios = Sorteio::paginate(10);
+        return view('sorteio.index', [
+            'sorteios' => $sorteios
+        ]);
     }
 
     /**
@@ -48,10 +51,10 @@ class SorteioController extends Controller
         $data['ativo'] = 1; // todo sorteio está ativo por padrão?
         $data['created_by'] = Auth::user()->id;
 
-        Sorteio::create($data);
+        $sorteio = Sorteio::create($data);
 
-        Session::flash('success', 'Sorteio criado com sucesso');
-        return redirect()->route('sorteios.create');
+        Session::flash('success', "Sorteio {$sorteio->titulo} criado com sucesso");
+        return redirect()->route('sorteios.index');
     }
 
     /**
