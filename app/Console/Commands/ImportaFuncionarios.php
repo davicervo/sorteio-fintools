@@ -41,7 +41,7 @@ class ImportaFuncionarios extends Command
      */
     public function handle()
     {
-        $ad_users = FuncionarioService::getFuncionarios();
+        $ad_users = (new FuncionarioService)->getFuncionarios();
         $funcionarios = [];
         $agora = Carbon::now();
         $by = "COMMAND";
