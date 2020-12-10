@@ -54,7 +54,7 @@
                 </tbody>
                 <tfoot>
                 <td colspan="6">
-                    {{$brindes->links()}}
+                    {{$brindes->withQueryString()->links()}}
                 </td>
                 </tfoot>
             </table>

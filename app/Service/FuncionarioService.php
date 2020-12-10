@@ -21,8 +21,7 @@ class FuncionarioService
      */
     public function __construct()
     {
-        // Atualiza token do client ou recupera de config
-        $this->updateClient();
+        $this->setClient();
     }
 
     public function getFuncionarios()
@@ -62,12 +61,8 @@ class FuncionarioService
         return [];
     }
 
-    private function updateClient(int $status = null)
+    private function setClient()
     {
-        if (is_null(config('token.hash')) || $status == 401) {
-            Config::set('token.hash', $this->getToken());
-        }
-
         $this->client = new Client([
             'verify' => false,
             'http_errors' => false,
@@ -77,6 +72,15 @@ class FuncionarioService
                 'Realm' => config('funcionario.realm')
             ]
         ]);
+    }
+
+    private function updateClient(int $status = null)
+    {
+        if (is_null(config('token.hash')) || $status == 401) {
+            Config::set('token.hash', $this->getToken());
+        }
+
+        $this->setClient();
     }
 
     public function getToken()

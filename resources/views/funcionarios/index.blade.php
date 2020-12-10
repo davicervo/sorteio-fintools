@@ -24,7 +24,7 @@
                     @foreach($data as $item)
                         <tr>
                             <td><a href="{{ route('funcionarios.show', $item->funcionario_uid) }}">{{ $item->nome }}</a></td>
-                            <td>{{ $item->departamento->nome_exibicao }}</td>
+                            <td>{{ $item->departamento->nome_exibicao ?? '--' }}</td>
                             <td>{{ $item->created_at->format('d/m/Y H:i') }}</td>
                             <td>{{ $item->elegivel ? 'SIM' : 'NÃO' }}</td>
                             <td>
@@ -52,7 +52,7 @@
                     </tbody>
                     <tfoot>
                         <td colspan="6">
-                            {{$data->links()}}
+                            {{$data->withQueryString()->links()}}
                         </td>
                     </tfoot>
                 </table>

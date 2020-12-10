@@ -50,6 +50,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
 
+                    @if(auth()->check())
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a class="nav-link @if(strpos($routerCurrentName, 'home') !== false) menuActive @endif" href="{{ route('home') }}">{{ __('Home') }}</a>
@@ -111,6 +112,7 @@
                             </a>
                         </li>
                     </ul>
+                    @endif
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">

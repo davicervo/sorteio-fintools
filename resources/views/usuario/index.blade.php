@@ -50,7 +50,7 @@
                     </tbody>
                     <tfoot>
                     <td colspan="6">
-                        {{$data->links()}}
+                        {{$data->withQueryString()->links()}}
                     </td>
                     </tfoot>
                 </table>
