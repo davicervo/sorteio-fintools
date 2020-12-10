@@ -63,4 +63,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::patch('{sorteio}/atualizar', 'SorteioController@update')->name('sorteios.update');
         Route::get('{sorteio}/deletar', 'SorteioController@destroy')->name('sorteios.destroy');
     });
+
+    Route::prefix('vencedores')->group(function () {
+        Route::get('', 'VencedorController@index')->name('vencedor.index');
+    });
+
 });

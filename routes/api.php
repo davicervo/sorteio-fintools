@@ -8,9 +8,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['middleware' => ['auth'], 'prefix' => 'funcionarios'], function () {
+Route::group( ['middleware' => ['auth'], 'prefix' => 'funcionarios'], function () {
     Route::get('', 'FuncionarioController@index');
     Route::get('{uid}', 'FuncionarioController@find');
     Route::post('', 'FuncionarioController@find@store');
     Route::put('{uid}', 'FuncionarioController@update');
+});
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'vencedores'], function () {
+    Route::get('', 'ApiVencedorController@index');
 });
