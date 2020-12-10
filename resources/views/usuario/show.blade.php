@@ -11,7 +11,7 @@
             Admin: <strong>{{ $dados->is_admin ? 'SIM' : 'NÃO' }}</strong>
             <br>
             <br>
-            <a href="{{route('usuarios.index')}}" class="btn btn-secondary float-left showload"><< Voltar</a>
+            <a href="{{route('usuarios.index')}}" class="btn btn-secondary float-left showload"><i class="fas fa-angle-double-left"></i> Voltar</a>
         </div>
     </div>
 </div>

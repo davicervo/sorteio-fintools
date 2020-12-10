@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Traits\UuidTrait;
 use App\Models\Funcao;
 use App\Models\Departamento;
-
+use App\Support\Fotos;
 use Illuminate\Database\Eloquent\Model;
 
 class Funcionario extends Model
@@ -45,5 +45,10 @@ class Funcionario extends Model
     public function brinde()
     {
         return $this->belongsTo(Brinde::class);
+    }
+
+    public function getFoto()
+    {
+        return (new Fotos())->getFoto($this);
     }
 }

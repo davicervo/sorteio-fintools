@@ -23,7 +23,7 @@
                     <input type="date" class="form-control-file" id="data_sorteio" name="data_sorteio">
                 </div>
 
-                <a href="{{route('sorteios.index')}}" class="btn btn-secondary float-left showload"><< Voltar</a>
+                <a href="{{route('sorteios.index')}}" class="btn btn-secondary float-left showload"><i class="fas fa-angle-double-left"></i> Voltar</a>
                 <button type="submit" class="btn btn-primary float-right showload">Criar</button>
             </form>
         </div>

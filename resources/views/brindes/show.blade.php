@@ -43,7 +43,7 @@
             @endif
 
             <p>
-                <a href="{{route('brindes.index')}}" class="btn btn-secondary float-left showload"><< Voltar</a>
+                <a href="{{route('brindes.index')}}" class="btn btn-secondary float-left showload"><i class="fas fa-angle-double-left"></i> Voltar</a>
             </p>
 
         </div>

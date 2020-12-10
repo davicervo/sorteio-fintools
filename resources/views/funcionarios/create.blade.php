@@ -51,7 +51,7 @@
 
                     @endforeach
 
-                    <a href="{{route('funcionarios.index')}}" class="btn btn-secondary float-left"><< Voltar</a>
+                    <a href="{{route('funcionarios.index')}}" class="btn btn-secondary float-left"><i class="fas fa-angle-double-left"></i> Voltar</a>
                     <button type="submit" class="btn btn-primary float-right">Criar</button>
                 </form>
             </div>

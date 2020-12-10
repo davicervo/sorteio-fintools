@@ -21,17 +21,12 @@ class FuncionarioController extends Controller
                 'type' => 'text'
             ],
             [
-                'label' => 'Foto',
-                'name' => 'foto',
-                'type' => 'text'
-            ],
-            [
                 'label' => 'Departamento',
                 'name' => 'departamento_uid',
                 'type' => 'select',
                 'option_name' => 'nome_exibicao',
                 'option_value' => 'departamento_uid',
-                'options' => Departamento::all()
+                'options' => Departamento::orderBy('nome_exibicao')->get()
             ],
             [
                 'label' => 'Elegível',
@@ -111,7 +106,7 @@ class FuncionarioController extends Controller
         }
 
         return view('funcionarios.show', [
-            "data" => $funcionario,
+            "dados" => $funcionario,
         ]);
     }
 

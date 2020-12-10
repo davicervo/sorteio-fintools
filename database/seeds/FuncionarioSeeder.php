@@ -24,15 +24,13 @@ class FuncionarioSeeder extends Seeder
             $departamento = Departamento::firstOrCreate([
                 'nome_exibicao' => $ad_user['department'] ?? 'SEM DEPARTAMENTO'
             ]);
-            $departamento = $departamento->departamento_uid;
-
 
             $funcionarios[] = [
                 'funcionario_uid' => $ad_user['object_guid'],
                 'nome' => $ad_user['name'],
-                'departamento_uid' => $departamento,
+                'username' => $ad_user['username'],
+                'departamento_uid' => $departamento->departamento_uid,
                 'elegivel' => true,
-                'foto' => null,
                 'created_at' => $agora,
                 'updated_at' => $agora,
             ];
