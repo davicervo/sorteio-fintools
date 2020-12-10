@@ -3,11 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Models\Funcionario;
+use App\Models\Departamento;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FuncionarioController extends Controller
 {
+
+    protected $fields;
+
+    public function __construct()
+    {
+        $this->fields = [
+            [
+                'label' => 'Nome',
+                'name' => 'nome',
+                'type' => 'text'
+            ],
+            [
+                'label' => 'Foto',
+                'name' => 'foto',
+                'type' => 'text'
+            ],
+            [
+                'label' => 'Departamento',
+                'name' => 'departamento_uid',
+                'type' => 'select',
+                'option_name' => 'nome_exibicao',
+                'option_value' => 'departamento_uid',
+                'options' => Departamento::all()
+            ],
+            [
+                'label' => 'Elegível',
+                'name' => 'elegivel',
+                'type' => 'radio',
+                'options' => [
+                    ['label' => 'Sim', 'value' => 1, 'name' => 'elegivel'],
+                    ['label' => 'Não', 'value' => 0, 'name' => 'elegivel']
+                ]
+            ],
+        ];
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +62,7 @@ class FuncionarioController extends Controller
      */
     public function create()
     {
-        return view('funcionarios.create');
+        return view('funcionarios.create', ['fields' => $this->fields]);
     }
 
     /**
@@ -51,7 +87,7 @@ class FuncionarioController extends Controller
      * @param  int  $uid
      * @return \Illuminate\Http\Response
      */
-    public function edit($uid)
+    public function edit(string $uid)
     {
         $funcionario = Funcionario::find($uid);
 
@@ -59,7 +95,24 @@ class FuncionarioController extends Controller
             abort(404);
         }
 
-        return view('funcionarios.edit', compact('funcionario'));
+        return view('funcionarios.edit', [
+            "data" => $funcionario,
+            "fields" => $this->fields
+        ]);
+
+    }
+
+    public function show(string $uid)
+    {
+        $funcionario = Funcionario::find($uid);
+
+        if (is_null($funcionario)) {
+            abort(404);
+        }
+
+        return view('funcionarios.show', [
+            "data" => $funcionario,
+        ]);
     }
 
     /**
@@ -69,10 +122,11 @@ class FuncionarioController extends Controller
      * @param  int  $uid
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $uid)
+    public function update(Request $request, string $uid)
     {
         try {
             $funcionario = Funcionario::findOrFail($uid);
+            $funcionario->update($request->all());
             return back()->with('success', "O funcionário {$funcionario->nome} foi atualizado com sucesso");
         } catch (\PDOException | ModelNotFoundException $e) {
             return back()->with('error', 'Falha ao atualizar o funcionário');
@@ -83,10 +137,10 @@ class FuncionarioController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $uid
      * @return \Illuminate\Http\Response
      */
-    public function destroy($uid)
+    public function destroy(string $uid)
     {
         try {
             $funcionario = Funcionario::findOrFail($uid);
