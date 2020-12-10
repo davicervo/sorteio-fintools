@@ -5,7 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-sm-8">
 
+            @if($brinde->imagem)
             <img src="{{ $brinde->imagem }}" title="{{ $brinde->nome }}">
+            @endif
 
             <h1><a href="{{ route('brindes.show', $brinde->brinde_uid) }}">{{ $brinde->nome }}</a></h1>
             <p>Criado por {{ $brinde->created_by }} em {{ \Carbon\Carbon::parse($brinde->created_at)->format("d/m/Y H:i") }}</p>
@@ -34,6 +36,9 @@
             <p>{{ $brinde->descricao }}</p>
             <p><a href="{{ $brinde->sorteio_uid }}"><strong>Sorteio</strong></a></p>
             <p><a href="{{ $brinde->funcionario_uid }}"><strong>Ganhador</strong></a></p>
+            <p>
+                <a href="{{route('brindes.index')}}" class="btn btn-secondary float-left"><< Voltar</a>
+            </p>
 
         </div>
     </div>

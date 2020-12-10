@@ -30,6 +30,12 @@ class Funcionario extends Model
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
+
+    public function funcao()
+    {
+        return $this->hasOne(Funcao::class, 'funcao_uid', 'funcao_uid');
+    }
+
     public function departamento()
     {
         return $this->hasOne(Departamento::class, 'departamento_uid', 'departamento_uid');

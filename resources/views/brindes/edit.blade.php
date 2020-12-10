@@ -52,7 +52,8 @@
                     <input type="file" class="form-control-file" id="imagem" name="imagem">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Atualizar</button>
+                <a href="{{route('brindes.index')}}" class="btn btn-secondary"><< Voltar</a>
+                <button type="submit" class="btn btn-primary float-right">Atualizar</button>
             </form>
         </div>
     </div>

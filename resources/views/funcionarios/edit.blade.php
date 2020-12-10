@@ -7,7 +7,7 @@
 
                 @include('messages')
 
-                <form method="POST" action="{{route('usuarios.update', ['id' => $data->id])}}">
+                <form method="POST" action="{{route('funcionarios.update', ['id' => $data->id])}}">
                     @csrf
                     @method('patch')
 
@@ -37,7 +37,7 @@
 
                     @endforeach
 
-                    <a href="{{route('usuarios.index')}}" class="btn btn-secondary float-left"><< Voltar</a>
+                    <a href="{{route('funcionarios.index')}}" class="btn btn-secondary float-left"><< Voltar</a>
                     <button type="submit" class="btn btn-primary float-right">Atualizar</button>
                 </form>
             </div>

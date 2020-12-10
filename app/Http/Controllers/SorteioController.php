@@ -62,7 +62,7 @@ class SorteioController extends Controller
      */
     public function show(Sorteio $sorteio)
     {
-        //
+        return view('sorteio.show', [ "dados" => $sorteio ]);
     }
 
     /**

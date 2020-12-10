@@ -18,7 +18,7 @@ class UsuarioSeeder extends Seeder
             'name' => 'Fintools',
             'email' => 'fintools@oliveiratrust.com.br',
             'email_verified_at' => Carbon::now(),
-            'password' => bcrypt('Senh@123')
+            'password' => 'Senh@123'
         ]);
     }
 }
