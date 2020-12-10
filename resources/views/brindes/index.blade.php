@@ -28,7 +28,7 @@
                             </td>
                             <td class="align-middle"><a href="{{ route('brindes.show', $brinde->brinde_uid) }}">{{ $brinde->nome }}</a></td>
                             <td class="align-middle">{{ $brinde->descricao }}</td>
-                            <td class="align-middle">{{ $brinde->sorteio_uid }}</td>
+                            <td class="align-middle"><a href="/sorteios/{{ $brinde->sorteio_uid }}/visualizar">{{ $brinde->sorteio->titulo }}</a></td>
                             <td class="align-middle">{{ $brinde->funcionario_uid }}</td>
                             <td class="align-middle text-center">
                                 <a href="{{ route('brindes.edit', $brinde->brinde_uid) }}">

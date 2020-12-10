@@ -36,10 +36,10 @@
             <br>
 
             <p>{{ $brinde->descricao }}</p>
-            <p><a href="/sorteios/{{ $brinde->sorteio_uid }}/visualizar"><strong>Sorteio</strong></a></p>
+            <p><strong>Sorteio</strong>: <a href="/sorteios/{{ $brinde->sorteio_uid }}/visualizar">{{ $brinde->sorteio->titulo }}</a></p>
 
             @if(!empty($brinde->funcionario_uid))
-                <p><a href="sorteios/{{ $brinde->funcionario_uid }}/visualizar"><strong>Ganhador</strong></a></p>
+                <p><strong>Ganhador</strong>: <a href="/funcionarios/{{ $brinde->funcionario_uid }}/visualizar">Ganhador</a></p>
             @endif
 
             <p>
