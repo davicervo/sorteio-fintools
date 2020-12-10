@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
 
     <style>
+        .page {
+            background: url('https://new.oliveiratrust.com.br/wp-content/themes/OliveiraTrust_WP/assets/img/fundo-marca-dagua-ot.png');
+            background-repeat: no-repeat;
+            background-position: center;
+        }
         .col {
             transform: scale(0.76);
             max-width: 200px;
@@ -24,8 +29,8 @@
 
 <body>
     <div id="app">
-        <!-- modal start -->
-        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- modal comecar -->
+        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modalComecar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="p-5 modal-body d-flex flex-column align-items-center">
@@ -37,8 +42,20 @@
                 </div>
             </div>
         </div>
-        <!-- modal start -->
-        <div class="container-fluid">
+        <!-- modal comecar -->
+        <!-- modal selecionado -->
+        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modalSelecionado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="p-5 modal-body">
+                        <p v-text="funcionarioSelecionado"></p>
+                        <button @click="[selectItemGrid(), restartSortable()]" class="btn btn-primary btn-lg">Recomeçar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal selecionado -->
+        <div class="container-fluid page">
             <div class="row no-gutters d-flex justify-content-center">
                 <div v-for="(func, indexFunc) in funcionarios" :key="func.id" class="col" :ref="`func_${indexFunc}`">
                     <div class="card shadow-lg">
@@ -59,12 +76,16 @@
         new Vue({
             el: '#app',
             mounted () {
-                $('#exampleModal').modal('show')
+                $('#modalComecar').modal('show')
+                setTimeout(() => {
+                    this.fakeRandom(1, 37)
+                }, 5000)
             },
             data: () => ({
                 sleepTime: 100,
                 funcionarios: [],
                 chunckIndex: 0,
+                loop: null,
                 chunck: [
                     [
                         { id: 1, nome: 'Emiliano', foto: 'avatar.png', setor: 'FINTOOLS' },
@@ -106,15 +127,46 @@
                         { id: 36, nome: 'Lorem ipsum', foto: 'avatar.png', setor: 'FINTOOLS' },
                         { id: 37, nome: 'Lorem ipsum', foto: 'avatar.png', setor: 'FINTOOLS' },
                     ]
-                ]
+                ],
+                funcionarioSelecionado: {}
             }),
+            watch: {
+                funcionarioSelecionado () {
+                    if (Object.keys(this.funcionarioSelecionado).length > 0) {
+                        $('#modalSelecionado').modal('show')
+                    }
+                }
+            },
             methods: {
+                restartSortable () {
+                    $('#modalSelecionado').modal('hide')
+                    this.selectItemGrid()
+                    setTimeout(() => {
+                        this.fakeRandom(1, 37)
+                    }, 5000)
+                },
+                fakeRandom (min, max) {
+                    const random =  ~~(Math.random() * (max - min)) + min;
+                    let arrayTmp = []
+                    for (let arrayItem in this.chunck) {
+                        for (let fnc in this.chunck[arrayItem]) {
+                            arrayTmp.push(this.chunck[arrayItem][fnc])
+                        }
+                    }
+                    const findFunc = arrayTmp.find(fn => fn.id === random)
+                    if (findFunc) {
+                        this.funcionarioSelecionado = findFunc
+                        this.funcionarios = []
+                        clearInterval(this.loop);
+                    }
+                },
+                //
                 selectItemGrid () {
-                    $('#exampleModal').modal('hide')
+                    $('#modalComecar').modal('hide')
                     this.funcionarios = this.chunck[this.chunckIndex]
                     const funcLength = this.funcionarios.length
                     let i = 0;
-                    let loop = setInterval(() => {
+                    this.loop = setInterval(() => {
                         if (this.$refs[`func_${i}`]) {
                             let prevEl = undefined
                             let nextEl = this.$refs[`func_${i}`][0]
@@ -127,7 +179,7 @@
                         if(i == funcLength){
                             this.funcionarios = []
                             this.chunckIndex++
-                            clearInterval(loop);
+                            clearInterval(this.loop);
                             if (this.chunck[this.chunckIndex]) {
                                 this.funcionarios = this.chunck[this.chunckIndex]
                                 this.selectItemGrid()
