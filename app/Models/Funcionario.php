@@ -25,7 +25,8 @@ class Funcionario extends Model
         'elegivel',
         'created_by',
         'updated_by',
-        'deleted_by'
+        'deleted_by',
+        'brinde_uid'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
@@ -39,5 +40,10 @@ class Funcionario extends Model
     public function departamento()
     {
         return $this->hasOne(Departamento::class, 'departamento_uid', 'departamento_uid');
+    }
+
+    public function brinde()
+    {
+        return $this->belongsTo(Brinde::class);
     }
 }

@@ -42,6 +42,7 @@
                 </div>
 
                 <div class="form-group">
+
                     @if(!empty($brinde->imagem))
                     <div class="img-thumbnail">
                             <img width="100" height="100" src="{{ asset('imagens/brindes/'.$brinde->imagem) }}"/>
