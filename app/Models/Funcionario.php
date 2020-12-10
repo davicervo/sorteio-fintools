@@ -47,7 +47,7 @@ class Funcionario extends Model
         return $this->belongsTo(Brinde::class);
     }
 
-    public function getFoto()
+    public function getFotoAttribute()
     {
         return (new Fotos())->getFoto($this);
     }
