@@ -25,6 +25,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style rel="stylesheet" type="text/css">
+        .menuActive{background: #999999;color: white !important;border-radius: 10px;}
+    </style>
 </head>
 
 <body>
@@ -37,16 +41,18 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
+                @php
+                    $routerCurrentName = \Route::current()->getName();
+                @endphp
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
 
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
+                            <a class="nav-link @if(strpos($routerCurrentName, 'home') !== false) menuActive @endif" href="{{ route('home') }}">{{ __('Home') }}</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="brindesDropdown"
+                            <a class="nav-link dropdown-toggle @if(strpos($routerCurrentName, 'brindes.') !== false) menuActive @endif" href="#" id="brindesDropdown"
                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ __('Brindes') }}
                             </a>
@@ -56,7 +62,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="brindesDropdown"
+                            <a class="nav-link dropdown-toggle @if(strpos($routerCurrentName, 'usuarios.') !== false) menuActive @endif" href="#" id="brindesDropdown"
                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Usuários
                             </a>
@@ -66,7 +72,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="sorteiosDropdown"
+                            <a class="nav-link dropdown-toggle @if(strpos($routerCurrentName, 'sorteios.') !== false) menuActive @endif" href="#" id="sorteiosDropdown"
                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ __('Sorteio') }}
                             </a>
