@@ -108,7 +108,7 @@ class SorteioController extends Controller
             //$sorteio->save();
             $sorteio->delete();
             $action = 'message';
-            $message = 'Brinde removido com sucesso.';
+            $message = 'Registro removido com sucesso.';
         } else {
             $action = 'error';
             $message = 'Já existe um brinde associado a esse sorteio. <strong>Ação não executada!</strong>';
