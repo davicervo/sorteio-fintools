@@ -103,15 +103,20 @@ class BrindeController extends Controller
     {
         $brinde = Brinde::find($uid);
 
-        if (!empty($brinde->funcionario_uid)) {
-            return redirect()->to('/brindes')->with('message', 'Não é possível remover brinde com ganhador.');
+        if( empty( $brinde->funcionario_uid ) ) {
+            $brinde->deleted_by = Auth::user()->name;
+            $this->removeImage($brinde->imagem);
+            $brinde->imagem = null;
+            $brinde->save();
+            $brinde->delete();
+            $action = 'message';
+            $message = 'Brinde removido com sucesso.';
+        } else {
+            $action = 'error';
+            $message = 'Registro não pode ser deletado pois já existe um ganhador vinculado.';
         }
-        $brinde->deleted_by = Auth::user()->name;
-        $this->removeImage($brinde->imagem);
-        $brinde->imagem = null;
-        $brinde->save();
-        $brinde->delete();
-        return redirect()->to('/brindes')->with('message', 'Brinde removido com sucesso.');
+
+        return redirect()->to('/brindes')->with($action, $message);
     }
 
 
