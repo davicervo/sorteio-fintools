@@ -62,5 +62,6 @@ class ImportaFuncionarios extends Command
             ];
         }
         Funcionario::insert($funcionarios);
+        echo "Importação de Funcionários finalizada com sucesso.";
     }
 }
