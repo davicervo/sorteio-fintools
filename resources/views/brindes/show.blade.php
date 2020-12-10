@@ -5,12 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-sm-8">
 
-            @if($brinde->imagem)
-            <img src="{{ $brinde->imagem }}" title="{{ $brinde->nome }}">
+            @if(!empty($brinde->imagem))
+                <img class="img-fluid mx-auto d-block" src="{{ asset('imagens/brindes/'. $brinde->imagem) }}" title="{{ $brinde->nome }}"/>
             @endif
 
-            <h1><a href="{{ route('brindes.show', $brinde->brinde_uid) }}">{{ $brinde->nome }}</a></h1>
-            <p>Criado por {{ $brinde->created_by }} em {{ \Carbon\Carbon::parse($brinde->created_at)->format("d/m/Y H:i") }}</p>
+            <h1 class="text-center m-5"><a href="{{ route('brindes.show', $brinde->brinde_uid) }}">{{ $brinde->nome }}</a></h1>
+            @if(!empty($brinde->created_by))
+                <p>Criado por {{ $brinde->created_by }} em {{ \Carbon\Carbon::parse($brinde->created_at)->format("d/m/Y H:i") }}</p>
+            @endif
             @if (!empty($brinde->deleted_at))
                 <p>Removido por {{ $brinde->deleted_by }} em {{ \Carbon\Carbon::parse($brinde->deleted_at)->format("d/m/Y H:i") }}</p>
             @else
@@ -34,8 +36,12 @@
             <br>
 
             <p>{{ $brinde->descricao }}</p>
-            <p><a href="{{ $brinde->sorteio_uid }}"><strong>Sorteio</strong></a></p>
-            <p><a href="{{ $brinde->funcionario_uid }}"><strong>Ganhador</strong></a></p>
+            <p><a href="/sorteios/{{ $brinde->sorteio_uid }}/visualizar"><strong>Sorteio</strong></a></p>
+
+            @if(!empty($brinde->funcionario_uid))
+                <p><a href="sorteios/{{ $brinde->funcionario_uid }}/visualizar"><strong>Ganhador</strong></a></p>
+            @endif
+
             <p>
                 <a href="{{route('brindes.index')}}" class="btn btn-secondary float-left"><< Voltar</a>
             </p>

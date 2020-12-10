@@ -14,14 +14,12 @@ class BrindeController extends Controller
         $this->upload_path = 'imagens/brindes';
     }
 
-    // ok
     public function index()
     {
         $brindes = Brinde::with('sorteio')->get();
         return view('brindes.index', compact('brindes'));
     }
 
-    // ok
     public function create()
     {
         $sorteios = Sorteio::select('sorteio_uid','titulo')->where('ativo', 1)->get();
@@ -56,14 +54,14 @@ class BrindeController extends Controller
         return redirect()->to('/brindes')->with('message', 'Brinde criado com sucesso.');
     }
 
-    // TODO adicionar links para sorteio, ganhador se houver e imagem.
+
     public function show(string $uid)
     {
         $brinde = Brinde::withTrashed()->find($uid);
         return view('brindes.show', compact('brinde'));
     }
 
-    // ok
+
     public function edit(string $uid)
     {
         $brinde = Brinde::with('sorteio')->find($uid);
@@ -74,11 +72,8 @@ class BrindeController extends Controller
 
     public function update(string $uid, Request $request)
     {
-        // TODO - adicionar select para o sorteio
-        // TODO - adicionar imagem.
         $request->validate([
             'nome' => 'required',
-            'descricao' => 'required',
             'sorteio' => 'required',
             'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
@@ -104,7 +99,6 @@ class BrindeController extends Controller
     }
 
 
-    // ok
     public function destroy(string $uid)
     {
         $brinde = Brinde::find($uid);

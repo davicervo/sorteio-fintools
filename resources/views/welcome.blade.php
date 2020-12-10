@@ -24,6 +24,20 @@
 
 <body>
     <div id="app">
+        <!-- modal start -->
+        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="p-5 modal-body d-flex flex-column align-items-center">
+                        <h1 class="mb-3">Sorteio Nª 1234</h1>
+                        <div>
+                            <button @click="selectItemGrid()" class="btn btn-primary btn-lg">Começar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal start -->
         <div class="container-fluid">
             <div class="row no-gutters d-flex justify-content-center">
                 <div v-for="(func, indexFunc) in funcionarios" :key="func.id" class="col" :ref="`func_${indexFunc}`">
@@ -38,15 +52,17 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha512-Ah5hWYPzDsVHf9i2EejFBFrG2ZAPmpu4ZJtW4MfSgpZacn+M9QHDt+Hd/wL1tEkk1UgbzqepJr6KnhZjFKB+0A==" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>
     <script>
         new Vue({
             el: '#app',
             mounted () {
-                this.selectItemGrid()
+                $('#exampleModal').modal('show')
             },
             data: () => ({
-                sleepTime: 250,
+                sleepTime: 100,
                 funcionarios: [],
                 chunckIndex: 0,
                 chunck: [
@@ -94,6 +110,7 @@
             }),
             methods: {
                 selectItemGrid () {
+                    $('#exampleModal').modal('hide')
                     this.funcionarios = this.chunck[this.chunckIndex]
                     const funcLength = this.funcionarios.length
                     let i = 0;

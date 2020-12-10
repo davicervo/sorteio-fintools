@@ -2,6 +2,7 @@
 /public/hot
 /public/imagens/*
 /public/storage
+/public/imagens/brindes
 /storage/*.key
 /vendor
 /volume
