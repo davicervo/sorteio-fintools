@@ -28,6 +28,7 @@
 
     <style rel="stylesheet" type="text/css">
         .menuActive{background: #999999;color: white !important;border-radius: 10px;}
+        .foto{margin-top: 10px;padding: 6px;border: 2px solid #A7A9AB;}
     </style>
 </head>
 
@@ -81,7 +82,16 @@
                                 <a class="dropdown-item" href="{{ route('sorteios.create') }}">Criar</a>
                             </div>
                         </li>
-
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @if(strpos($routerCurrentName, 'funcionarios.') !== false) menuActive @endif" href="#" id="funcionariosDropdown"
+                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Funcionarios
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="funcionariosDropdown">
+                                <a class="dropdown-item" href="{{ route('funcionarios.index') }}">Listar</a>
+                                <a class="dropdown-item" href="{{ route('funcionarios.create') }}">Criar</a>
+                            </div>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link @if(strpos($routerCurrentName, 'vencedor.') !== false) menuActive @endif" id="vencedores"
                                role="button"  aria-haspopup="true" aria-expanded="false" href="{{ route('vencedor.index') }}">
