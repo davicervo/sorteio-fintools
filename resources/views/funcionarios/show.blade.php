@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-sm-8">
             Nome: <strong><a href="{{ route('funcionarios.show', $dados->funcionario_uid) }}">{{ $dados->nome }}</a></strong><br>
-            Departamento: <strong>{{ $dados->departamento->nome_exibicao }}</strong><br>
+            Departamento: <strong>{{ $dados->departamento->nome_exibicao ?? null }}</strong><br>
             Elegivel: <strong>{{ $dados->elegivel ? 'SIM' : 'NÃO' }}</strong><br>
             <img src="{{ $dados->foto }}" alt="{{ $dados->nome }}" class="foto"/>
             <br>
