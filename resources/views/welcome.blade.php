@@ -31,7 +31,7 @@
     <div id="app">
         <!-- modal comecar -->
         <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modalComecar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="p-5 modal-body d-flex flex-column align-items-center">
                         <h1 class="mb-3">Sorteio Nª 1234</h1>
@@ -45,7 +45,7 @@
         <!-- modal comecar -->
         <!-- modal selecionado -->
         <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modalSelecionado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="p-5 modal-body">
                         <p v-text="funcionarioSelecionado"></p>
