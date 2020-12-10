@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-sm-8">
+            <div class="col-sm-12">
 
                 @include('messages')
 
@@ -37,8 +37,7 @@
                                 </a>
                             </td>
                             <td>
-                                @if( $item->id > 1)
-                                <a href="{{ route('funcionarios.destroy', $item->funcionario_uid) }}">
+                                <a data-action="{{ route('funcionarios.destroy', $item->funcionario_uid) }}" class="btn-delete">
                                     <button type="button" class="btn btn-danger">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -47,9 +46,6 @@
                                         </svg>
                                     </button>
                                 </a>
-                                @else
-                                    --
-                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -64,4 +60,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    @include('partials.confirm-delete')
 @endsection
