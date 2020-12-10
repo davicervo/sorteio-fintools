@@ -3,6 +3,9 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-sm-12 section-search">
+                @include('partials.search')
+            </div>
             <div class="col-sm-12">
 
                 @include('messages')
@@ -14,8 +17,7 @@
                         <th scope="col">Departamento</th>
                         <th scope="col">Data de criação</th>
                         <th scope="col">Elegivel</th>
-                        <th scope="col">Editar</th>
-                        <th scope="col">Remover</th>
+                        <th scope="col">Ações</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -35,8 +37,6 @@
                                         </svg>
                                     </button>
                                 </a>
-                            </td>
-                            <td>
                                 <a data-action="{{ route('funcionarios.destroy', $item->funcionario_uid) }}" class="btn-delete">
                                     <button type="button" class="btn btn-danger">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill"

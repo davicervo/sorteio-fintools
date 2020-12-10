@@ -4,6 +4,9 @@
 <div class="container">
     @include('partials.messages')
     <div class="row justify-content-center">
+        <div class="col-sm-12 section-search">
+            @include('partials.search')
+        </div>
         <div class="col-sm-12">
 
             <table class="table table-hover">
@@ -13,8 +16,7 @@
                     <th scope="col">Descrição</th>
                     <th scope="col">Data do sorteio</th>
                     <th scope="col">Ativo</th>
-                    <th scope="col">Editar</th>
-                    <th scope="col">Remover</th>
+                    <th scope="col">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,8 +34,6 @@
                                         </svg>
                                     </button>
                                 </a>
-                            </td>
-                            <td>
                                 <a data-action="{{ route('sorteios.destroy', $sorteio->sorteio_uid) }}" class="btn-delete">
                                     <button type="button" class="btn btn-danger">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

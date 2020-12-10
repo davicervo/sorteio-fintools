@@ -3,6 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        <div class="col-sm-12 section-search">
+            @include('partials.search')
+        </div>
         <div class="col-sm-12">
 
             @include('messages')
@@ -49,6 +52,11 @@
                         </tr>
                     @endforeach
                 </tbody>
+                <tfoot>
+                <td colspan="6">
+                    {{$brindes->links()}}
+                </td>
+                </tfoot>
             </table>
 
         </div>

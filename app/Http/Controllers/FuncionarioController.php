@@ -44,9 +44,13 @@ class FuncionarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        $data = Funcionario::paginate();
+        $resource = Funcionario::orderBy('nome');
+        if($request->get('search')){
+            $resource->where('nome', 'like', '%' . trim($request->get('search')) . '%');
+        }
+        $data = $resource->paginate();
         return view('funcionarios.index', compact('data'));
     }
 
@@ -126,7 +130,7 @@ class FuncionarioController extends Controller
         } catch (\PDOException | ModelNotFoundException $e) {
             return back()->with('error', 'Falha ao atualizar o funcionário');
         }
-    
+
     }
 
     /**

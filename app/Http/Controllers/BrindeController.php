@@ -14,9 +14,13 @@ class BrindeController extends Controller
         $this->upload_path = 'imagens/brindes';
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $brindes = Brinde::with('sorteio')->get();
+        $resource = Brinde::with('sorteio')->orderBy('nome');
+        if($request->get('search')){
+            $resource->where('nome', 'like', '%' . trim($request->get('search')) . '%');
+        }
+        $brindes = $resource->paginate();
         return view('brindes.index', compact('brindes'));
     }
 
