@@ -11,13 +11,13 @@ class CreateBrindesTable extends Migration
     {
         Schema::create('brindes', function (Blueprint $table) {
             $table->uuid('brinde_uid')->primary();
-            $table->uuid('sorteio_uid')->nullable()->default(null);
-            $table->uuid('funcionario_uid')->nullable()->default(null);
+            $table->foreignUuid('sorteio_uid')->nullable()->default(null);
+            $table->foreignUuid('funcionario_uid')->nullable()->default(null);
             $table->string('nome', 255);
             $table->text('descricao')->nullable()->default(null);
             $table->text('imagem')->nullable()->default(null);
             $table->string('created_by', 100)->nullable()->default(null);
-            $table->timestamp('created_at', 0);
+            $table->timestamp('created_at', 0)->nullable();
             $table->string('updated_by', 100)->nullable()->default(null);
             $table->timestamp('updated_at', 0)->nullable();
             $table->string('deleted_by', 100)->nullable()->default(null);

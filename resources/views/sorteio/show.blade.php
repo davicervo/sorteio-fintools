@@ -10,7 +10,7 @@
             Ativo: <strong>{{ $dados->ativo ? 'Ativo' : 'Inativo' }}</a></strong><br>
             <br>
             <br>
-            <a href="{{route('sorteios.index')}}" class="btn btn-secondary float-left"><< Voltar</a>
+            <a href="{{route('sorteios.index')}}" class="btn btn-secondary float-left showload"><< Voltar</a>
         </div>
     </div>
 </div>
