@@ -6,27 +6,19 @@ namespace App\Support;
 use App\Models\Funcionario;
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Config\Repository;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\UrlGenerator;
 
 class Fotos
 {
     /**
-     * @var Repository|Application|mixed
+     * @var string
      */
     private $password;
     /**
-     * @var Repository|Application|mixed
+     * @var string
      */
     private $user;
     /**
-     * @var Repository|Application|mixed
-     */
-    private $url;
-    /**
-     * @var Application|UrlGenerator|string
+     * @var string
      */
     private $img_default;
     /**
@@ -39,22 +31,21 @@ class Fotos
      */
     public function __construct()
     {
-        $this->img_default = url('img/default.png');
+        $this->img_default = url('img/default.jpg');
         $this->path_img = 'http://portal/Arquivos/fotos/';
-        $this->url = config('picture.url');
         $this->user = config('picture.user');
         $this->password = config('picture.password');
     }
 
     /**
      * @param \App\Models\Funcionario $funcionario
-     * @param string $type_img
-     * @return Application|UrlGenerator|string
-     * @throws GuzzleException
+     * @return string
      */
-    public function getFoto(Funcionario $funcionario, string $type_img = '.jpg')
+    public function getFoto(Funcionario $funcionario)
     {
         try {
+            $type_img = '.jpg';
+
             /**
              * Alteração para buscar a foto do team fintools
              */
