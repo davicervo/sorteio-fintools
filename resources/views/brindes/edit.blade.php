@@ -42,18 +42,18 @@
                 </div>
 
                 <div class="form-group">
+                    @if(!empty($brinde->imagem))
                     <div class="img-thumbnail">
-                        @if(!empty($brinde->imagem))
                             <img width="100" height="100" src="{{ asset('imagens/brindes/'.$brinde->imagem) }}"/>
-                        @endif
                     </div>
+                    @endif
 
                     <label for="imagem">Imagem</label>
                     <input type="file" class="form-control-file" id="imagem" name="imagem">
                 </div>
 
-                <a href="{{route('brindes.index')}}" class="btn btn-secondary"><< Voltar</a>
-                <button type="submit" class="btn btn-primary float-right">Atualizar</button>
+                <a href="{{route('brindes.index')}}" class="btn btn-secondary showload"><< Voltar</a>
+                <button type="submit" class="btn btn-primary float-right showload">Atualizar</button>
             </form>
         </div>
     </div>

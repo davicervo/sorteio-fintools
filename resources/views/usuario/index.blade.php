@@ -25,7 +25,7 @@
                             <td>{{ $item->created_at->format('d/m/Y H:i') }}</td>
                             <td>
                                 <a href="{{ route('usuarios.edit', $item->id) }}">
-                                    <button type="button" class="btn btn-primary">
+                                    <button type="button" class="btn btn-primary showload">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"
@@ -35,9 +35,8 @@
                                 </a>
                             </td>
                             <td>
-                                @if( $item->id > 1)
-                                <a data-action="{{ route('usuarios.destroy', $item->id) }}" class="btn-delete">
-                                    <button type="button" class="btn btn-danger">
+                                <a data-action="{{ route('usuarios.destroy', $item->id) }}" @if( $item->id > 1) class="btn-delete" @endif>
+                                    <button type="button" class="btn btn-danger" @if( $item->id == 1) disabled @endif>
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"
@@ -45,9 +44,6 @@
                                         </svg>
                                     </button>
                                 </a>
-                                @else
-                                    --
-                                @endif
                             </td>
                         </tr>
                     @endforeach

@@ -27,7 +27,7 @@
                             <td>{{ $item->elegivel ? 'SIM' : 'NÃO' }}</td>
                             <td>
                                 <a href="{{ route('funcionarios.edit', $item->funcionario_uid) }}">
-                                    <button type="button" class="btn btn-primary">
+                                    <button type="button" class="btn btn-primary showload">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"

@@ -35,8 +35,8 @@
                     <input type="file" class="form-control-file" id="imagem" name="imagem">
                 </div>
 
-                <a href="{{route('brindes.index')}}" class="btn btn-secondary float-left"><< Voltar</a>
-                <button type="submit" class="btn btn-primary float-right">Criar</button>
+                <a href="{{route('brindes.index')}}" class="btn btn-secondary float-left showload"><< Voltar</a>
+                <button type="submit" class="btn btn-primary float-right showload">Criar</button>
             </form>
         </div>
     </div>
