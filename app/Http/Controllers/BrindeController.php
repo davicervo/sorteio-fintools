@@ -17,7 +17,7 @@ class BrindeController extends Controller
     // ok
     public function index()
     {
-        $brindes = Brinde::with('sorteio', 'funcionario')->get();
+        $brindes = Brinde::with('sorteio')->get();
         return view('brindes.index', compact('brindes'));
     }
 
