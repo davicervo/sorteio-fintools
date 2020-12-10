@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['register' => true, 'reset' => false, 'verify' => false]);
+Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('{uid}/editar', 'BrindeController@edit')->name('brindes.edit');
         Route::patch('{uid}/atualizar', 'BrindeController@update');
         Route::get('{uid}/deletar', 'BrindeController@destroy')->name('brindes.destroy');
-        Route::get('ganhador/{brindeUid}/{uidFuncionario}', 'BrindeController@adicionarGanhador');
+        Route::post('ganhador/{brindeUid}/{uidFuncionario}', 'BrindeController@adicionarGanhador');
     });
 
     Route::prefix('usuarios')->group(function () {

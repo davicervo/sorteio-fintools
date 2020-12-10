@@ -42,12 +42,13 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="img-thumbnail">
-                        @if(!empty($brinde->imagem))
-                            <img width="100" height="100" src="{{ asset('imagens/brindes/'.$brinde->imagem) }}"/>
-                        @endif
-                    </div>
 
+                    @if(!empty($brinde->imagem))
+                    <div class="img-thumbnail">
+                        <img width="100" height="100" src="{{ asset('imagens/brindes/'.$brinde->imagem) }}"/>
+                    </div>
+                    @endif
+                    
                     <label for="imagem">Imagem</label>
                     <input type="file" class="form-control-file" id="imagem" name="imagem">
                 </div>

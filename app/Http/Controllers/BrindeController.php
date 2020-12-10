@@ -57,15 +57,15 @@ class BrindeController extends Controller
 
     public function show(string $uid)
     {
-        $brinde = Brinde::withTrashed()->find($uid);
+        $brinde = Brinde::withTrashed()->with('sorteio', 'funcionario')->find($uid);
         return view('brindes.show', compact('brinde'));
     }
 
 
     public function edit(string $uid)
     {
-        $brinde = Brinde::with('sorteio')->find($uid);
-        $sorteios = Sorteio::select('sorteio_uid','titulo')->where('ativo', 1)->get();
+        $brinde = Brinde::with('sorteio', 'funcionario')->find($uid);
+        $sorteios = Sorteio::select('sorteio_uid', 'titulo')->where('ativo', 1)->get();
         return view('brindes.edit', compact('brinde', 'sorteios'));
     }
 
@@ -102,12 +102,21 @@ class BrindeController extends Controller
     public function destroy(string $uid)
     {
         $brinde = Brinde::find($uid);
-        $brinde->deleted_by = Auth::user()->name;
-        $this->removeImage($brinde->imagem);
-        $brinde->imagem = null;
-        $brinde->save();
-        $brinde->delete();
-        return redirect()->to('/brindes')->with('message', 'Brinde removido com sucesso.');
+
+        if( empty( $brinde->funcionario_uid ) ) {
+            $brinde->deleted_by = Auth::user()->name;
+            $this->removeImage($brinde->imagem);
+            $brinde->imagem = null;
+            $brinde->save();
+            $brinde->delete();
+            $action = 'message';
+            $message = 'Brinde removido com sucesso.';
+        } else {
+            $action = 'error';
+            $message = 'Registro não pode ser deletado pois já existe um ganhador vinculado.';
+        }
+
+        return redirect()->to('/brindes')->with($action, $message);
     }
 
 
@@ -123,6 +132,7 @@ class BrindeController extends Controller
         $brinde = Brinde::find($uidBrinde);
         $brinde->funcionario_uid = $uidFuncionario;
         $brinde->save();
+        return $this->jsonResponse(["success"]);
     }
 }
 

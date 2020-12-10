@@ -6,6 +6,7 @@ use App\Models\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class Brinde extends Model
 {
     use UuidTrait;
@@ -30,21 +31,15 @@ class Brinde extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
 
-    /**
-     * Relação de 1 : 1 com funcionário.
-     */
     public function funcionario()
     {
-        return $this->hasOne('App\Models\Funcionario');
+        return $this->hasOne(Funcionario::class, 'funcionario_uid');
     }
 
 
-    /**
-     * Relação de 1 sorteio : n brindes.
-     */
     public function sorteio()
     {
-        return $this->belongsTo('App\Models\Sorteio', 'sorteio_uid');
+        return $this->belongsTo(Sorteio::class, 'sorteio_uid');
     }
 
 }
