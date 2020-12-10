@@ -47,7 +47,7 @@
 
                 </tbody>
             </table>
-            {{ $sorteios->links() }}
+            {{ $sorteios->withQueryString()->links() }}
 
         </div>
     </div>

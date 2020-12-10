@@ -47,8 +47,10 @@ class FuncionarioController extends Controller
     public function index(request $request)
     {
         $resource = Funcionario::orderBy('nome');
-        if($request->get('search')){
-            $resource->where('nome', 'like', '%' . trim($request->get('search')) . '%');
+        if ($request->get('search')) {
+            $resource->where('nome', 'like', '%' . trim($request->get('search')) . '%')->orWhereHas('departamento', function ($query) use ($request) {
+                return $query->where('nome_exibicao', 'like', '%' . trim($request->get('search')) . '%');
+            });
         }
         $data = $resource->paginate();
         return view('funcionarios.index', compact('data'));
@@ -98,7 +100,6 @@ class FuncionarioController extends Controller
             "data" => $funcionario,
             "fields" => $this->fields
         ]);
-
     }
 
     public function show(string $uid)
@@ -130,7 +131,6 @@ class FuncionarioController extends Controller
         } catch (\PDOException | ModelNotFoundException $e) {
             return back()->with('error', 'Falha ao atualizar o funcionário');
         }
-
     }
 
     /**
@@ -147,8 +147,7 @@ class FuncionarioController extends Controller
             return $this->jsonResponse(true, 'Deletado com sucesso', [], 200);
         } catch (\PDOException $e) {
             return $this->jsonResponse(true, 'Erro ao deletar', [], 500);
-        }
-        catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             return $this->jsonResponse(true, 'Nenhum registro encontrado', [], 404);
         }
     }
