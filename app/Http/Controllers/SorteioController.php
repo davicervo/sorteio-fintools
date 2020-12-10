@@ -97,13 +97,23 @@ class SorteioController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Sorteio $sorteio
+     * @return RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Sorteio $sorteio)
     {
-        //
+        if(count($sorteio->brindes) == 0){
+            //$sorteio->deleted_by = Auth::user()->name;
+            //$sorteio->save();
+            $sorteio->delete();
+            $action = 'message';
+            $message = 'Brinde removido com sucesso.';
+        } else {
+            $action = 'error';
+            $message = 'Já existe um brinde associado a esse sorteio. <strong>Ação não executada!</strong>';
+        }
+
+        return back()->with($action, $message);
     }
 }
