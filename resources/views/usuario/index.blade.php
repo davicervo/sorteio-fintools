@@ -36,7 +36,7 @@
                             </td>
                             <td>
                                 @if( $item->id > 1)
-                                <a href="{{ route('usuarios.destroy', $item->id) }}">
+                                <a data-action="{{ route('usuarios.destroy', $item->id) }}" class="btn-delete">
                                     <button type="button" class="btn btn-danger">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -57,4 +57,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    @include('partials.confirm-delete')
 @endsection

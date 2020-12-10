@@ -17,7 +17,7 @@ class CreateBrindesTable extends Migration
             $table->text('descricao')->nullable()->default(null);
             $table->text('imagem')->nullable()->default(null);
             $table->string('created_by', 100)->nullable()->default(null);
-            $table->timestamp('created_at', 0);
+            $table->timestamp('created_at', 0)->nullable();
             $table->string('updated_by', 100)->nullable()->default(null);
             $table->timestamp('updated_at', 0)->nullable();
             $table->string('deleted_by', 100)->nullable()->default(null);

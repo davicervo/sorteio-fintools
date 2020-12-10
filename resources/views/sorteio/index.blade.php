@@ -22,7 +22,7 @@
                         <tr>
                             <td><a href="{{ route('sorteios.show', $sorteio->sorteio_uid) }}">{{ $sorteio->titulo }}</a></td>
                             <td>{{ $sorteio->descricao }}</td>
-                            <td>{{ $sorteio->data_sorteio }}</td>
+                            <td>{{ \Carbon\Carbon::parse($sorteio->data_sorteio)->format('d/m/Y') }}</td>
                             <td>{{ $sorteio->isAtivo }}</td>
                             <td>
                                 <a href="{{ route('sorteios.edit', $sorteio->sorteio_uid) }}">
@@ -34,7 +34,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ route('sorteios.destroy', $sorteio->sorteio_uid) }}">
+                                <a data-action="{{ route('sorteios.destroy', $sorteio->sorteio_uid) }}" class="btn-delete">
                                     <button type="button" class="btn btn-danger">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
@@ -52,4 +52,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+    @include('partials.confirm-delete')
 @endsection
