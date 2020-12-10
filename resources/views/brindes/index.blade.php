@@ -23,7 +23,7 @@
                         <tr>
                             <td><a href="{{ route('brindes.show', $brinde->brinde_uid) }}">{{ $brinde->nome }}</a></td>
                             <td>{{ $brinde->descricao }}</td>
-                            <td>{{ $brinde->sorteio_uid }}</td>
+                            <td>{{ $brinde->sorteio->titulo ?? '-' }}</td>
                             <td>{{ $brinde->funcionario_uid }}</td>
                             <td>
                                 @if(!empty($brinde->imagem))

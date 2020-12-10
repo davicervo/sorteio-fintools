@@ -44,7 +44,7 @@ class Brinde extends Model
      */
     public function sorteio()
     {
-        return $this->belongsTo('App\Models\Sorteio');
+        return $this->belongsTo('App\Models\Sorteio', 'sorteio_uid');
     }
 
 }

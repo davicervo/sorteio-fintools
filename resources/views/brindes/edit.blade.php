@@ -32,6 +32,22 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="sorteio">Sorteio</label>
+                    <select class="custom-select" name="sorteio" required>
+                        <option value="">Selecione</option>
+                        @foreach($sorteios as $sorteio)
+                            <option value="{{ $sorteio->sorteio_uid  }}" @if($brinde->sorteio->sorteio_uid === $sorteio->sorteio_uid) selected @endif>{{ $sorteio->titulo }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="img-thumbnail">
+                        @if(!empty($brinde->imagem))
+                            <img width="100" height="100" src="{{ asset('imagens/brindes/'.$brinde->imagem) }}"/>
+                        @endif
+                    </div>
+
                     <label for="imagem">Imagem</label>
                     <input type="file" class="form-control-file" id="imagem" name="imagem">
                 </div>

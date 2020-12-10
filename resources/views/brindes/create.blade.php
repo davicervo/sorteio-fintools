@@ -22,7 +22,7 @@
 
                 <div class="form-group">
                     <label for="sorteio">Sorteio</label>
-                    <select name="sorteio_uid" required>
+                    <select class="custom-select" name="sorteio" required>
                         <option value="">Selecione</option>
                         @foreach($sorteios as $sorteio)
                             <option value="{{ $sorteio->sorteio_uid  }}">{{ $sorteio->titulo }}</option>
