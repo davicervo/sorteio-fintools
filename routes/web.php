@@ -44,6 +44,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('{id}/deletar', 'UsuarioController@destroy')->name('usuarios.destroy');
     });
 
+    Route::prefix('funcionarios')->group(function () {
+        Route::get('', 'FuncionarioController@index')->name('funcionarios.index');
+        Route::get('criar', 'FuncionarioController@create')->name('funcionarios.create');
+        Route::post('salvar', 'FuncionarioController@store')->name('funcionarios.store');
+        Route::get('{uid}/visualizar', 'FuncionarioController@show')->name('funcionarios.show');
+        Route::get('{uid}/editar', 'FuncionarioController@edit')->name('funcionarios.edit');
+        Route::patch('{uid}/atualizar', 'FuncionarioController@update')->name('funcionarios.update');
+        Route::get('{uid}/deletar', 'FuncionarioController@destroy')->name('funcionarios.destroy');
+    });
+
     Route::prefix('sorteios')->group(function () {
         Route::get('', 'SorteioController@index')->name('sorteios.index');
         Route::get('criar', 'SorteioController@create')->name('sorteios.create');
