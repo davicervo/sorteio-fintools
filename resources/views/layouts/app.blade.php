@@ -28,7 +28,7 @@
 
     <style rel="stylesheet" type="text/css">
         .menuActive{background: #999999;color: white !important;border-radius: 10px;}
-        .foto{margin-top: 10px;padding: 6px;border: 2px solid #A7A9AB;}
+        .foto{margin-top: 10px;padding: 6px;border: 2px solid #A7A9AB;width: 150px;height: auto;}
         .pagination {justify-content: center;margin-top: 20px;}
     </style>
 </head>
