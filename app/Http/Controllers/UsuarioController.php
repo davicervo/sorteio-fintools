@@ -83,7 +83,7 @@ class UsuarioController extends Controller
             return redirect()->back()->with('danger', 'Houve um erro interno ao tentar criar esse usuário.');
         }
 
-        return redirect()->back()->with('message', 'Usuário criado com sucesso.');
+        return redirect()->to('/usuarios')->with('message', 'Usuário criado com sucesso.');
     }
 
     /**
@@ -117,7 +117,7 @@ class UsuarioController extends Controller
             return redirect()->back()->with('danger', 'Houve um erro interno ao tentar atualizar esse usuário.');
         }
 
-        return redirect()->back()->with('message', 'Usuário  alterado com sucesso.');
+        return redirect()->to('/usuarios')->with('message', 'Usuário  alterado com sucesso.');
     }
 
 

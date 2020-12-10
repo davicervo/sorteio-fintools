@@ -11,8 +11,9 @@
                     <thead>
                     <tr>
                         <th scope="col">Nome</th>
-                        <th scope="col">Email</th>
+                        <th scope="col">Departamento</th>
                         <th scope="col">Data de criação</th>
+                        <th scope="col">Elegivel</th>
                         <th scope="col">Editar</th>
                         <th scope="col">Remover</th>
                     </tr>
@@ -20,11 +21,12 @@
                     <tbody>
                     @foreach($data as $item)
                         <tr>
-                            <td><a href="{{ route('usuarios.show', $item->id) }}">{{ $item->name }}</a></td>
-                            <td>{{ $item->email }}</td>
+                            <td><a href="{{ route('funcionarios.show', $item->funcionario_uid) }}">{{ $item->nome }}</a></td>
+                            <td>--</td>
                             <td>{{ $item->created_at->format('d/m/Y H:i') }}</td>
+                            <td>{{ $item->elegivel ? 'SIM' : 'NÃO' }}</td>
                             <td>
-                                <a href="{{ route('usuarios.edit', $item->id) }}">
+                                <a href="{{ route('funcionarios.edit', $item->funcionario_uid) }}">
                                     <button type="button" class="btn btn-primary">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -36,7 +38,7 @@
                             </td>
                             <td>
                                 @if( $item->id > 1)
-                                <a data-action="{{ route('usuarios.destroy', $item->id) }}" class="btn-delete">
+                                <a href="{{ route('funcionarios.destroy', $item->funcionario_uid) }}">
                                     <button type="button" class="btn btn-danger">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -57,8 +59,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('js')
-    @include('partials.confirm-delete')
 @endsection

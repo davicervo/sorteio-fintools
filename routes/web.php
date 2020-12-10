@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
+Auth::routes(['register' => true, 'reset' => false, 'verify' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -42,6 +42,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('{id}/editar', 'UsuarioController@edit')->name('usuarios.edit');
         Route::patch('{id}/atualizar', 'UsuarioController@update')->name('usuarios.update');
         Route::get('{id}/deletar', 'UsuarioController@destroy')->name('usuarios.destroy');
+    });
+
+    Route::prefix('funcionarios')->group(function () {
+        Route::get('', 'FuncionarioController@index')->name('funcionarios.index');
+        Route::get('criar', 'FuncionarioController@create')->name('funcionarios.create');
+        Route::post('salvar', 'FuncionarioController@store')->name('funcionarios.store');
+        Route::get('{uid}/visualizar', 'FuncionarioController@show')->name('funcionarios.show');
+        Route::get('{uid}/editar', 'FuncionarioController@edit')->name('funcionarios.edit');
+        Route::patch('{uid}/atualizar', 'FuncionarioController@update')->name('funcionarios.update');
+        Route::get('{uid}/deletar', 'FuncionarioController@destroy')->name('funcionarios.destroy');
     });
 
     Route::prefix('sorteios')->group(function () {

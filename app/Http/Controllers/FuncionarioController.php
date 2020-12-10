@@ -4,16 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Funcionario;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FuncionarioController extends Controller
 {
-    private $funcionario;
-
-    public function __construct(Funcionario $funcionario)
-    {
-        $this->funcionario = $funcionario;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +15,8 @@ class FuncionarioController extends Controller
      */
     public function index()
     {
-        return $this->funcionario->all();
+        $data = Funcionario::paginate();
+        return view('funcionarios.index', compact('data'));
     }
 
     /**
@@ -31,7 +26,7 @@ class FuncionarioController extends Controller
      */
     public function create()
     {
-        //
+        return view('funcionarios.create');
     }
 
     /**
@@ -42,41 +37,47 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        try {
+            $funcionario = Funcionario::create($request->all());
+            return back()->with('success', "O funcionário {$funcionario->nome} foi criado com sucesso!");
+        } catch (\PDOException $e) {
+            return back()->with('error', 'Falha ao criar um funcionário');
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $uid
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($uid)
     {
-        //
+        $funcionario = Funcionario::find($uid);
+
+        if (is_null($funcionario)) {
+            abort(404);
+        }
+
+        return view('funcionarios.edit', compact('funcionario'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $uid
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $uid)
     {
-        //
+        try {
+            $funcionario = Funcionario::findOrFail($uid);
+            return back()->with('success', "O funcionário {$funcionario->nome} foi atualizado com sucesso");
+        } catch (\PDOException | ModelNotFoundException $e) {
+            return back()->with('error', 'Falha ao atualizar o funcionário');
+        }
+    
     }
 
     /**
@@ -85,8 +86,17 @@ class FuncionarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($uid)
     {
-        //
+        try {
+            $funcionario = Funcionario::findOrFail($uid);
+            $funcionario->delete();
+            return $this->jsonResponse(true, 'Deletado com sucesso', [], 200);
+        } catch (\PDOException $e) {
+            return $this->jsonResponse(true, 'Erro ao deletar', [], 500);
+        }
+        catch (ModelNotFoundException $e) {
+            return $this->jsonResponse(true, 'Nenhum registro encontrado', [], 404);
+        }
     }
 }
