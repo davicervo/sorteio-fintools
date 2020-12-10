@@ -10,27 +10,27 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Sorteio</th>
-                    <th scope="col">Ganhador</th>
-                    <th scope="col">Brinde</th>
-                    <th scope="col">Ações</th>
+                    <th scope="col"></th>
+                    <th scope="col" class="text-center">Nome</th>
+                    <th scope="col" class="text-center">Descrição</th>
+                    <th scope="col" class="text-center">Sorteio</th>
+                    <th scope="col" class="text-center">Ganhador</th>
+                    <th scope="col" class="text-center">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
                     @foreach($brindes as $brinde)
                         <tr>
-                            <td><a href="{{ route('brindes.show', $brinde->brinde_uid) }}">{{ $brinde->nome }}</a></td>
-                            <td>{{ $brinde->descricao }}</td>
-                            <td>{{ $brinde->sorteio_uid }}</td>
-                            <td>{{ $brinde->funcionario_uid }}</td>
                             <td>
                                 @if(!empty($brinde->imagem))
-                                    <img width="100" height="100" src="{{ asset('imagens/brindes/'.$brinde->imagem) }}"/>
+                                    <img class="img-thumbnail mx-auto d-block" width="100" height="100" src="{{ asset('imagens/brindes/'. $brinde->imagem) }}" title="{{ $brinde->nome }}"/>
                                 @endif
                             </td>
-                            <td>
+                            <td class="align-middle"><a href="{{ route('brindes.show', $brinde->brinde_uid) }}">{{ $brinde->nome }}</a></td>
+                            <td class="align-middle">{{ $brinde->descricao }}</td>
+                            <td class="align-middle">{{ $brinde->sorteio_uid }}</td>
+                            <td class="align-middle">{{ $brinde->funcionario_uid }}</td>
+                            <td class="align-middle text-center">
                                 <a href="{{ route('brindes.edit', $brinde->brinde_uid) }}">
                                     <button type="button" class="btn btn-primary">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
