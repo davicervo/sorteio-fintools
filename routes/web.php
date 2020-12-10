@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('{uid}/editar', 'BrindeController@edit')->name('brindes.edit');
         Route::patch('{uid}/atualizar', 'BrindeController@update');
         Route::get('{uid}/deletar', 'BrindeController@destroy')->name('brindes.destroy');
+        Route::get('ganhador/{brindeUid}/{uidFuncionario}', 'BrindeController@adicionarGanhador');
     });
 
     Route::prefix('usuarios')->group(function () {
