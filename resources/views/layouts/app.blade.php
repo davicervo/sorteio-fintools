@@ -75,6 +75,13 @@
                                 <a class="dropdown-item" href="{{ route('sorteios.create') }}">Criar</a>
                             </div>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="vencedores"
+                               role="button"  aria-haspopup="true" aria-expanded="false" href="{{ route('vencedor.index') }}">
+                                Vencedores
+                            </a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
