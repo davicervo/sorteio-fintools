@@ -5,10 +5,12 @@ namespace App\Models;
 use App\Models\Funcionario;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\UuidTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Departamento extends Model
 {
     use UuidTrait;
+    use SoftDeletes;
 
     public $incrementing = false;
     protected $primaryKey = 'departamento_uid';

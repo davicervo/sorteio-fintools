@@ -44,6 +44,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('{id}/deletar', 'UsuarioController@destroy')->name('usuarios.destroy');
     });
 
+    Route::prefix('departamentos')->group(function () {
+        Route::get('', 'DepartamentosController@index')->name('departamentos.index');
+        Route::get('criar', 'DepartamentosController@create')->name('departamentos.create');
+        Route::post('salvar', 'DepartamentosController@store')->name('departamentos.store');
+        Route::get('{uid}/visualizar', 'DepartamentosController@show')->name('departamentos.show');
+        Route::get('{uid}/editar', 'DepartamentosController@edit')->name('departamentos.edit');
+        Route::patch('{uid}/atualizar', 'DepartamentosController@update')->name('departamentos.update');
+        Route::get('{uid}/deletar', 'DepartamentosController@destroy')->name('departamentos.destroy');
+    });
+
     Route::prefix('funcionarios')->group(function () {
         Route::get('', 'FuncionarioController@index')->name('funcionarios.index');
         Route::get('criar', 'FuncionarioController@create')->name('funcionarios.create');

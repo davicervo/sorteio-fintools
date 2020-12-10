@@ -30,6 +30,7 @@
         .menuActive{background: #999999;color: white !important;border-radius: 10px;}
         .foto{margin-top: 10px;padding: 6px;border: 2px solid #A7A9AB;width: 150px;height: auto;}
         .pagination {justify-content: center;margin-top: 20px;}
+        .section-search{margin-bottom: 20px;}
     </style>
 </head>
 
@@ -74,13 +75,13 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @if(strpos($routerCurrentName, 'sorteios.') !== false) menuActive @endif" href="#" id="sorteiosDropdown"
+                            <a class="nav-link dropdown-toggle @if(strpos($routerCurrentName, 'departamentos.') !== false) menuActive @endif" href="#" id="departamentosDropdown"
                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ __('Sorteio') }}
+                                Departamentos
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="sorteiosDropdown">
-                                <a class="dropdown-item" href="{{ route('sorteios.index') }}">Listar</a>
-                                <a class="dropdown-item" href="{{ route('sorteios.create') }}">Criar</a>
+                            <div class="dropdown-menu" aria-labelledby="departamentosDropdown">
+                                <a class="dropdown-item" href="{{ route('departamentos.index') }}">Listar</a>
+                                <a class="dropdown-item" href="{{ route('departamentos.create') }}">Criar</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -91,6 +92,16 @@
                             <div class="dropdown-menu" aria-labelledby="funcionariosDropdown">
                                 <a class="dropdown-item" href="{{ route('funcionarios.index') }}">Listar</a>
                                 <a class="dropdown-item" href="{{ route('funcionarios.create') }}">Criar</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @if(strpos($routerCurrentName, 'sorteios.') !== false) menuActive @endif" href="#" id="sorteiosDropdown"
+                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ __('Sorteio') }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="sorteiosDropdown">
+                                <a class="dropdown-item" href="{{ route('sorteios.index') }}">Listar</a>
+                                <a class="dropdown-item" href="{{ route('sorteios.create') }}">Criar</a>
                             </div>
                         </li>
                         <li class="nav-item">
