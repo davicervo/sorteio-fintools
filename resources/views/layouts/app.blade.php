@@ -83,7 +83,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" id="vencedores"
+                            <a class="nav-link @if(strpos($routerCurrentName, 'vencedor.') !== false) menuActive @endif" id="vencedores"
                                role="button"  aria-haspopup="true" aria-expanded="false" href="{{ route('vencedor.index') }}">
                                 Vencedores
                             </a>
