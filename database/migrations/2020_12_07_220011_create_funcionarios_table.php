@@ -13,7 +13,6 @@ class CreateFuncionariosTable extends Migration
             $table->uuid('funcionario_uid')->primary();
             $table->string('nome', 60);
             $table->string('username', 60)->nullable();
-            //$table->foreignUuid('funcao_uid')->constrained('funcoes', 'funcao_uid');
             $table->foreignUuid('departamento_uid')->constrained('departamentos', 'departamento_uid');
             $table->boolean('elegivel')->default(false);
             $table->string('created_by', 100)->nullable()->default(null);
