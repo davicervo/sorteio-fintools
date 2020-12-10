@@ -4,9 +4,9 @@ namespace App\Console\Commands;
 
 use App\Models\Departamento;
 use App\Models\Funcionario;
+use App\Service\FuncionarioService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
 
 class ImportaFuncionarios extends Command
 {
@@ -41,25 +41,40 @@ class ImportaFuncionarios extends Command
      */
     public function handle()
     {
-        $response = Http::get('https://ot-test.herokuapp.com/funcionarios');
-        $ad_users = $response->json();
+        $ad_users = FuncionarioService::getFuncionarios();
         $funcionarios = [];
         $agora = Carbon::now();
+        $by = "COMMAND";
         foreach ($ad_users as $ad_user) {
 
             $departamento = Departamento::firstOrCreate([
                 'nome_exibicao' => $ad_user['department'] ?? 'SEM DEPARTAMENTO'
             ]);
 
-            $funcionarios[] = [
-                'funcionario_uid' => $ad_user['object_guid'],
-                'nome' => $ad_user['name'],
-                'username' => $ad_user['username'],
-                'departamento_uid' => $departamento->departamento_uid,
-                'elegivel' => true,
-                'created_at' => $agora,
-                'updated_at' => $agora,
-            ];
+            // Verifica se user uid existe em Funcionario
+            $funcionario = Funcionario::where('funcionario_uid', '=', $ad_user['object_guid'])->first();
+
+            // Se ja existe funcionario atualiza se n existe prepara p incluir
+            if ($funcionario != null) {
+                $funcionario->update([
+                    'nome' => $ad_user['name'],
+                    'username' => $ad_user['username'],
+                    'departamento_uid' => $departamento->departamento_uid,
+                    'updated_at' => $agora,
+                    'updated_by' => $by
+                ]);
+            } else {
+                $funcionarios[] = [
+                    'funcionario_uid' => $ad_user['object_guid'],
+                    'nome' => $ad_user['name'],
+                    'username' => $ad_user['username'],
+                    'departamento_uid' => $departamento->departamento_uid,
+                    'created_at' => $agora,
+                    'updated_at' => $agora,
+                    'created_by' => $by,
+                    'updated_by' => $by
+                ];
+            }
         }
         Funcionario::insert($funcionarios);
         echo "Importação de Funcionários finalizada com sucesso.";
