@@ -39,7 +39,7 @@ class LimpaFuncionarios extends Command
      */
     public function handle()
     {
-        $ad_users = FuncionarioService::getFuncionarios();
+        $ad_users = (new FuncionarioService)->getFuncionarios();
         // recuperando apenas o uid
         $ad_users = array_column($ad_users, 'object_guid');
 
