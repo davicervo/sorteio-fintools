@@ -31,7 +31,7 @@ class Fotos
      */
     public function __construct()
     {
-        $this->img_default = url('img/default.jpg');
+        $this->img_default = url('img/default.png');
         $this->path_img = 'http://portal/Arquivos/fotos/';
         $this->user = config('picture.user');
         $this->password = config('picture.password');
