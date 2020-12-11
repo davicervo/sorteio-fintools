@@ -84,6 +84,11 @@ class BrindeController extends Controller
         ]);
 
         $brinde = Brinde::find($uid);
+
+        if (!is_null($brinde->funcionario_uid)) {
+            return back()->with('error', "Não é possível editar um prêmio que tenha um ganhador.");
+        }
+
         $brinde->nome = $request->nome;
         $brinde->descricao = $request->descricao;
         $brinde->updated_by = Auth::user()->name;
