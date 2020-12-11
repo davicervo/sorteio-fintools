@@ -19,8 +19,10 @@
                     console.log(login);
                     return fetch(route + '/' + login)
                         .then(response => {
-                            console.log(response);
-                            return response.json();
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            location.reload();
                         })
                         .catch(error => {
                             console.log(error)
