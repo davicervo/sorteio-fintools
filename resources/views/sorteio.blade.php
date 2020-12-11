@@ -30,6 +30,10 @@
             background: #D40000;
             color: white;
         }
+        .row-effect {
+            filter: blur(8px);
+            -webkit-filter: blur(8px);
+        }
     </style>
 </head>
 
@@ -80,7 +84,7 @@
         </div>
         <!-- modal selecionado -->
         <div class="container-fluid page">
-            <div class="row no-gutters d-flex justify-content-center">
+            <div class="row no-gutters d-flex justify-content-center" ref="gridCards">
                 <div v-for="(func, indexFunc) in funcionarios" :key="func.funcionario_id" class="item-func" :ref="`func_${indexFunc}`">
                     <div class="card shadow-lg" style="height: 240px">
                         <div class="card-body d-flex justify-content-center align-items-center flex-column">
@@ -136,6 +140,8 @@
                     setTimeout(() => {
                         clearInterval(this.loop);
                         $("#modalSelecionado").modal('show')
+                        let gridCards = this.$refs['gridCards']
+                        gridCards.classList.add('row-effect')
                         if (this.$refs[`func_${this.lastIndexSelected}`][0]) {
                             let cardItem = this.$refs[`func_${this.lastIndexSelected}`][0]
                             cardItem.classList.remove('select-card')
