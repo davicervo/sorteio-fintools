@@ -63,6 +63,7 @@ class Fotos
 
             if ($response->getStatusCode() !== 200) {
                 $picture = $this->img_default;
+                $response = $client->request('GET', $picture);
             }
 
             Storage::disk('public_fotos')->put("{$funcionario->username}{$this->type_img}", $response->getBody());
