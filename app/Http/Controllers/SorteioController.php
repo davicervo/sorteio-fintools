@@ -6,10 +6,10 @@ use App\Http\Requests\SorteioRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Sorteio;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-use Session;
 
 class SorteioController extends Controller
 {
@@ -21,7 +21,7 @@ class SorteioController extends Controller
     public function index(Request $request): View
     {
         $resource = Sorteio::query()->latest()->orderBy('titulo');
-        if($request->get('search')){
+        if ($request->get('search')) {
             $resource->where('titulo', 'like', '%' . trim($request->get('search')) . '%');
         }
         $sorteios = $resource->paginate(10); // ordenando pelo mais recente
@@ -67,7 +67,7 @@ class SorteioController extends Controller
      */
     public function show(Sorteio $sorteio)
     {
-        return view('sorteio.show', [ "dados" => $sorteio ]);
+        return view('sorteio.show', ["dados" => $sorteio]);
     }
 
     /**
@@ -110,7 +110,7 @@ class SorteioController extends Controller
      */
     public function destroy(Sorteio $sorteio)
     {
-        if(count($sorteio->brindes) == 0){
+        if (count($sorteio->brindes) == 0) {
             $sorteio->deleted_by = Auth::user()->name;
             $sorteio->save();
             $sorteio->delete();
