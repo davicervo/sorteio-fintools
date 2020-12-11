@@ -165,5 +165,21 @@ class BrindeController extends Controller
             'qtd' => $brindes
         ]);
     }
+
+    /**
+     * Envia uma lista de brindes agrupados para o front
+     * @param string $sorteio_uid
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function listForSelect(string $sorteio_uid)
+    {
+        $brindes = Brinde::orderBy('nome')->where('sorteio_uid', $sorteio_uid)
+            ->whereNull('funcionario_uid')->pluck('nome','brinde_uid')->unique()
+            ->all();
+
+        return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
+            'brindes' => $brindes
+        ]);
+    }
 }
 

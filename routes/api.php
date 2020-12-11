@@ -20,3 +20,7 @@ Route::group([ 'prefix' => 'vencedores'], function () {
     Route::get('', 'ApiVencedorController@index');
     Route::get('{sorteioUid}/visualizar', 'ApiVencedorController@show');
 });
+
+Route::group([ 'prefix' => 'brindes'], function () {
+    Route::get('/{sorteio_uid}', 'BrindeController@listForSelect');
+});

@@ -15,9 +15,8 @@
                 confirmButtonText: 'Gerar',
                 cancelButtonText: 'Cancelar',
                 showLoaderOnConfirm: true,
-                preConfirm: (login) => {
-                    console.log(login);
-                    return fetch(route + '/' + login)
+                preConfirm: (qtd) => {
+                    return fetch(route + '/' + qtd)
                         .then(response => {
                             if (!response.ok) {
                                 throw new Error(response.statusText)
