@@ -54,7 +54,7 @@
                                     <option v-for="(opt, index) in brindes" :key="index" :value="opt.value">[[ opt.text ]]</option>
                                 </select>
                             </div>
-                            <button @click="selectItemGrid()" class="btn btn-light btn-lg mt-3">Começar</button>
+                            <button :disabled="brindes.length < 1" @click="selectItemGrid()" class="btn btn-light btn-lg mt-3">Começar</button>
                         </div>
                     </div>
                 </div>
