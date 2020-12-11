@@ -138,5 +138,32 @@ class BrindeController extends Controller
         $brinde->save();
         return $this->jsonResponse(true, 'Adicionado com sucesso!', [], 200);
     }
+
+    /**
+     * Clone de brinde
+     * @param string $brindeUid
+     * @param int $brindes
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cloneBrinde(string $brindeUid, int $brindes = 0)
+    {
+        if ($brindes < 1) {
+            return $this->jsonResponse(true, 'Nem brinde foi gerado.');
+        }
+        $brinde = Brinde::find($brindeUid);
+
+        //clonando os brindes
+        for ($i = 0; $i < $brindes; $i++) {
+            $clone = $brinde->replicate()->fill([
+                'funcionario_uid' => null
+            ]);
+            $clone->save();
+        }
+
+        return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
+            'brinde_uid' => $brindeUid,
+            'qtd' => $brindes
+        ]);
+    }
 }
 

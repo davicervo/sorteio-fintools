@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::patch('{uid}/atualizar', 'BrindeController@update');
         Route::get('{uid}/deletar', 'BrindeController@destroy')->name('brindes.destroy');
         Route::post('ganhador/{brindeUid}/{uidFuncionario}', 'BrindeController@adicionarGanhador');
+        Route::get('clone/{brindeUid}/brindes/{brindes?}', 'BrindeController@cloneBrinde')->name('brinde.clone');
     });
 
     Route::prefix('usuarios')->group(function () {
