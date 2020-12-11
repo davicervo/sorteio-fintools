@@ -41,6 +41,6 @@ class Funcionario extends Model
 
     public function getFotoAttribute()
     {
-        return (new Fotos())->getFoto($this);
+        return url('img/default.png');//(new Fotos())->getFoto($this);
     }
 }

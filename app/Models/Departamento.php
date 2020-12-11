@@ -27,6 +27,6 @@ class Departamento extends Model
 
     public function funcionarios()
     {
-        return $this->hasMany(Funcionario::class, 'funcionario_uid', 'funcionario_uid');
+        return $this->hasMany(Funcionario::class, 'departamento_uid', 'departamento_uid');
     }
 }

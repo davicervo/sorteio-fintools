@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FuncionarioController extends Controller
 {
-
     protected $fields;
 
     public function __construct()
@@ -150,5 +149,15 @@ class FuncionarioController extends Controller
         } catch (ModelNotFoundException $e) {
             return $this->jsonResponse(true, 'Nenhum registro encontrado', [], 404);
         }
+    }
+
+    public function getByChunk(int $qtd){
+        $qtd = $qtd > 1 ? $qtd : 1;
+        return array_chunk(Funcionario::orderBy('nome')
+            ->selectRaw('funcionario_uid, nome, foto, departamento_uid')
+            ->with(['departamento' => function ($query) {
+                $query->selectRaw('departamento_uid, nome_exibicao');
+            }])
+            ->get()->toArray(), $qtd);
     }
 }
