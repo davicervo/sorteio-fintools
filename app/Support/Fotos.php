@@ -61,14 +61,11 @@ class Fotos
                 'auth' => [$this->user, $this->password, 'ntlm']
             ]);
 
-            if ($response->getStatusCode() === 200) {
-                return $picture;
+            if ($response->getStatusCode() !== 200) {
+                $picture = $this->img_default;
             }
 
-            $picture = $this->img_default;
-
-            $contents = file_get_contents($picture);
-            Storage::disk('public_fotos')->put("{$funcionario->username}{$this->type_img}", $contents);
+            Storage::disk('public_fotos')->put("{$funcionario->username}{$this->type_img}", $response->getBody());
             echo "OK: Foto de {$funcionario->nome} importada.\n";
         } catch (Exception $e) {
             echo "ERRO: Não foi possível importar a foto de {$funcionario->nome}. [{$e->getMessage()}]\n";
