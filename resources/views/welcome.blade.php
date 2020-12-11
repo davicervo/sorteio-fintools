@@ -71,6 +71,9 @@
                         <div class="d-flex justify-content-center align-items-center" style="height: 200px">
                             <img src="https://oliveiratrust.com.br/portal/img/logo.png" width="200">
                         </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; background: #ad0000; color: white">
+                            <button @click="draftNextAward()" class="btn btn-light btn-lg mt-3">Sortear próximo Brinde</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -189,6 +192,9 @@
                         }
                         i++;
                     }, this.sleepTime);
+                },
+                draftNextAward(){
+                    window.location.reload();
                 }
             }
         })
