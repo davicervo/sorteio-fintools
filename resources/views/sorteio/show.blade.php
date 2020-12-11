@@ -21,8 +21,8 @@
                     @forelse($dados->brindes as $premio)
                         <tr>
                             
-                            <td>{{$premio->funcionario->nome}}</td>
-                            <td>{{$premio->nome}}</td>
+                            <td>{{$premio->funcionario->nome ?? '--'}}</td>
+                            <td>{{$premio->nome ?? '--'}}</td>
                         </tr>
                     @empty
                         <tr class="text-center">

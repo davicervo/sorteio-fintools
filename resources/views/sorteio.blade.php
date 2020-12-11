@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center align-items-center" style="height: 20px">
-                            <h4>Brinde: [[ brindeExibicao.text ]]</h4>
+                            <h4>[[ brindeExibicao.text ]]</h4>
                         </div>
                         <div class="d-flex justify-content-center align-items-center" style="height: 200px">
                             <img src="https://oliveiratrust.com.br/portal/img/logo.png" width="200">
@@ -94,7 +94,6 @@
                     <div class="card shadow-lg" style="height: 240px">
                         <div class="card-body d-flex justify-content-center align-items-center flex-column">
                             <img style="border-radius: 50%;border:3px solid #D40000;" width="100" height="100" :src=" func.foto ">
-                            <h4 class="mt-2">[[ func.nome.split(" ")[0].substr(0, 20) ]]</h4>
                         </div>
                     </div>
                 </div>
