@@ -13,6 +13,15 @@ use Illuminate\View\View;
 
 class SorteioController extends Controller
 {
+    public function lista(): View
+    {
+        $resource = Sorteio::query()->latest()->orderBy('titulo')->where('ativo', '=', true);
+        $sorteios = $resource->get(); // ordenando pelo mais recente
+        return view('welcome', [
+            'sorteios' => $sorteios
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *

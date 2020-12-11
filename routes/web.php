@@ -14,15 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'SorteioController@lista')->name('sorteios.lista');
 
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::view('/{uid}', 'sorteio')->name('sorteio');
+
     Route::prefix('brindes')->group(function () {
         Route::get('', 'BrindeController@index')->name('brindes.index');
         Route::get('criar', 'BrindeController@create')->name('brindes.create');
@@ -78,5 +78,4 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('vencedores')->group(function () {
         Route::get('', 'VencedorController@index')->name('vencedor.index');
     });
-
 });
