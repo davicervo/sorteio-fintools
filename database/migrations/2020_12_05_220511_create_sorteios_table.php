@@ -15,13 +15,13 @@ class CreateSorteiosTable extends Migration
             $table->text('descricao');
             $table->date('data_sorteio');
             $table->boolean('ativo');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->timeStamps();
             $table->softDeletes();
 
             // FK's
-            $table->foreignId('created_by')->constrained('users', 'id');
-            $table->foreignId('updated_by')->nullable()->default(null)->constrained('users', 'id');
-            $table->foreignId('deleted_by')->nullable()->default(null)->constrained('users', 'id');
 
             // Indexs
             $table->index('titulo');

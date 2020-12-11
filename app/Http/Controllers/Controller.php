@@ -11,8 +11,12 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function jsonResponse(bool $status, string $message, array $data, int $statusCode)
+    public function jsonResponse(bool $status, string $message, array $data = [], int $statusCode = 200)
     {
-        return response()->json(['success' => true, 'message' => 'Deletado com sucesso.', 'data' => []], $statusCode);
+        return response()->json([
+            'success' => $status,
+            'message' => $message,
+            'data' => $data
+        ], $statusCode);
     }
 }

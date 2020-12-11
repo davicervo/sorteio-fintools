@@ -51,6 +51,7 @@ class SorteioController extends Controller
         $data = $request->input();
 
         $data['ativo'] = 1; // todo sorteio está ativo por padrão?;
+        $data['created_by'] = Auth::user()->name;
 
         $sorteio = Sorteio::create($data);
 
@@ -90,13 +91,15 @@ class SorteioController extends Controller
     public function update(SorteioRequest $request, Sorteio $sorteio): RedirectResponse
     {
         try {
-            $sorteio->update($request->only(['titulo', 'descricao', 'data_sorteio']));
+            $data = $request->only(['titulo', 'descricao', 'data_sorteio']);
+            $data['updated_by'] = Auth::user()->name;
+            $sorteio->update($data);
 
             return redirect()->route('sorteios.index')->with('success', "Sorteio {$sorteio->titulo} criado com sucesso");
         } catch (\PDOException $e) {
             Log::error($e->getMessage());
 
-            return back()->with('success', 'Ocorreu uma falha ao atualizar.');
+            return back()->with('danger', 'Ocorreu uma falha ao atualizar.');
         }
     }
 
@@ -108,8 +111,8 @@ class SorteioController extends Controller
     public function destroy(Sorteio $sorteio)
     {
         if(count($sorteio->brindes) == 0){
-            //$sorteio->deleted_by = Auth::user()->name;
-            //$sorteio->save();
+            $sorteio->deleted_by = Auth::user()->name;
+            $sorteio->save();
             $sorteio->delete();
             $action = 'message';
             $message = 'Registro removido com sucesso.';
