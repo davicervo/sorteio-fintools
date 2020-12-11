@@ -117,7 +117,8 @@
                 funcionariosLeitura: 0,
                 chunck: [],
                 funcionarioSelecionado: {},
-                exibeVencedor: false
+                exibeVencedor: false,
+                lastIndexSelected: undefined
             }),
             watch: {
                 funcionarioSelecionado () {
@@ -135,13 +136,17 @@
                     setTimeout(() => {
                         clearInterval(this.loop);
                         $("#modalSelecionado").modal('show')
+                        if (this.$refs[`func_${this.lastIndexSelected}`][0]) {
+                            let cardItem = this.$refs[`func_${this.lastIndexSelected}`][0]
+                            cardItem.classList.remove('select-card')
+                        }
                     }, 1000)
                 }
             },
             methods: {
                 async getEmployees () {
                     try {
-                        const data = await axios.get(window.location.origin + '/api/funcionarios/chunk/' + this.numFuncionariosPorExibicao)
+                        const data = await axios.get(window.location.origin + '/api/funcionarios/chunk/' + this.numFuncionariosPorExibicao + '/' + this.sorteioUid)
                         if (data && Array.isArray(data.data)) {
                             this.chunck = data.data
                             this.countChunks()
@@ -168,6 +173,7 @@
                             let nextEl = this.$refs[`func_${i}`][0]
                             if (nextEl) {
                                 nextEl.classList.add('select-card')
+                                this.lastIndexSelected = i
                             }
                             this.funcionariosLeitura++
                             if (i > 0) {
