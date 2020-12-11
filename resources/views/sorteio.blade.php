@@ -50,7 +50,7 @@
                         <div class="d-flex flex-column justify-content-center align-items-center" style="height: 200px; background: #ad0000; color: white">
                             <h4>Sorteio Id: [[ sorteioUid ]]</h4>
                             <div style="width: 50%">
-                                <select class="custom-select" v-model="brindeModel">
+                                <select class="form-control form-control-lg" v-model="brindeModel">
                                     <option v-for="(opt, index) in brindes" :key="index" :value="opt.value">[[ opt.text ]]</option>
                                 </select>
                             </div>
