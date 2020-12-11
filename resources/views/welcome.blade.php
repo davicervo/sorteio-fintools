@@ -105,6 +105,7 @@
                 $('#modalComecar').modal('show')
             },
             data: () => ({
+                numFuncionariosPorExibicao: 24,
                 sleepTime: 100,
                 funcionarios: [],
                 chunckIndex: 0,
@@ -137,7 +138,7 @@
             methods: {
                 async getEmployees () {
                     try {
-                        const data = await axios.get(window.location.origin + '/api/funcionarios/chunk/20')
+                        const data = await axios.get(window.location.origin + '/api/funcionarios/chunk/' + this.numFuncionariosPorExibicao)
                         if (data && Array.isArray(data.data)) {
                             this.chunck = data.data
                             this.countChunks()
