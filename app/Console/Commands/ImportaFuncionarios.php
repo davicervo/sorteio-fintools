@@ -72,6 +72,7 @@ class ImportaFuncionarios extends Command
                     'nome' => $ad_user['name'],
                     'username' => $ad_user['username'],
                     'departamento_uid' => $departamento->departamento_uid,
+                    'elegivel' => true,
                     'created_at' => $agora,
                     'updated_at' => $agora,
                     'created_by' => $by,
