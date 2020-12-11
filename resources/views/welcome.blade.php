@@ -25,7 +25,7 @@
     </style>
 </head>
 
-<body>
+<body class="page">
     <div class="container h-100">
         <div class="row h-100 justify-content-center align-items-center">
             <div class="col-12">
@@ -39,7 +39,9 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{$sorteio->titulo}}</h5>
                                 <p class="card-text" style="height: 70px;overflow: auto;">{{$sorteio->descricao}}</p>
-                                <a href="{{route('sorteio',[$sorteio->sorteio_uid])}}" class="btn btn-light btn-lg mt-3">Ir para o Sorteio</a>
+                                <div class="text-center">
+                                    <a href="{{route('sorteio',[$sorteio->sorteio_uid])}}" class="btn btn-light btn-lg mt-3">Ir para o Sorteio</a>
+                                </div>
                             </div>
                         </div>
                     </div>
