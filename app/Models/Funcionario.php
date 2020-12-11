@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Traits\UuidTrait;
 use App\Models\Departamento;
-use App\Support\Fotos;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -18,16 +17,17 @@ class Funcionario extends Model
     protected $keyType = 'string';
     protected $table = 'funcionarios';
 
+    protected $appends = ['foto'];
 
     protected $fillable = [
         'nome',
         'foto',
         'departamento_uid',
+        'username',
         'elegivel',
         'created_by',
         'updated_by',
-        'deleted_by',
-        'brinde_uid'
+        'deleted_by'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
@@ -45,13 +45,13 @@ class Funcionario extends Model
     public function getFotoAttribute()
     {
         $type_img = config('picture.type_img');
-
+        $base_url = url('img/fotos');
         /**
          * Alteração para buscar a foto do team fintools
          */
         if (strpos($this->departamento->nome_exibicao, 'FINTOOLS')) {
-            return url('team_fintools') . '/' . $this->username . $type_img;
+            $base_url = url('team_fintools');
         }
-        return url('img/fotos') . '/' . $this->username . $type_img;
+        return "{$base_url}/{$this->username}{$type_img}";
     }
 }

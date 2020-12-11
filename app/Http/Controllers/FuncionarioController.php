@@ -161,12 +161,9 @@ class FuncionarioController extends Controller
         $funcionarios = Funcionario::with(['departamento' => function ($query) {
             $query->selectRaw('departamento_uid, nome_exibicao');
         }])
-            ->selectRaw('funcionario_uid, nome, departamento_uid')
+            ->selectRaw('funcionario_uid, nome, departamento_uid, username')
             ->where('elegivel', '=', true)
             ->orderBy('nome')->get();
-        foreach ($funcionarios as $funcionario) {
-            $funcionario->foto = $funcionario->foto;
-        }
         return array_chunk($funcionarios->toArray(), $qtd);
     }
 }
