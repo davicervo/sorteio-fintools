@@ -23,7 +23,7 @@
 
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" class="form-control" id="nome" name="nome" value="{{ $brinde->nome }}" required>
+                    <input type="text" class="form-control" id="nome" name="nome" value="{{ $brinde->nome }}">
                 </div>
 
                 <div class="form-group">
@@ -33,7 +33,7 @@
 
                 <div class="form-group">
                     <label for="sorteio">Sorteio</label>
-                    <select class="custom-select" name="sorteio" required>
+                    <select class="custom-select" name="sorteio">
                         <option value="">Selecione</option>
                         @foreach($sorteios as $sorteio)
                             <option value="{{ $sorteio->sorteio_uid  }}" @if($brinde->sorteio->sorteio_uid === $sorteio->sorteio_uid) selected @endif>{{ $sorteio->titulo }}</option>

@@ -12,17 +12,17 @@
 
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" class="form-control" id="nome" name="nome" value="{{ old('nome') }}" required>
+                    <input type="text" class="form-control" id="nome" name="nome" value="{{ old('nome') }}">
                 </div>
 
                 <div class="form-group">
                     <label for="descricao">Descrição</label>
-                    <textarea class="form-control" id="descricao" rows="5" name="descricao" required>{{ old('descricao') }}</textarea>
+                    <textarea class="form-control" id="descricao" rows="5" name="descricao">{{ old('descricao') }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="sorteio">Sorteio</label>
-                    <select class="custom-select" name="sorteio" required>
+                    <select class="custom-select" name="sorteio">
                         <option value="">Selecione</option>
                         @foreach($sorteios as $sorteio)
                             <option value="{{ $sorteio->sorteio_uid  }}">{{ $sorteio->titulo }}</option>
