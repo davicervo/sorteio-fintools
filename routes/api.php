@@ -18,5 +18,5 @@ Route::group( ['prefix' => 'funcionarios'], function () {
 
 Route::group([ 'prefix' => 'vencedores'], function () {
     Route::get('', 'ApiVencedorController@index');
-    Route::get('{sorteioUid}/buscar', 'ApiVencedorController@show');
+    Route::get('{sorteioUid}/visualizar', 'ApiVencedorController@show');
 });
