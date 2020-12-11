@@ -7,7 +7,6 @@ use App\Models\Funcionario;
 use App\Models\Sorteio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Collection;
 
 class BrindeController extends Controller
 {
@@ -192,12 +191,14 @@ class BrindeController extends Controller
      */
     public function listForSelect(string $sorteio_uid)
     {
+        $sorteio = Sorteio::find($sorteio_uid);
         $brindes = Brinde::orderBy('nome')->where('sorteio_uid', $sorteio_uid)
             ->whereNull('funcionario_uid')->pluck('nome','brinde_uid')->unique()
             ->all();
 
         return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
-            'brindes' => $brindes
+            'brindes' => $brindes,
+            'sorteio' => $sorteio->titulo ?? null
         ]);
     }
 }
