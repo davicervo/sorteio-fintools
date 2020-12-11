@@ -42,7 +42,7 @@ class ImportaFuncionariosFotos extends Command
         echo "IMPORTAÇÃO DE FOTOS DOS FUNCIONÁRIOS:\n";
         $funcionarios = Funcionario::get();
         foreach ($funcionarios as $funcionario) {
-            (new Fotos)->getFoto($funcionario);
+            (new Fotos)->downloadFoto($funcionario);
         }
     }
 }

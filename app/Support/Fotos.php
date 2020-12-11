@@ -36,7 +36,7 @@ class Fotos
      */
     public function __construct()
     {
-        $this->img_default = url(config('picture.img_default'));
+        $this->img_default = config('app.url') . config('picture.img_default');
         $this->path_img = config('picture.path_img');
         $this->user = config('picture.user');
         $this->password = config('picture.password');
@@ -47,7 +47,7 @@ class Fotos
      * @param \App\Models\Funcionario $funcionario
      * @return string
      */
-    public function getFoto(Funcionario $funcionario)
+    public function downloadFoto(Funcionario $funcionario)
     {
         try {
             $client = new Client([
