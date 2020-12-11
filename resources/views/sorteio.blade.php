@@ -47,8 +47,13 @@
                         <div class="d-flex justify-content-center align-items-center" style="height: 200px">
                             <img src="https://oliveiratrust.com.br/portal/img/logo.png" width="250">
                         </div>
-                        <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; background: #ad0000; color: white">
+                        <div class="d-flex flex-column justify-content-center align-items-center" style="height: 200px; background: #ad0000; color: white">
                             <h4>Sorteio Nº 1234</h4>
+                            <div style="width: 50%">
+                                <select class="custom-select" v-model="brindeModel">
+                                    <option v-for="(opt, index) in brindes" :key="index" :value="opt.value">[[ opt.text ]]</option>
+                                </select>
+                            </div>
                             <button @click="selectItemGrid()" class="btn btn-light btn-lg mt-3">Começar</button>
                         </div>
                     </div>
@@ -62,7 +67,7 @@
                 <div class="modal-content">
                     <div class="p-0 modal-body">
                         <div class="d-flex flex-column justify-content-center align-items-center" style="background: #ad0000; height: 170px">
-                            <h4 class="text-white">Nome do vencedor</h4>
+                            <h4 class="text-white">[[ winner.nome ]]</h4>
                         </div>
                         <div class="d-flex justify-content-center" style="margin:-40px 0; height: 200px">
                             <div style="width: 150px; position: absolute; background: white; padding: 25px; border-radius: 100px">
@@ -70,7 +75,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center align-items-center" style="height: 20px">
-                            <h4>Descrição do brinde</h4>
+                            <h4>Brinde: [[ brindeExibicao.text ]]</h4>
                         </div>
                         <div class="d-flex justify-content-center align-items-center" style="height: 200px">
                             <img src="https://oliveiratrust.com.br/portal/img/logo.png" width="200">
@@ -106,6 +111,7 @@
             delimiters: ['[[',']]'],
             created() {
                 this.getEmployees()
+                this.getGifts()
             },
             mounted () {
                 $('#modalComecar').modal('show')
@@ -122,7 +128,11 @@
                 chunck: [],
                 funcionarioSelecionado: {},
                 exibeVencedor: false,
-                lastIndexSelected: undefined
+                lastIndexSelected: undefined,
+                brindes: [],
+                brindeModel: undefined,
+                brindeExibicao: {},
+                winner: {}
             }),
             watch: {
                 funcionarioSelecionado () {
@@ -132,7 +142,6 @@
                 },
                 funcionariosLeitura () {
                     if (this.funcionariosLeitura === this.funcionariosTotal) {
-                        console.log('recebe vencedor')
                         this.exibeVencedor = true
                     }
                 },
@@ -147,9 +156,34 @@
                             cardItem.classList.remove('select-card')
                         }
                     }, 1000)
+                },
+                brindeModel () {
+                    if (this.brindeModel !== undefined) {
+                        this.brindeExibicao = this.brindes.find(b => b.value === this.brindeModel)
+                    }
                 }
             },
             methods: {
+                async getGiftWinner() {
+                    try {
+                        const { data: { data } } = await axios.get(window.location.origin + '/brindes/ganhador/' + this.brindeModel)
+                        this.winner = data
+                    } catch (e) {}
+                },
+                async getGifts () {
+                    try {
+                        this.brindes = []
+                        const { data: { data } } = await axios.get(window.location.origin + '/api/brindes/' + this.sorteioUid)
+                        if (Object.keys(data.brindes).length > 0) {
+                            Object.keys(data.brindes).forEach((b, i) => {
+                                this.brindes.push({
+                                    value: b,
+                                    text: data.brindes[b]
+                                })
+                            })
+                        }
+                    } catch (e) {}
+                },
                 async getEmployees () {
                     try {
                         const data = await axios.get(window.location.origin + '/api/funcionarios/chunk/' + this.numFuncionariosPorExibicao + '/' + this.sorteioUid)
