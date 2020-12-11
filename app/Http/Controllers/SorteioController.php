@@ -107,6 +107,11 @@ class SorteioController extends Controller
         return view('sorteio.edit', compact('sorteio'));
     }
 
+    public function find($uid)
+    {
+        return Sorteio::find($uid);
+    }
+
     /**
      * Update the specified resource in storage.
      *
