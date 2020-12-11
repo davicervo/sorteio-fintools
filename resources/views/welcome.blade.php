@@ -37,7 +37,7 @@
     <div id="app">
         <!-- modal comecar -->
         <div style="margin: 10% 0 0;" data-backdrop="static" data-keyboard="false" class="modal fade" id="modalComecar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body p-0">
                         <div class="d-flex justify-content-center align-items-center" style="height: 200px">
@@ -54,7 +54,7 @@
         <!-- modal comecar -->
         <!-- modal selecionado -->
         <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modalSelecionado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="p-5 modal-body">
                         <p v-text="funcionarioSelecionado"></p>

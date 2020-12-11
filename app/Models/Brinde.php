@@ -42,4 +42,11 @@ class Brinde extends Model
         return $this->belongsTo(Sorteio::class, 'sorteio_uid');
     }
 
+    public function scopeVencedoresSorteio($query)
+    {
+        return $query->select('brindes.nome AS brinde_nome', 'brindes.*', 'funcionarios.*', 'sorteios.*')
+            ->join('funcionarios', 'funcionarios.funcionario_uid', 'brindes.funcionario_uid')
+            ->join('sorteios', 'sorteios.sorteio_uid', 'brindes.sorteio_uid');
+    }
+
 }

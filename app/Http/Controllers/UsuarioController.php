@@ -51,9 +51,13 @@ class UsuarioController extends Controller
      * Retorna a lista de usuarios no sistema
      * @return Factory|View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->model->all();
+        $resource = $this->model->orderBy('name');
+        if($request->get('search')){
+            $resource->where('name', 'like', '%' . trim($request->get('search')) . '%');
+        }
+        $data = $resource->paginate();
         return view($this->view . '.index', ["data" => $data]);
     }
 

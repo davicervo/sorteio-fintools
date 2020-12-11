@@ -3,7 +3,10 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-sm-8">
+            <div class="col-sm-12 section-search">
+                @include('partials.search')
+            </div>
+            <div class="col-sm-12">
 
                 @include('messages')
 
@@ -14,20 +17,19 @@
                         <th scope="col">Departamento</th>
                         <th scope="col">Data de criação</th>
                         <th scope="col">Elegivel</th>
-                        <th scope="col">Editar</th>
-                        <th scope="col">Remover</th>
+                        <th scope="col">Ações</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($data as $item)
                         <tr>
                             <td><a href="{{ route('funcionarios.show', $item->funcionario_uid) }}">{{ $item->nome }}</a></td>
-                            <td>--</td>
+                            <td>{{ $item->departamento->nome_exibicao ?? '--' }}</td>
                             <td>{{ $item->created_at->format('d/m/Y H:i') }}</td>
                             <td>{{ $item->elegivel ? 'SIM' : 'NÃO' }}</td>
                             <td>
                                 <a href="{{ route('funcionarios.edit', $item->funcionario_uid) }}">
-                                    <button type="button" class="btn btn-primary">
+                                    <button type="button" class="btn btn-primary showload">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"
@@ -35,10 +37,7 @@
                                         </svg>
                                     </button>
                                 </a>
-                            </td>
-                            <td>
-                                @if( $item->id > 1)
-                                <a href="{{ route('funcionarios.destroy', $item->funcionario_uid) }}">
+                                <a data-action="{{ route('funcionarios.destroy', $item->funcionario_uid) }}" class="btn-delete">
                                     <button type="button" class="btn btn-danger">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -47,16 +46,22 @@
                                         </svg>
                                     </button>
                                 </a>
-                                @else
-                                    --
-                                @endif
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
+                    <tfoot>
+                        <td colspan="6">
+                            {{$data->withQueryString()->links()}}
+                        </td>
+                    </tfoot>
                 </table>
 
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    @include('partials.confirm-delete')
 @endsection

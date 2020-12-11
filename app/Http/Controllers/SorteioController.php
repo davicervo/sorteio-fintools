@@ -18,9 +18,13 @@ class SorteioController extends Controller
      *
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $sorteios = Sorteio::query()->latest()->paginate(10); // ordenando pelo mais recente
+        $resource = Sorteio::query()->latest()->orderBy('titulo');
+        if($request->get('search')){
+            $resource->where('titulo', 'like', '%' . trim($request->get('search')) . '%');
+        }
+        $sorteios = $resource->paginate(10); // ordenando pelo mais recente
         return view('sorteio.index', [
             'sorteios' => $sorteios
         ]);
@@ -97,13 +101,23 @@ class SorteioController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Sorteio $sorteio
+     * @return RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Sorteio $sorteio)
     {
-        //
+        if(count($sorteio->brindes) == 0){
+            //$sorteio->deleted_by = Auth::user()->name;
+            //$sorteio->save();
+            $sorteio->delete();
+            $action = 'message';
+            $message = 'Registro removido com sucesso.';
+        } else {
+            $action = 'error';
+            $message = 'Já existe um brinde associado a esse sorteio. <strong>Ação não executada!</strong>';
+        }
+
+        return back()->with($action, $message);
     }
 }
