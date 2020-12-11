@@ -30,7 +30,9 @@ class SorteioController extends Controller
     public function vencedores(string $sorteio_uid)
     {
         $data = Brinde::where('sorteio_uid', $sorteio_uid)->with('funcionario')->whereNotNull("funcionario_uid")->get()->toArray();
-        return $this->jsonResponse(200, 'Dados retornados com sucesso!', $data, 200);
+        return view('vencedores', [
+            'data' => $data
+        ]);
     }
 
     /**
