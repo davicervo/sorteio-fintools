@@ -176,7 +176,7 @@ class FuncionarioController extends Controller
         })
         ->selectRaw('funcionario_uid, nome, departamento_uid, username')
         ->where('elegivel', '=', true)
-        ->orderBy('nome')->get();
+        ->orderBy('nome')->limit(10)->get();
         return array_chunk($result->toArray(), $qtd);
     }
 }
