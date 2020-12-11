@@ -101,7 +101,7 @@
                 <div v-for="(func, indexFunc) in funcionarios" :key="func.funcionario_id" class="item-func" :ref="`func_${indexFunc}`">
                     <div class="card shadow-lg" style="height: 150px">
                         <div class="card-body d-flex justify-content-center align-items-center flex-column">
-                            <img style="border-radius: 50%;border:3px solid #D40000;" width="100" height="100" :src=" func.foto ">
+                            <div :style="'border-radius: 50%;border:3px solid #D40000;width: 100px;height: 100px;background-color: #D40000;background-image: url(' + func.foto + '), url(<?= config('app.url') .'/'. config('picture.img_default')  ?>);background-position: center, center;background-repeat: no-repeat, no-repeat;background-size: cover, cover;'"></div>
                         </div>
                     </div>
                 </div>
