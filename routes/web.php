@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'SorteioController@lista')->name('sorteios.lista');
+Route::get('/sorteio/{sorteio_uid}/vencedores', 'SorteioController@vencedores')->name('sorteios.vencedores');
 
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 

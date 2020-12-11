@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SorteioRequest;
+use App\Models\Brinde;
+use App\Models\Sorteio;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Models\Sorteio;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -20,6 +21,16 @@ class SorteioController extends Controller
         return view('welcome', [
             'sorteios' => $sorteios
         ]);
+    }
+
+    /**
+     * @param string $sorteio_uid
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function vencedores(string $sorteio_uid)
+    {
+        $data = Brinde::where('sorteio_uid', $sorteio_uid)->with('funcionario')->whereNotNull("funcionario_uid")->get()->toArray();
+        return $this->jsonResponse(200, 'Dados retornados com sucesso!', $data, 200);
     }
 
     /**
