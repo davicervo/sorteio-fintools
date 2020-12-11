@@ -143,13 +143,15 @@ class FuncionarioController extends Controller
     {
         try {
             $funcionario = Funcionario::findOrFail($uid);
-            $funcionario->update(['deleted_by' => Auth::user()->name]);
+            $funcionario->update([
+                'deleted_by' => Auth::user()->name
+            ]);
             $funcionario->delete();
-            return $this->jsonResponse(true, 'Deletado com sucesso', [], 200);
+            return response()->redirectToRoute('funcionarios.index')->with('message', 'Deletado com sucesso');
         } catch (\PDOException $e) {
-            return $this->jsonResponse(true, 'Erro ao deletar', [], 500);
+            return response()->redirectToRoute('funcionarios.index')->with('error', 'Erro ao deletar');
         } catch (ModelNotFoundException $e) {
-            return $this->jsonResponse(true, 'Nenhum registro encontrado', [], 404);
+            return response()->redirectToRoute('funcionarios.index')->with('error', 'Nenhum registro encontrado');
         }
     }
 

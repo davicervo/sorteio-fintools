@@ -117,7 +117,7 @@ class DepartamentosController extends Controller
             $message = 'Brinde removido com sucesso.';
         } else {
             $action = 'error';
-            $message = 'Registro não pode ser deletado pois já existe um funcioario vinculado.';
+            $message = 'Registro não pode ser deletado pois já existe um funcionário vinculado.';
         }
         return redirect()->to('/departamentos')->with($action, $message);
     }

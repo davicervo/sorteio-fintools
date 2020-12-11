@@ -17,6 +17,7 @@ class CreateFuncionariosTable extends Migration
             $table->boolean('elegivel')->default(false);
             $table->string('created_by', 100)->nullable()->default(null);
             $table->string('updated_by', 100)->nullable()->default(null);
+            $table->string('deleted_by', 100)->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
         });
