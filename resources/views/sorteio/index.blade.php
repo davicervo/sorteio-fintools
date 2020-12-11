@@ -13,10 +13,10 @@
                 <thead>
                 <tr>
                     <th scope="col">Título</th>
-                    <th scope="col">Descrição</th>
+                    <th scope="col" style="width: 50%">Descrição</th>
                     <th scope="col">Data do sorteio</th>
                     <th scope="col">Ativo</th>
-                    <th scope="col">Ações</th>
+                    <th scope="col" style="width: 10%">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
