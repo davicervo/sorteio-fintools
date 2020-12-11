@@ -7,6 +7,7 @@ use App\Models\Funcionario;
 use App\Service\FuncionarioService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 
 class ImportaFuncionarios extends Command
 {
@@ -45,6 +46,7 @@ class ImportaFuncionarios extends Command
         $funcionarios = [];
         $agora = Carbon::now();
         $by = "COMMAND";
+        echo "IMPORTAÇÃO DE FUNCIONÁRIOS:\n";
         foreach ($ad_users as $ad_user) {
 
             $departamento = Departamento::firstOrCreate([
@@ -63,6 +65,7 @@ class ImportaFuncionarios extends Command
                     'updated_at' => $agora,
                     'updated_by' => $by
                 ]);
+                echo "-{$funcionario->nome} atualizado.\n";
             } else {
                 $funcionarios[] = [
                     'funcionario_uid' => $ad_user['object_guid'],
@@ -77,6 +80,9 @@ class ImportaFuncionarios extends Command
             }
         }
         Funcionario::insert($funcionarios);
-        echo "Importação de Funcionários finalizada com sucesso.";
+        echo "Importação de Funcionários finalizada com sucesso.\n";
+
+        // Importa as fotos dos funcionarios
+        Artisan::call('funcionarios:importPhotos');
     }
 }

@@ -39,6 +39,7 @@ class ImportaFuncionariosFotos extends Command
      */
     public function handle()
     {
+        echo "IMPORTAÇÃO DE FOTOS DOS FUNCIONÁRIOS:\n";
         $funcionarios = Funcionario::get();
         foreach ($funcionarios as $funcionario) {
             (new Fotos)->getFoto($funcionario);

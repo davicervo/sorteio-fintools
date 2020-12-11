@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Funcionario;
 use App\Service\FuncionarioService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 class LimpaFuncionarios extends Command
 {
@@ -48,16 +49,18 @@ class LimpaFuncionarios extends Command
 
         $funcionarios_destruidos = [];
 
+        $type_img = config('picture.type_img');
+
+        echo "EXCLUSÃO DE FUNCIONÁRIOS QUE NÃO ESTÃO MAIS NO AD:\n";
         foreach ($funcionarios as $funcionario) {
             if (!in_array($funcionario->funcionario_uid, $ad_users)) {
-                $funcionarios_destruidos[] = "-{$funcionario->nome} [{$funcionario->departamento->nome_exibicao}]\n";
+                $arquivo = "{$funcionario->username}{$type_img}";
+                if (Storage::disk('public_fotos')->exists($arquivo)) {
+                    Storage::disk('public_fotos')->delete($arquivo);
+                }
                 Funcionario::destroy($funcionario);
+                echo "-{$funcionario->nome} [{$funcionario->departamento->nome_exibicao}] removido.\n";
             }
-        }
-        // se tiver funcionario excluido mostra msg
-        if (count($funcionarios_destruidos) > 0) {
-            $funcionarios_destruidos = implode("", $funcionarios_destruidos);
-            echo "Funcionários excluídos do Banco de dados pois não estão no AD:\n{$funcionarios_destruidos}\n";
         }
     }
 }
