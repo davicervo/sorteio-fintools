@@ -29,9 +29,13 @@ class SorteioController extends Controller
      */
     public function vencedores(string $sorteio_uid)
     {
-        $data = Brinde::where('sorteio_uid', $sorteio_uid)->with('funcionario')->whereNotNull("funcionario_uid")->get()->toArray();
+        $data = Brinde::where('sorteio_uid', $sorteio_uid)->with(['funcionario'])
+            ->whereNotNull("funcionario_uid")->get()->toArray();
+        $sorteio = Sorteio::find($sorteio_uid);
+
         return view('vencedores', [
-            'data' => $data
+            'data' => $data,
+            'sorteio' => $sorteio
         ]);
     }
 
@@ -101,6 +105,11 @@ class SorteioController extends Controller
     public function edit(Sorteio $sorteio): View
     {
         return view('sorteio.edit', compact('sorteio'));
+    }
+
+    public function find($uid)
+    {
+        return Sorteio::find($uid);
     }
 
     /**

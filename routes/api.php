@@ -8,6 +8,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group( ['prefix' => 'sorteio'], function () {
+    Route::get('{uid}', 'SorteioController@find');
+});
+
 Route::group( ['prefix' => 'funcionarios'], function () {
     Route::get('', 'FuncionarioController@index');
     Route::get('{uid}', 'FuncionarioController@find');

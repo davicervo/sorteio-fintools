@@ -52,13 +52,18 @@
                             <img src="https://oliveiratrust.com.br/portal/img/logo.png" width="250">
                         </div>
                         <div class="d-flex flex-column justify-content-center align-items-center" style="height: 200px; background: #ad0000; color: white">
-                            <h4>Sorteio Id: [[ sorteioUid ]]</h4>
+                            <h4 v-if="this.sorteio !== null">[[ this.sorteio.titulo ]]</h4>
+                            <h4 v-if="this.sorteio === null">
+                                <div class="spinner-border text-light" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </h4>
                             <div style="width: 50%">
-                                <select class="form-control form-control-lg" v-model="brindeModel">
+                                <select class="form-control form-control-lg" v-model="brindeModel" :disabled="brindes.length < 1">
                                     <option v-for="(opt, index) in brindes" :key="index" :value="opt.value">[[ opt.text ]]</option>
                                 </select>
                             </div>
-                            <button :disabled="brindes.length < 1" @click="selectItemGrid()" class="btn btn-light btn-lg mt-3">Começar</button>
+                            <button :disabled="brindeModel === undefined" @click="selectItemGrid()" class="btn btn-light btn-lg mt-3">Começar</button>
                         </div>
                     </div>
                 </div>
@@ -119,6 +124,7 @@
             created() {
                 this.getEmployees()
                 this.getGifts()
+                this.getDraw()
             },
             mounted () {
                 $('#modalComecar').modal('show')
@@ -139,7 +145,8 @@
                 brindes: [],
                 brindeModel: undefined,
                 brindeExibicao: {},
-                winner: {}
+                winner: {},
+                sorteio:null
             }),
             watch: {
                 funcionarioSelecionado () {
@@ -191,6 +198,12 @@
                                 })
                             })
                         }
+                    } catch (e) {}
+                },
+                async getDraw () {
+                    try {
+                        const res = await axios.get(window.location.origin + '/api/sorteio/' + this.sorteioUid)
+                        this.sorteio = res.data
                     } catch (e) {}
                 },
                 async getEmployees () {
