@@ -159,6 +159,7 @@
                 },
                 brindeModel () {
                     if (this.brindeModel !== undefined) {
+                        this.getGiftWinner()
                         this.brindeExibicao = this.brindes.find(b => b.value === this.brindeModel)
                     }
                 }
