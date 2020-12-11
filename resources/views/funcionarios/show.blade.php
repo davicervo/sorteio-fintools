@@ -7,7 +7,7 @@
             Nome: <strong><a href="{{ route('funcionarios.show', $dados->funcionario_uid) }}">{{ $dados->nome }}</a></strong><br>
             Departamento: <strong>{{ $dados->departamento->nome_exibicao ?? null }}</strong><br>
             Elegivel: <strong>{{ $dados->elegivel ? 'SIM' : 'NÃO' }}</strong><br>
-            <img src="{{ $dados->foto }}" alt="{{ $dados->nome }}" class="foto"/>
+            <div style="background-image: url({{ $dados->foto }}), url(<?= config('app.url') .'/'. config('picture.img_default')  ?>);background-position: center, center;background-repeat: no-repeat, no-repeat;background-size: cover, cover;" class="foto"></div>
             <br>
             <br>
             <a href="{{route('funcionarios.index')}}" class="btn btn-secondary float-left"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-double-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
