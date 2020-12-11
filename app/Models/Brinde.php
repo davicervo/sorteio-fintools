@@ -33,7 +33,7 @@ class Brinde extends Model
 
     public function funcionario()
     {
-        return $this->hasOne(Funcionario::class, 'funcionario_uid');
+        return $this->hasOne(Funcionario::class, 'funcionario_uid', 'funcionario_uid');
     }
 
 
