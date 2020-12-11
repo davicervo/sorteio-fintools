@@ -56,9 +56,21 @@
         <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modalSelecionado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="p-5 modal-body">
-                        <p v-text="funcionarioSelecionado"></p>
-                        <button @click="[selectItemGrid(), restartSortable()]" class="btn btn-primary btn-lg">Recomeçar</button>
+                    <div class="p-0 modal-body">
+                        <div class="d-flex flex-column justify-content-center align-items-center" style="background: #ad0000; height: 170px">
+                            <h4 class="text-white">Nome do vencedor</h4>
+                        </div>
+                        <div class="d-flex justify-content-center" style="margin:-40px 0; height: 200px">
+                            <div style="width: 150px; position: absolute; background: white; padding: 25px; border-radius: 100px">
+                                <img width="100" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNjRweCIgaWQ9IkxheWVyXzEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDY0IDY0OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNjQgNjQiIHdpZHRoPSI2NHB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZyBpZD0iSGFuZGxlcyI+PGc+PHBhdGggZD0iTTU2LDRjLTcsMC04LDYtOCw4czAsNCwyLDRzMi0yLDItNHMxLTQsNC00czQsMiw0LDRjMCwxMC0xMiwxNi0xOCwxNkgyMmMtNiwwLTE4LTYtMTgtMTYgICAgYzAtMiwxLTQsNC00czQsMiw0LDRzMCw0LDIsNHMyLTIsMi00cy0xLTgtOC04Yy01LDAtOCw0LTgsOGMwLDEyLDE0LDIwLDIyLDIwaDIwYzgsMCwyMi04LDIyLTIwQzY0LDgsNjEsNCw1Niw0eiIgc3R5bGU9ImZpbGw6I0U2Qjg1QzsiLz48L2c+PC9nPjxnIGlkPSJDdXAiPjxnPjxwYXRoIGQ9Ik01MCw0YzAtMi4wMDEsMC00LTItNFMxOCwwLDE2LDBzLTIsMS45OTktMiw0YzAsMzQsMTQsMzAsMTQsMzR2NGMwLDQtNiwyLTYsNmgyMGMwLTQtNi0yLTYtNnYtNCAgICBDMzYsMzQsNTAsMzgsNTAsNHoiIHN0eWxlPSJmaWxsOiNGRkNDNjY7Ii8+PC9nPjwvZz48ZyBpZD0iU3RhbmQiPjxnPjxwYXRoIGQ9Ik01MCw1MkgxNGMtMS4xMDQsMC0yLDAuODk1LTIsMnY4YzAsMS4xMDQsMC44OTYsMiwyLDJoMzZjMS4xMDQsMCwyLTAuODk2LDItMnYtOCAgICBDNTIsNTIuODk1LDUxLjEwNCw1Miw1MCw1MnoiIHN0eWxlPSJmaWxsOiM2NjY2NjY7Ii8+PC9nPjwvZz48ZyBpZD0iUGxhdGUiPjxnPjxyZWN0IGhlaWdodD0iNCIgc3R5bGU9ImZpbGw6I0U2RTZFNjsiIHdpZHRoPSIyMCIgeD0iMjIiIHk9IjU2Ii8+PC9nPjwvZz48ZyBpZD0iQmFzZV8xXyI+PGc+PHBhdGggZD0iTTQyLDQ4SDIyYzAsMC02LDAtNiw0aDMyQzQ4LDQ4LDQyLDQ4LDQyLDQ4eiBNMjgsNDJoOCAgICBjMS4xMDQsMCwyLTAuODk2LDItMmMwLTEuMTA1LTAuODk2LTItMi0yaC04Yy0xLjEwNCwwLTIsMC44OTUtMiwyQzI2LDQxLjEwNCwyNi44OTYsNDIsMjgsNDJ6IiBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7ZmlsbDojRTZCODVDOyIvPjwvZz48L2c+PGcgaWQ9Il94MzFfIj48Zz48cGF0aCBkPSJNMzYsMTkuOTk5aC0ydi0xMHYtMnYtMmgtMmMtMC43NDQsMC0xLjM4NywwLjQxMS0xLjczLDEuMDE1ICAgIGwtMy43LDMuNzAxYy0wLjc1LDAuNzQ5LTAuNzUsMS45NjYsMCwyLjcxNWMwLjc0OSwwLjc1LDEuOTY1LDAuNzUsMi43MTUsMEwzMCwxMi43MTR2Ny4yODVoLTJjLTEuMTA1LDAtMiwwLjg5Ni0yLDJzMC44OTUsMiwyLDIgICAgaDhjMS4xMDQsMCwyLTAuODk2LDItMlMzNy4xMDQsMTkuOTk5LDM2LDE5Ljk5OXoiIHN0eWxlPSJmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtmaWxsOiNDQ0EzNTI7Ii8+PC9nPjwvZz48Zy8+PGcvPjxnLz48Zy8+PGcvPjxnLz48Zy8+PGcvPjxnLz48Zy8+PGcvPjxnLz48Zy8+PGcvPjxnLz48L3N2Zz4=">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center" style="height: 20px">
+                            <h4>Descrição do brinde</h4>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center" style="height: 200px">
+                            <img src="https://oliveiratrust.com.br/portal/img/logo.png" width="200">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,7 +112,8 @@
                 funcionariosTotal: 0,
                 funcionariosLeitura: 0,
                 chunck: [],
-                funcionarioSelecionado: {}
+                funcionarioSelecionado: {},
+                exibeVencedor: false
             }),
             watch: {
                 funcionarioSelecionado () {
@@ -111,8 +124,14 @@
                 funcionariosLeitura () {
                     if (this.funcionariosLeitura === this.funcionariosTotal) {
                         console.log('recebe vencedor')
-                        clearInterval(this.loop);
+                        this.exibeVencedor = true
                     }
+                },
+                exibeVencedor () {
+                    setTimeout(() => {
+                        clearInterval(this.loop);
+                        $("#modalSelecionado").modal('show')
+                    }, 1000)
                 }
             },
             methods: {
