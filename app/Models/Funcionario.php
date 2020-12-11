@@ -49,9 +49,10 @@ class Funcionario extends Model
         /**
          * Alteração para buscar a foto do team fintools
          */
-        if (strpos($this->departamento->nome_exibicao, 'FINTOOLS')) {
+        if (!empty($this->departamento) && strpos($this->departamento->nome_exibicao, 'FINTOOLS')) {
             $base_url = url('team_fintools');
         }
+
         return "{$base_url}/{$this->username}{$type_img}";
     }
 }

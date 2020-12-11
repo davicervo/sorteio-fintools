@@ -26,12 +26,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('brindes')->group(function () {
         Route::get('', 'BrindeController@index')->name('brindes.index');
         Route::get('criar', 'BrindeController@create')->name('brindes.create');
-        Route::post('salvar', 'BrindeController@store');
+        Route::post('salvar', 'BrindeController@store')->name('brindes.store');;
         Route::get('{uid}/visualizar', 'BrindeController@show')->name('brindes.show');
         Route::get('{uid}/editar', 'BrindeController@edit')->name('brindes.edit');
-        Route::patch('{uid}/atualizar', 'BrindeController@update');
+        Route::patch('{uid}/atualizar', 'BrindeController@update')->name('brindes.update');;
         Route::get('{uid}/deletar', 'BrindeController@destroy')->name('brindes.destroy');
-        Route::post('ganhador/{brindeUid}/{uidFuncionario}', 'BrindeController@adicionarGanhador');
+        Route::get('ganhador/{brindeUid}', 'BrindeController@adicionarGanhador')->name('brindes.ganhador');;
         Route::get('clone/{brindeUid}/brindes/{brindes?}', 'BrindeController@cloneBrinde')->name('brinde.clone');
     });
 
