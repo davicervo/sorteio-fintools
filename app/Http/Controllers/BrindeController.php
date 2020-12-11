@@ -56,7 +56,7 @@ class BrindeController extends Controller
         $brinde->sorteio()->associate($request->sorteio);
         $brinde->save();
 
-        return redirect()->to('/brindes')->with('message', 'Brinde criado com sucesso.');
+        return redirect()->to('/brindes')->with('message', 'Prêmio criado com sucesso.');
     }
 
 
@@ -100,7 +100,7 @@ class BrindeController extends Controller
 
         $brinde->sorteio()->associate($request->sorteio);
         $brinde->save();
-        return redirect()->to("/brindes/$uid/editar")->with('message', 'Brinde alterado com sucesso.');
+        return redirect()->to("/brindes/$uid/editar")->with('message', 'Prêmio alterado com sucesso.');
     }
 
 
@@ -166,7 +166,7 @@ class BrindeController extends Controller
     public function cloneBrinde(string $brindeUid, int $brindes = 0)
     {
         if ($brindes < 1) {
-            return $this->jsonResponse(true, 'Nenhum brinde foi gerado.');
+            return $this->jsonResponse(true, 'Nenhum prêmio foi gerado.');
         }
         $brinde = Brinde::find($brindeUid);
 
