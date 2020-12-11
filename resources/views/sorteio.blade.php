@@ -81,7 +81,7 @@
                             <img src="https://oliveiratrust.com.br/portal/img/logo.png" width="200">
                         </div>
                         <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; background: #ad0000; color: white">
-                            <button @click="draftNextAward()" class="btn btn-light btn-lg mt-3">Sortear próximo Brinde</button>
+                            <button @click="draftNextAward()" class="btn btn-light btn-lg mt-3">Sortear próximo Prêmio</button>
                         </div>
                     </div>
                 </div>
