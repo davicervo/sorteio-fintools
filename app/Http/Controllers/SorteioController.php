@@ -92,7 +92,7 @@ class SorteioController extends Controller
         try {
             $sorteio->update($request->only(['titulo', 'descricao', 'data_sorteio']));
 
-            return redirect()->route('sorteios.index')->with('success', "Sorteio {$sorteio->titulo} criado com sucesso");
+            return redirect()->route('sorteios.index')->with('success', "Sorteio {$sorteio->titulo} editado com sucesso");
         } catch (\PDOException $e) {
             Log::error($e->getMessage());
 

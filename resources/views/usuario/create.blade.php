@@ -17,9 +17,9 @@
                                 @foreach($field['options'] as $option)
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="{{$field['name']}}"
-                                               id="{{$option['name']}}" value="{{$option['value']}}">
+                                            id="{{"{$option['name']}{$option['value']}"}}" value="{{$option['value']}}">
                                         <label class="form-check-label"
-                                               for="{{$option['name']}}">{{$option['label']}}</label>
+                                               for="{{"{$option['name']}{$option['value']}"}}">{{$option['label']}}</label>
                                     </div>
                                 @endforeach
                             </div>

@@ -6,6 +6,7 @@ use App\Models\Funcionario;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 class FuncionarioController extends Controller
 {
@@ -74,8 +75,8 @@ class FuncionarioController extends Controller
     public function store(Request $request)
     {
         try {
-            $funcionario = Funcionario::create($request->all());
-            return back()->with('success', "O funcionário {$funcionario->nome} foi criado com sucesso!");
+            $funcionario = Funcionario::create($request->all() + ['created_by' => Auth::user()->name]);
+            return back()->with('message', "O funcionário {$funcionario->nome} foi criado com sucesso!");
         } catch (\PDOException $e) {
             return back()->with('error', 'Falha ao criar um funcionário');
         }
@@ -125,8 +126,8 @@ class FuncionarioController extends Controller
     {
         try {
             $funcionario = Funcionario::findOrFail($uid);
-            $funcionario->update($request->all());
-            return back()->with('success', "O funcionário {$funcionario->nome} foi atualizado com sucesso");
+            $funcionario->update($request->all() + ['updated_by' => Auth::user()->name]);
+            return back()->with('message', "O funcionário {$funcionario->nome} foi atualizado com sucesso");
         } catch (\PDOException | ModelNotFoundException $e) {
             return back()->with('error', 'Falha ao atualizar o funcionário');
         }
@@ -142,6 +143,7 @@ class FuncionarioController extends Controller
     {
         try {
             $funcionario = Funcionario::findOrFail($uid);
+            $funcionario->update(['deleted_by' => Auth::user()->name]);
             $funcionario->delete();
             return $this->jsonResponse(true, 'Deletado com sucesso', [], 200);
         } catch (\PDOException $e) {
