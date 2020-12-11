@@ -155,15 +155,28 @@ class FuncionarioController extends Controller
         }
     }
 
-    public function getByChunk(int $qtd)
+    /**
+     * @param int $qtd
+     * @param string $sorteioUid
+     * @return array
+     */
+    public function getByChunk(int $qtd, string $sorteioUid)
     {
+        $funcionarios = new Funcionario();
         $qtd = $qtd > 1 ? $qtd : 1;
-        $funcionarios = Funcionario::with(['departamento' => function ($query) {
+
+        $result = $funcionarios->with(['departamento' => function ($query) {
             $query->selectRaw('departamento_uid, nome_exibicao');
         }])
-            ->selectRaw('funcionario_uid, nome, departamento_uid, username')
-            ->where('elegivel', '=', true)
-            ->orderBy('nome')->get();
-        return array_chunk($funcionarios->toArray(), $qtd);
+            ->whereNotIn('funcionario_uid', function($query) use($funcionarios, $sorteioUid){
+            $query->select('funcionario_uid')
+                ->from($funcionarios->brinde()->getRelated()->getTable())
+                ->where('sorteio_uid', $sorteioUid)
+                ->whereRaw('funcionario_uid is not null');
+        })
+        ->selectRaw('funcionario_uid, nome, departamento_uid, username')
+        ->where('elegivel', '=', true)
+        ->orderBy('nome')->get();
+        return array_chunk($result->toArray(), $qtd);
     }
 }

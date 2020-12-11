@@ -13,7 +13,7 @@ Route::group( ['prefix' => 'funcionarios'], function () {
     Route::get('{uid}', 'FuncionarioController@find');
     Route::post('', 'FuncionarioController@find@store');
     Route::put('{uid}', 'FuncionarioController@update');
-    Route::get('chunk/{qtd}', 'FuncionarioController@getByChunk');
+    Route::get('chunk/{qtd}/{sorteioUid}', 'FuncionarioController@getByChunk');
 });
 
 Route::group([ 'prefix' => 'vencedores'], function () {
