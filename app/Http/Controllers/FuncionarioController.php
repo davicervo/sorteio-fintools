@@ -162,6 +162,7 @@ class FuncionarioController extends Controller
             ->with(['departamento' => function ($query) {
                 $query->selectRaw('departamento_uid, nome_exibicao');
             }])
+            ->where('elegivel', 1)
             ->get()->toArray(), $qtd);
     }
 }
