@@ -81,7 +81,7 @@
                 <div v-for="(func, indexFunc) in funcionarios" :key="func.funcionario_id" class="item-func" :ref="`func_${indexFunc}`">
                     <div class="card shadow-lg" style="height: 240px">
                         <div class="card-body d-flex justify-content-center align-items-center flex-column">
-                            <img width="100" height="100" :src=" func.foto ">
+                            <img style="border-radius: 50%;border:3px solid #D40000;" width="100" height="100" :src=" func.foto ">
                             <h4 class="mt-2">[[ func.nome.split(" ")[0].substr(0, 20) ]]</h4>
                         </div>
                     </div>
