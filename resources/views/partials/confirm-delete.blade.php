@@ -4,7 +4,7 @@
 
             Swal.fire({
                 title: 'Você tem certeza disso?',
-                text: 'Você não será capaz de recuperar este arquivo novamente!',
+                text: 'Você não será capaz de recuperar este registro novamente!',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Sim, quero continuar!',

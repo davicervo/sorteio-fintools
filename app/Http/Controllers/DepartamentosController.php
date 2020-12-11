@@ -98,7 +98,7 @@ class DepartamentosController extends Controller
         try {
             $this->model->find($uid)->fill($data)->save();
         } catch (\Exception $e) {
-            return redirect()->back()->with('danger', 'Houve um erro interno ao tentar atualizar esse registro.');
+            return redirect()->back()->with('error', 'Houve um erro interno ao tentar atualizar esse registro.');
         }
 
         return redirect()->to('/departamentos')->with('message', 'registro  alterado com sucesso.');

@@ -31,6 +31,7 @@
                                         id="{{$field['name']}}"
                                         name="{{$field['name']}}"
                                 >
+                                <option value="">Selecione</option>
                                 @foreach($field['options'] AS $option)
                                     <option value="{{ $option[$field['option_value']]}}"
                                         @if($option[$field['option_value']] == old($field['name']))

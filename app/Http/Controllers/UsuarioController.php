@@ -84,7 +84,7 @@ class UsuarioController extends Controller
         try {
             $this->model->fill($data)->save();
         } catch (\Exception $e) {
-            return redirect()->back()->with('danger', 'Houve um erro interno ao tentar criar esse usuário.');
+            return redirect()->back()->with('error', 'Houve um erro interno ao tentar criar esse usuário.');
         }
 
         return redirect()->to('/usuarios')->with('message', 'Usuário criado com sucesso.');
@@ -118,7 +118,7 @@ class UsuarioController extends Controller
         try {
             $this->model->find($id)->fill($data)->save();
         } catch (\Exception $e) {
-            return redirect()->back()->with('danger', 'Houve um erro interno ao tentar atualizar esse usuário.');
+            return redirect()->back()->with('error', 'Houve um erro interno ao tentar atualizar esse usuário.');
         }
 
         return redirect()->to('/usuarios')->with('message', 'Usuário  alterado com sucesso.');

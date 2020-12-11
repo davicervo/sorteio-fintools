@@ -136,7 +136,7 @@ class BrindeController extends Controller
         $brinde = Brinde::find($uidBrinde);
         $brinde->funcionario_uid = $uidFuncionario;
         $brinde->save();
-        return $this->jsonResponse(["success"]);
+        return $this->jsonResponse(true, 'Adicionado com sucesso!', [], 200);
     }
 
     /**
