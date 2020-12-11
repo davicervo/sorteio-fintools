@@ -164,6 +164,9 @@ class FuncionarioController extends Controller
             ->selectRaw('funcionario_uid, nome, departamento_uid')
             ->where('elegivel', '=', true)
             ->orderBy('nome')->get();
+        foreach ($funcionarios as $funcionario) {
+            $funcionario->foto = $funcionario->foto;
+        }
         return array_chunk($funcionarios->toArray(), $qtd);
     }
 }

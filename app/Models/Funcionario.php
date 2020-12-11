@@ -44,6 +44,14 @@ class Funcionario extends Model
 
     public function getFotoAttribute()
     {
-        return (new Fotos())->getFoto($this);
+        $type_img = config('picture.type_img');
+
+        /**
+         * Alteração para buscar a foto do team fintools
+         */
+        if (strpos($this->departamento->nome_exibicao, 'FINTOOLS')) {
+            return url('team_fintools') . '/' . $this->username . $type_img;
+        }
+        return url('img/fotos') . '/' . $this->username . $type_img;
     }
 }

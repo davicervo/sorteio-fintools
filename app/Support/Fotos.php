@@ -6,6 +6,7 @@ namespace App\Support;
 use App\Models\Funcionario;
 use Exception;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Storage;
 
 class Fotos
 {
@@ -25,16 +26,21 @@ class Fotos
      * @var string
      */
     private $path_img;
+    /**
+     * @var string
+     */
+    private $type_img;
 
     /**
      * Fotos constructor.
      */
     public function __construct()
     {
-        $this->img_default = url('img/default.png');
-        $this->path_img = 'http://portal/Arquivos/fotos/';
+        $this->img_default = url(config('picture.img_default'));
+        $this->path_img = config('picture.path_img');
         $this->user = config('picture.user');
         $this->password = config('picture.password');
+        $this->type_img = config('picture.type_img');
     }
 
     /**
@@ -44,21 +50,12 @@ class Fotos
     public function getFoto(Funcionario $funcionario)
     {
         try {
-            $type_img = '.jpg';
-
-            /**
-             * Alteração para buscar a foto do team fintools
-             */
-            if (strpos($funcionario->departamento->nome_exibicao, 'FINTOOLS')) {
-                return url('team_fintools') . '/' . $funcionario->username . $type_img;
-            }
-
             $client = new Client([
                 'verify' => false,
                 'http_errors' => false,
             ]);
 
-            $picture = "{$this->path_img}{$funcionario->username}{$type_img}";
+            $picture = "{$this->path_img}{$funcionario->username}{$this->type_img}";
 
             $response = $client->request('GET', $picture, [
                 'auth' => [$this->user, $this->password, 'ntlm']
@@ -68,9 +65,13 @@ class Fotos
                 return $picture;
             }
 
-            return $this->img_default;
+            $picture = $this->img_default;
+
+            $contents = file_get_contents($picture);
+            Storage::disk('public_fotos')->put("{$funcionario->username}{$this->type_img}", $contents);
+            echo "OK: Foto de {$funcionario->nome} importada.\n";
         } catch (Exception $e) {
-            return $this->img_default;
+            echo "ERRO: Não foi possível importar a foto de {$funcionario->nome}. [{$e->getMessage()}]\n";
         }
     }
 }
