@@ -91,7 +91,7 @@
         <div class="container-fluid page">
             <div class="row no-gutters d-flex justify-content-center" ref="gridCards">
                 <div v-for="(func, indexFunc) in funcionarios" :key="func.funcionario_id" class="item-func" :ref="`func_${indexFunc}`">
-                    <div class="card shadow-lg" style="height: 240px">
+                    <div class="card shadow-lg" style="height: 150px">
                         <div class="card-body d-flex justify-content-center align-items-center flex-column">
                             <img style="border-radius: 50%;border:3px solid #D40000;" width="100" height="100" :src=" func.foto ">
                         </div>
@@ -117,7 +117,7 @@
             },
             data: () => ({
                 sorteioUid: "<?= request()->route()->parameter('uid') ?>",
-                numFuncionariosPorExibicao: 24,
+                numFuncionariosPorExibicao: 32,
                 sleepTime: 100,
                 funcionarios: [],
                 chunckIndex: 0,
