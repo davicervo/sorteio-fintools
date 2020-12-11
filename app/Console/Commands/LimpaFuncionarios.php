@@ -47,8 +47,6 @@ class LimpaFuncionarios extends Command
         // recupera todos os funcionarios
         $funcionarios = Funcionario::get();
 
-        $funcionarios_destruidos = [];
-
         $type_img = config('picture.type_img');
 
         echo "EXCLUSÃO DE FUNCIONÁRIOS QUE NÃO ESTÃO MAIS NO AD:\n";
