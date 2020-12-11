@@ -155,14 +155,15 @@ class FuncionarioController extends Controller
         }
     }
 
-    public function getByChunk(int $qtd){
+    public function getByChunk(int $qtd)
+    {
         $qtd = $qtd > 1 ? $qtd : 1;
-        return array_chunk(Funcionario::orderBy('nome')
-            ->selectRaw('funcionario_uid, nome, foto, departamento_uid')
-            ->with(['departamento' => function ($query) {
-                $query->selectRaw('departamento_uid, nome_exibicao');
-            }])
-            ->where('elegivel', 1)
-            ->get()->toArray(), $qtd);
+        $funcionarios = Funcionario::with(['departamento' => function ($query) {
+            $query->selectRaw('departamento_uid, nome_exibicao');
+        }])
+            ->selectRaw('funcionario_uid, nome, departamento_uid')
+            ->where('elegivel', '=', true)
+            ->orderBy('nome')->get();
+        return array_chunk($funcionarios->toArray(), $qtd);
     }
 }
