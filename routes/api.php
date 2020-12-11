@@ -16,6 +16,7 @@ Route::group( ['prefix' => 'funcionarios'], function () {
     Route::get('chunk/{qtd}', 'FuncionarioController@getByChunk');
 });
 
-Route::group(['middleware' => ['auth'], 'prefix' => 'vencedores'], function () {
+Route::group([ 'prefix' => 'vencedores'], function () {
     Route::get('', 'ApiVencedorController@index');
+    Route::get('{sorteioUid}/visualizar', 'ApiVencedorController@show');
 });

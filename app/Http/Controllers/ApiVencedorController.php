@@ -12,4 +12,9 @@ class ApiVencedorController extends Controller
         return Brinde::vencedoresSorteio()->get();
     }
 
+    public function show($sorteioUid)
+    {
+        return Brinde::vencedoresSorteioShow($sorteioUid)->get();
+    }
+
 }

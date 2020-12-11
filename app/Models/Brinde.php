@@ -49,4 +49,12 @@ class Brinde extends Model
             ->join('sorteios', 'sorteios.sorteio_uid', 'brindes.sorteio_uid');
     }
 
+    public function scopeVencedoresSorteioShow($query, $sorteioUid)
+    {
+        return $query->select('brindes.nome AS brinde_nome', 'brindes.*', 'funcionarios.*', 'sorteios.*')
+            ->join('funcionarios', 'funcionarios.funcionario_uid', 'brindes.funcionario_uid')
+            ->join('sorteios', 'sorteios.sorteio_uid', 'brindes.sorteio_uid')
+            ->where('sorteios.sorteio_uid', $sorteioUid);
+    }
+
 }
