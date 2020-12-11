@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brinde;
+use App\Models\Funcionario;
 use App\Models\Sorteio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 
 class BrindeController extends Controller
 {
@@ -131,12 +133,29 @@ class BrindeController extends Controller
         }
     }
 
-    public function adicionarGanhador($uidBrinde, $uidFuncionario)
+    public function adicionarGanhador(string $brindeUid)
     {
-        $brinde = Brinde::find($uidBrinde);
-        $brinde->funcionario_uid = $uidFuncionario;
-        $brinde->save();
-        return $this->jsonResponse(true, 'Adicionado com sucesso!', [], 200);
+        $brinde = Brinde::find($brindeUid);
+        $funcionarios = Funcionario::where('elegivel', 1)->get();
+
+        if (count($funcionarios) > 0) {
+            $funcionario = $funcionarios->random();
+            $brinde->funcionario_uid = $funcionario->funcionario_uid;
+            $brinde->save();
+
+            return $this->jsonResponse(true, 'Dados retornados com sucesso.',
+                [
+                    "funcionario_uid" => $funcionario->funcionario_uid,
+                    "nome" => $funcionario->nome,
+                    "username" => $funcionario->username,
+                    "departamento_uid" => $funcionario->departamento_uid,
+                    "foto" => $funcionario->foto
+                ]
+            );
+        } else {
+            return $this->jsonResponse(false, 'Não existem funcionários elegíveis.');
+        }
+
     }
 
     /**
@@ -148,7 +167,7 @@ class BrindeController extends Controller
     public function cloneBrinde(string $brindeUid, int $brindes = 0)
     {
         if ($brindes < 1) {
-            return $this->jsonResponse(true, 'Nem brinde foi gerado.');
+            return $this->jsonResponse(true, 'Nenhum brinde foi gerado.');
         }
         $brinde = Brinde::find($brindeUid);
 
