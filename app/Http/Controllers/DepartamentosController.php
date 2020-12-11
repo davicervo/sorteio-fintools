@@ -108,14 +108,18 @@ class DepartamentosController extends Controller
     // ok
     public function destroy(string $uid)
     {
-        //if($uid !== 1) {
-            $result = $this->model->find($uid);
+        $result = $this->model->find($uid);
+        if(empty($result->funcionarios)) {
             $result->deleted_by = Auth::user()->name;
             $result->save();
             $result->delete();
-            return redirect()->to('/departamentos')->with('message', 'Registro removido com sucesso.');
-        //}
-        //return redirect()->to('/departamentos')->with('message', 'Registro não permitido.');
+            $action = 'message';
+            $message = 'Brinde removido com sucesso.';
+        } else {
+            $action = 'error';
+            $message = 'Registro não pode ser deletado pois já existe um funcioario vinculado.';
+        }
+        return redirect()->to('/departamentos')->with($action, $message);
     }
 
     public function show(string $uid)
