@@ -52,7 +52,7 @@
                             <img src="https://oliveiratrust.com.br/portal/img/logo.png" width="250">
                         </div>
                         <div class="d-flex flex-column justify-content-center align-items-center" style="height: 200px; background: #ad0000; color: white">
-                            <h4>Sorteio Id: [[ sorteioUid ]]</h4>
+                            <h4 style="font-size: 2.5rem;">[[ sorteioName ]]</h4>
                             <div style="width: 50%">
                                 <select class="form-control form-control-lg" v-model="brindeModel">
                                     <option v-for="(opt, index) in brindes" :key="index" :value="opt.value">[[ opt.text ]]</option>
@@ -125,6 +125,7 @@
             },
             data: () => ({
                 sorteioUid: "<?= request()->route()->parameter('uid') ?>",
+                sorteioName: null,
                 numFuncionariosPorExibicao: 32,
                 sleepTime: 100,
                 funcionarios: [],
@@ -185,6 +186,7 @@
                         const { data: { data } } = await axios.get(window.location.origin + '/api/brindes/' + this.sorteioUid)
                         if (Object.keys(data.brindes).length > 0) {
                             Object.keys(data.brindes).forEach((b, i) => {
+                                this.sorteioName = data.sorteio
                                 this.brindes.push({
                                     value: b,
                                     text: data.brindes[b]
