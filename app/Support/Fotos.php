@@ -36,7 +36,7 @@ class Fotos
      */
     public function __construct()
     {
-        $this->img_default = config('app.url') . config('picture.img_default');
+        $this->img_default = config('app.url') . '/' . config('picture.img_default');
         $this->path_img = config('picture.path_img');
         $this->user = config('picture.user');
         $this->password = config('picture.password');
