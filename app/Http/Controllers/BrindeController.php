@@ -15,7 +15,9 @@ class BrindeController extends Controller
     {
         $resource = Brinde::with('sorteio')->orderBy('nome');
         if ($request->get('search')) {
-            $resource->where('nome', 'like', '%' . trim($request->get('search')) . '%');
+            $resource->where('nome', 'like', '%' . trim($request->get('search')) . '%')->orWhereHas('sorteio', function ($query) use ($request) {
+                return $query->where('titulo', 'like', '%' . trim($request->get('search')) . '%');
+            });
         }
         $brindes = $resource->paginate();
         return view('brindes.index', compact('brindes'));
@@ -197,14 +199,12 @@ class BrindeController extends Controller
      */
     public function listForSelect(string $sorteio_uid)
     {
-        $sorteio = Sorteio::find($sorteio_uid);
         $brindes = Brinde::orderBy('nome')->where('sorteio_uid', $sorteio_uid)
             ->whereNull('funcionario_uid')->pluck('nome', 'brinde_uid')->unique()
             ->all();
 
         return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
-            'brindes' => $brindes,
-            'sorteio' => $sorteio->titulo ?? null
+            'brindes' => $brindes
         ]);
     }
 }
