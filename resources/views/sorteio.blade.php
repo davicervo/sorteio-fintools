@@ -331,7 +331,7 @@
             <div class="modal-content">
                 <div class="modal-body p-0">
                     <div class="d-flex justify-content-center align-items-center" style="height: 200px">
-                        <img src="https://oliveiratrust.com.br/portal/img/logo.png" width="250">
+                        <img src="<?= asset('img/logo.png') ?>" width="250">
                     </div>
                     <div class="d-flex flex-column justify-content-center align-items-center" style="height: 200px; background: #ad0000; color: white">
                         <h4 v-if="this.sorteio !== null">[[ this.sorteio.titulo ]]</h4>
@@ -374,7 +374,7 @@
                         <h4 class="brinde-texto">[[ brindeExibicao.text ]]</h4>
                     </div>
                     <div class="d-flex justify-content-center align-items-center" style="height: 200px">
-                        <img class="winner-logo" src="https://oliveiratrust.com.br/portal/img/logo.png" width="200">
+                        <img class="winner-logo" src="<?= asset('img/logo.png') ?>" width="200">
                     </div>
                     <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; background: #ad0000; color: white">
                         <button @click="draftNextAward()" class="btn btn-light btn-lg mt-3">Sortear próximo Prêmio</button>

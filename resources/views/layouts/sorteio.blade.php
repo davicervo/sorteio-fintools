@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="icon" type="image/png" href="<?= asset('favicon.png') ?>" />
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -18,7 +20,7 @@
 
     <style>
         .page {
-            background: url('https://new.oliveiratrust.com.br/wp-content/themes/OliveiraTrust_WP/assets/img/fundo-marca-dagua-ot.png');
+            background: url('<?= asset('img/fundo-marca-dagua-ot.png') ?>');
             background-repeat: no-repeat;
             background-position: center;
             height: 100vh;

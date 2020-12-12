@@ -14,7 +14,7 @@
     <div class="row h-100 justify-content-center align-items-center">
         <div class="col-12">
             <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
-                <img src="https://oliveiratrust.com.br/portal/img/logo.png" width="250">
+                <img src="<?= asset('img/logo.png') ?>" width="250">
             </div>
             <div class="row justify-content-center align-items-center">
                 @foreach($sorteios as $sorteio)
