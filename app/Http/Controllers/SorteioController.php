@@ -31,7 +31,7 @@ class SorteioController extends Controller
     {
         $data = Brinde::where('sorteio_uid', $sorteio_uid)->with(['funcionario'])
             ->whereNotNull("funcionario_uid")->get()->toArray();
-        $sorteio = Sorteio::find($sorteio_uid);
+        $sorteio = Sorteio::findOrFail($sorteio_uid);
 
         return view('vencedores', [
             'data' => $data,
