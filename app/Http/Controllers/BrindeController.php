@@ -7,18 +7,14 @@ use App\Models\Funcionario;
 use App\Models\Sorteio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BrindeController extends Controller
 {
-
-    public function __construct() {
-        $this->upload_path = 'imagens/brindes';
-    }
-
     public function index(Request $request)
     {
         $resource = Brinde::with('sorteio')->orderBy('nome');
-        if($request->get('search')){
+        if ($request->get('search')) {
             $resource->where('nome', 'like', '%' . trim($request->get('search')) . '%');
         }
         $brindes = $resource->paginate();
@@ -27,16 +23,16 @@ class BrindeController extends Controller
 
     public function create()
     {
-        $sorteios = Sorteio::select('sorteio_uid','titulo')->where('ativo', 1)->get();
+        $sorteios = Sorteio::select('sorteio_uid', 'titulo')->where('ativo', 1)->get();
         return view('brindes.create')->with(compact('sorteios'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-           'nome' => 'required',
-           'sorteio' => 'required',
-           'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:100'
+            'nome' => 'required',
+            'sorteio' => 'required',
+            'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:100'
         ]);
 
         $brinde = new Brinde;
@@ -46,12 +42,7 @@ class BrindeController extends Controller
             "created_by" => Auth::user()->name
         ]);
 
-        if ($request->has('imagem') ) {
-            $timestamp = time();
-            $nomeImagem = "{$timestamp}.{$request->imagem->extension()}";
-            $brinde->imagem = $nomeImagem;
-            $request->imagem->move(public_path($this->upload_path), $nomeImagem);
-        }
+        $brinde = $this->saveImage($request, $brinde);
 
         $brinde->sorteio()->associate($request->sorteio);
         $brinde->save();
@@ -93,15 +84,7 @@ class BrindeController extends Controller
         $brinde->descricao = $request->descricao;
         $brinde->updated_by = Auth::user()->name;
 
-        if ($request->has('imagem') ) {
-
-            $this->removeImage($brinde->imagem);
-
-            $timestamp = time();
-            $nomeImagem = "{$timestamp}.{$request->imagem->extension()}";
-            $brinde->imagem = $nomeImagem;
-            $request->imagem->move(public_path($this->upload_path), $nomeImagem);
-        }
+        $brinde = $this->saveImage($request, $brinde);
 
         $brinde->sorteio()->associate($request->sorteio);
         $brinde->save();
@@ -113,7 +96,7 @@ class BrindeController extends Controller
     {
         $brinde = Brinde::find($uid);
 
-        if( empty( $brinde->funcionario_uid ) ) {
+        if (empty($brinde->funcionario_uid)) {
             $brinde->deleted_by = Auth::user()->name;
             $this->removeImage($brinde->imagem);
             $brinde->imagem = null;
@@ -129,11 +112,28 @@ class BrindeController extends Controller
         return redirect()->to('/brindes')->with($action, $message);
     }
 
+    public function saveImage(Request $request, Brinde $brinde)
+    {
+        if ($request->has('imagem')) {
+
+            $this->removeImage($brinde->imagem);
+
+            $timestamp = time();
+            $nomeImagem = "{$timestamp}.{$request->imagem->extension()}";
+
+            Storage::disk('public_brindes')->put($nomeImagem, $request->file('imagem')->getContent());
+
+            $brinde->imagem = $nomeImagem;
+        }
+
+        return $brinde;
+    }
 
     public function removeImage($img)
     {
-        if(\File::exists(public_path("$this->upload_path/$img"))){
-            \File::delete(public_path("$this->upload_path/$img"));
+        $storage = Storage::disk('public_brindes');
+        if ($storage->exists($img)) {
+            $storage->delete($img);
         }
     }
 
@@ -147,7 +147,9 @@ class BrindeController extends Controller
             $brinde->funcionario_uid = $funcionario->funcionario_uid;
             $brinde->save();
 
-            return $this->jsonResponse(true, 'Dados retornados com sucesso.',
+            return $this->jsonResponse(
+                true,
+                'Dados retornados com sucesso.',
                 [
                     "funcionario_uid" => $funcionario->funcionario_uid,
                     "nome" => $funcionario->nome,
@@ -159,7 +161,6 @@ class BrindeController extends Controller
         } else {
             return $this->jsonResponse(false, 'Não existem funcionários elegíveis.');
         }
-
     }
 
     /**
@@ -198,7 +199,7 @@ class BrindeController extends Controller
     {
         $sorteio = Sorteio::find($sorteio_uid);
         $brindes = Brinde::orderBy('nome')->where('sorteio_uid', $sorteio_uid)
-            ->whereNull('funcionario_uid')->pluck('nome','brinde_uid')->unique()
+            ->whereNull('funcionario_uid')->pluck('nome', 'brinde_uid')->unique()
             ->all();
 
         return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
@@ -207,4 +208,3 @@ class BrindeController extends Controller
         ]);
     }
 }
-

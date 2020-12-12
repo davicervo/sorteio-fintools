@@ -6,7 +6,7 @@
         <div class="col-sm-8">
 
             @if(!empty($brinde->imagem))
-                <img class="img-fluid mx-auto d-block" src="{{ asset('imagens/brindes/'. $brinde->imagem) }}" title="{{ $brinde->nome }}"/>
+                <img class="img-fluid mx-auto d-block" src="{{ $brinde->imagem_url }}" title="{{ $brinde->nome }}"/>
             @endif
 
             <h1 class="text-center m-5"><a href="{{ route('brindes.show', $brinde->brinde_uid) }}">{{ $brinde->nome }}</a></h1>
