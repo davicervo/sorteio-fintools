@@ -153,15 +153,11 @@ class BrindeController extends Controller
                 true,
                 'Dados retornados com sucesso.',
                 [
-                    "funcionario_uid" => $funcionario->funcionario_uid,
-                    "nome" => $funcionario->nome,
-                    "username" => $funcionario->username,
-                    "departamento_uid" => $funcionario->departamento_uid,
-                    "foto" => $funcionario->foto
+                    "ganhador" => $funcionario
                 ]
             );
         } else {
-            return $this->jsonResponse(false, 'Não existem funcionários elegíveis.');
+            return $this->jsonResponse(false, 'Não existem funcionários elegíveis.', [], 500);
         }
     }
 

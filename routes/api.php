@@ -27,4 +27,6 @@ Route::group([ 'prefix' => 'vencedores'], function () {
 
 Route::group([ 'prefix' => 'brindes'], function () {
     Route::get('/{sorteio_uid}', 'BrindeController@listForSelect');
+    Route::get('ganhador/{brindeUid}', 'BrindeController@adicionarGanhador');
+
 });

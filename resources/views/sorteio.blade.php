@@ -331,6 +331,11 @@
                 margin-left: 80%
             }
         }
+
+        .form-control:disabled {
+            background-color: #CCCCCC;
+            opacity: 0.5;
+        }
     </style>
 </head>
 
@@ -357,7 +362,7 @@
                                 </select>
                                 <small class="form-text text-white">Selecione um Prêmio para ser sorteado.</small>
                             </div>
-                            <button :disabled="brindeModel === undefined" @click="selectItemGrid()" class="btn btn-light btn-lg mt-3">Começar</button>
+                            <button :disabled="brindeModel === undefined" @click="getGiftWinner()" class="btn btn-light btn-lg mt-3">Começar</button>
                         </div>
                     </div>
                 </div>
@@ -466,23 +471,19 @@
                         }
                     }, 1000)
                 },
-                brindeModel() {
-                    if (this.brindeModel !== undefined) {
-                        this.getGiftWinner()
-                        this.brindeExibicao = this.brindes.find(b => b.value === this.brindeModel)
-                    }
-                }
             },
             methods: {
-                async getGiftWinner() {
-                    try {
-                        const {
-                            data: {
-                                data
-                            }
-                        } = await axios.get(window.location.origin + '/brindes/ganhador/' + this.brindeModel)
-                        this.winner = data
-                    } catch (e) {}
+                getGiftWinner() {
+                    if (this.brindeModel !== undefined) {
+                        axios.get(window.location.origin + '/api/brindes/ganhador/' + this.brindeModel).then(response => {
+                                this.winner = response.data.data.ganhador
+                                this.brindeExibicao = this.brindes.find(b => b.value === this.brindeModel)
+                                this.selectItemGrid()
+                            })
+                            .catch(error => {
+                                alert(error.response.data.message)
+                            })
+                    }
                 },
                 async getGifts() {
                     try {
@@ -502,14 +503,14 @@
                         }
                     } catch (e) {}
                 },
-                async getDraw() {
+                getDraw() {
                     axios.get(window.location.origin + '/api/sorteio/' + this.sorteioUid).then(response => {
                             this.sorteio = response.data.data.sorteio
                         })
                         .catch(error => {
                             alert(error.response.data.message)
                             window.location.href = "<?= route('sorteios.lista') ?>"
-                        });
+                        })
                 },
                 async getEmployees() {
                     try {
