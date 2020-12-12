@@ -383,7 +383,7 @@
                         </div>
                         <div class="d-flex justify-content-center" style="margin:-40px 0; height: 200px">
                             <div style="width: 140px; position: absolute; background: white; padding: 20px; border-radius: 100px">
-                                <img width="100" style="border-radius: 100px;margin: -8px 0 0 -10px;" :src="winner.foto">
+                                <div :style="'border-radius: 100px;margin: -8px 0 0 -10px;width: 120px; height: 120px;background-color: #E9E9E9;background-image: url(' + winner.foto + '), url(<?= config('app.url') . '/' . config('picture.img_default')  ?>);background-position: center, center;background-repeat: no-repeat, no-repeat;background-size: cover, cover;'"></div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center align-items-center" style="height: 20px">
@@ -405,7 +405,7 @@
                 <div v-for="(func, indexFunc) in funcionarios" :key="func.funcionario_id" class="item-func" :ref="`func_${indexFunc}`">
                     <div class="card shadow-lg" style="height: 150px">
                         <div class="card-body d-flex justify-content-center align-items-center flex-column">
-                            <div :style="'border-radius: 50%;border:3px solid #D40000;width: 100px;height: 100px;background-color: #D40000;background-image: url(' + func.foto + '), url(<?= config('app.url') . '/' . config('picture.img_default')  ?>);background-position: center, center;background-repeat: no-repeat, no-repeat;background-size: cover, cover;'"></div>
+                            <div :style="'border-radius: 50%;border:3px solid #D40000;width: 100px;height: 100px;background-color: #E9E9E9;background-image: url(' + func.foto + '), url(<?= config('app.url') . '/' . config('picture.img_default')  ?>);background-position: center, center;background-repeat: no-repeat, no-repeat;background-size: cover, cover;'"></div>
                         </div>
                     </div>
                 </div>
@@ -478,7 +478,11 @@
                         axios.get(window.location.origin + '/api/brindes/ganhador/' + this.brindeModel).then(response => {
                                 this.winner = response.data.data.ganhador
                                 this.brindeExibicao = this.brindes.find(b => b.value === this.brindeModel)
-                                this.selectItemGrid()
+                                try {
+                                    this.selectItemGrid()
+                                } catch (e) {
+                                    console.log(e)
+                                }
                             })
                             .catch(error => {
                                 alert(error.response.data.message)
@@ -515,8 +519,8 @@
                 async getEmployees() {
                     try {
                         const data = await axios.get(window.location.origin + '/api/funcionarios/chunk/' + this.numFuncionariosPorExibicao + '/' + this.sorteioUid)
-                        if (data && Array.isArray(data.data)) {
-                            this.chunck = data.data
+                        if (data && Array.isArray(data.data.data.chunk)) {
+                            this.chunck = data.data.data.chunk
                             this.countChunks()
                         }
                     } catch (e) {}

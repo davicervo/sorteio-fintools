@@ -120,7 +120,12 @@ class SorteioController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            return $this->jsonResponse(false, 'Não foi possível encontrar o sorteio desejado.', [], 404);
+            return $this->jsonResponse(false, 'Não foi possível encontrar o sorteio desejado.', [
+                'exception' => [
+                    'message' => $e->getMessage(),
+                    'code' => $e->getCode()
+                ]
+            ], 404);
         }
     }
 

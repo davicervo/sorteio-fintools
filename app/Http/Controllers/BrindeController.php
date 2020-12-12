@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brinde;
 use App\Models\Funcionario;
 use App\Models\Sorteio;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -141,23 +142,30 @@ class BrindeController extends Controller
 
     public function adicionarGanhador(string $brindeUid)
     {
-        $brinde = Brinde::find($brindeUid);
-        $funcionarios = Funcionario::where('elegivel', 1)->get();
+        try {
+            $brinde = Brinde::find($brindeUid);
+            $funcionarios = Funcionario::where('elegivel', 1)->get();
 
-        if (count($funcionarios) > 0) {
-            $funcionario = $funcionarios->random();
-            $brinde->funcionario_uid = $funcionario->funcionario_uid;
-            $brinde->save();
+            if (count($funcionarios) > 0) {
+                $funcionario = $funcionarios->random();
+                $brinde->funcionario_uid = $funcionario->funcionario_uid;
+                $brinde->save();
 
-            return $this->jsonResponse(
-                true,
-                'Dados retornados com sucesso.',
-                [
-                    "ganhador" => $funcionario
-                ]
-            );
-        } else {
-            return $this->jsonResponse(false, 'Não existem funcionários elegíveis.', [], 500);
+                return $this->jsonResponse(
+                    true,
+                    'Dados retornados com sucesso.',
+                    [
+                        "ganhador" => $funcionario
+                    ]
+                );
+            }
+
+            throw new Exception('Não existem funcionários elegíveis.');
+        } catch (Exception $e) {
+            return $this->jsonResponse(false, 'Não foi possível definir um ganhador para o brinde especificado.', ['exception' => [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ]], 500);
         }
     }
 
@@ -169,23 +177,30 @@ class BrindeController extends Controller
      */
     public function cloneBrinde(string $brindeUid, int $brindes = 0)
     {
-        if ($brindes < 1) {
-            return $this->jsonResponse(true, 'Nenhum prêmio foi gerado.');
-        }
-        $brinde = Brinde::find($brindeUid);
+        try {
+            if ($brindes < 1) {
+                return $this->jsonResponse(true, 'Nenhum prêmio foi gerado.');
+            }
+            $brinde = Brinde::find($brindeUid);
 
-        //clonando os brindes
-        for ($i = 0; $i < $brindes; $i++) {
-            $clone = $brinde->replicate()->fill([
-                'funcionario_uid' => null
+            //clonando os brindes
+            for ($i = 0; $i < $brindes; $i++) {
+                $clone = $brinde->replicate()->fill([
+                    'funcionario_uid' => null
+                ]);
+                $clone->save();
+            }
+
+            return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
+                'brinde_uid' => $brindeUid,
+                'qtd' => $brindes
             ]);
-            $clone->save();
+        } catch (Exception $e) {
+            return $this->jsonResponse(false, 'Não foi possível clonar o brinde.', ['exception' => [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ]], 500);
         }
-
-        return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
-            'brinde_uid' => $brindeUid,
-            'qtd' => $brindes
-        ]);
     }
 
     /**
@@ -195,12 +210,19 @@ class BrindeController extends Controller
      */
     public function listForSelect(string $sorteio_uid)
     {
-        $brindes = Brinde::orderBy('nome')->where('sorteio_uid', $sorteio_uid)
-            ->whereNull('funcionario_uid')->pluck('nome', 'brinde_uid')->unique()
-            ->all();
+        try {
+            $brindes = Brinde::orderBy('nome')->where('sorteio_uid', $sorteio_uid)
+                ->whereNull('funcionario_uid')->pluck('nome', 'brinde_uid')->unique()
+                ->all();
 
-        return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
-            'brindes' => $brindes
-        ]);
+            return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
+                'brindes' => $brindes
+            ]);
+        } catch (Exception $e) {
+            return $this->jsonResponse(false, 'Não foi possível retornar a lista de brindes.', ['exception' => [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ]], 500);
+        }
     }
 }
