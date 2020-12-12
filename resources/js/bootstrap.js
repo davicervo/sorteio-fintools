@@ -11,7 +11,9 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
-} catch (e) {}
+
+    window.Swal = require('sweetalert2')
+} catch (e) { }
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
