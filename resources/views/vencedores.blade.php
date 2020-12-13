@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <div class="row no-gutters d-flex justify-content-center" style="height:100%;width:100%;position: relative;z-index: 10;" ref="gridCards">
         <div class="col-12">
-            <h2 class="card-title mt-5" style="color:white;text-align: center;font-family: monospace;font-size: 2.5rem;font-weight: 500; width: fit-content;margin: auto;background-color: #e60000;padding: 15px 20px;border-radius: 100px;box-shadow: 5px 5px 5px -2px #acacac;">{{$sorteio->titulo}} - Vencedores</h2>
+            <h2 class="card-title mt-5" style="color:white;text-align: center;font-family: monospace;font-size: 2.5rem;font-weight: 500; width: fit-content;margin: auto;background-color: #e60000;padding: 15px 35px;border-radius: 100px;box-shadow: 5px 5px 5px -2px #acacac;">{{$sorteio->titulo}} - Vencedores</h2>
         </div>
         <table class="table" style="margin: 50px 10% 10% 10%;width: 50%;background: linear-gradient(to right, #ff7171 , #ffd6d6);border-radius: 12px;text-align:center;">
             <thead>
@@ -19,7 +19,7 @@
                 @foreach($data as $item)
                 <tr>
                     <td>
-                        <div style="border-radius: 50%;object-fit: cover;border:3px solid #D40000;width: 70px;height: 70px;background-color: #E9E9E9;background-image: url({{$item->funcionario->foto}}), url(<?= config('app.url') . '/' . config('picture.img_default')  ?>);background-position: center, center;background-repeat: no-repeat, no-repeat;background-size: cover, cover;'"></div>
+                        <div style="border-radius: 50%;object-fit: cover;border:3px solid #D40000;width: 50px;height: 50px;background-color: #E9E9E9;background-image: url({{$item->funcionario->foto}}), url(<?= config('app.url') . '/' . config('picture.img_default')  ?>);background-position: center, center;background-repeat: no-repeat, no-repeat;background-size: cover, cover;'"></div>
                     </td>
                     <td>{{$item->funcionario->nome ?? '--'}}</td>
                     <td>{{$item->nome}}</td>
