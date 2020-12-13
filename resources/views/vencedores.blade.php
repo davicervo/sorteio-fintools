@@ -20,7 +20,7 @@
                 @foreach($data as $item)
                 <tr>
                     <td>
-                        <div style="border-radius: 50%;object-fit: cover;border:3px solid #D40000;width: 50px;height: 50px;background-color: #E9E9E9;background-image: url({{$item->funcionario->foto}}), url(<?= config('app.url') . '/' . config('picture.img_default')  ?>);background-position: center, center;background-repeat: no-repeat, no-repeat;background-size: cover, cover;'"></div>
+                        <div style="border-radius: 50%;object-fit: cover;border:3px solid #D40000;width: 50px;height: 50px;background-color: #E9E9E9;background-image: url({{$item->funcionario->foto}}), url(<?= config('app.url') . '/' . config('picture.img_default')  ?>);background-position: center, center;background-repeat: no-repeat, no-repeat;background-size: cover, cover;margin: auto;border-collapse: separate;"></div>
                     </td>
                     <td>{{$item->funcionario->nome ?? '--'}}</td>
                     <td>{{$item->nome}}</td>
@@ -52,7 +52,7 @@
 
         static get CONST() {
             return {
-                DURATION: 1000
+                DURATION: 10000
             };
         }
 
@@ -200,7 +200,7 @@
     }
 
     (() => {
-        const DURATION = 8000,
+        const DURATION = 15000,
             LENGTH = 800;
 
         new Confetti({
@@ -343,9 +343,10 @@
     thead,
     table {
         border: none;
+        font-weight: bolder;
+        font-size: large;
     }
 
-    table th,
     table td {
         border-top: 1px solid #ff7b81 !important;
         vertical-align: middle !important;
@@ -354,6 +355,12 @@
     th {
         border-top: none !important;
         border-bottom: none !important;
+    }
+    table  th:nth-child(1){
+        border-radius: 12px 0px 0px 0px;
+    }
+    table  th:nth-last-child(1){
+        border-radius: 0px 12px 0px 0px;
     }
 
     thead {
