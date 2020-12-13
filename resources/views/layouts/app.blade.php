@@ -23,7 +23,14 @@
     <script src="{{ asset('js/app.js') }}"></script>
 
     <style rel="stylesheet" type="text/css">
-        .menuActive {background: #999999;color: white !important;border-radius: 10px;}
+        .navbar{padding-top: 1.5rem;padding-bottom: 1.5rem;}
+        .navbar-nav li {margin-right: 5px;}
+        .menuActive, .navbar-nav li a:hover {background: #bd0000;color: #FFF !important;border-radius: 6px;font-weight: bold;}
+        .navbar-nav li a{font-size: 1.0rem;}
+        .dropdown-menu{margin: -6px 0 0 0;border: none;background: #bd0000;}
+        .dropdown-menu a{color: #FFF;margin-left: 6px !important;width: 91%;background: none;margin-bottom: 5px;}
+        .dropdown-menu a:hover{background: #ff1a1a !important;border: none !important;}
+
         .foto {margin-top: 10px;padding: 6px;border: 2px solid #A7A9AB;width: 150px;height: 150px;}
         .pagination {justify-content: center;margin-top: 20px;}
         .section-search {margin-bottom: 20px;}
@@ -54,7 +61,7 @@
                             <a class="nav-link @if(request()->routeIs('home')) menuActive @endif" href="{{ route('home') }}">{{ __('Home') }}</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @if(request()->routeIs('sorteios.index')||request()->routeIs('sorteios.create')) menuActive @endif" href="#" id="sorteiosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle @if(request()->routeIs('sorteios.index')||request()->routeIs('sorteios.create')) menuActive active @endif" href="#" id="sorteiosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ __('Sorteio') }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="sorteiosDropdown">
@@ -63,7 +70,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @if(request()->routeIs('brindes.index') || request()->routeIs('brindes.create')) menuActive @endif" href="#" id="brindesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle @if(request()->routeIs('brindes.index') || request()->routeIs('brindes.create')) menuActive active @endif" href="#" id="brindesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ __('Prêmios') }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="brindesDropdown">
@@ -72,7 +79,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @if(request()->routeIs('usuarios.index')||request()->routeIs('usuarios.create')) menuActive @endif" href="#" id="brindesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle @if(request()->routeIs('usuarios.index')||request()->routeIs('usuarios.create')) menuActive active @endif" href="#" id="brindesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Usuários
                             </a>
                             <div class="dropdown-menu" aria-labelledby="brindesDropdown">
@@ -81,7 +88,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @if(request()->routeIs('departamentos.index')||request()->routeIs('departamentos.create')) menuActive @endif" href="#" id="departamentosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle @if(request()->routeIs('departamentos.index')||request()->routeIs('departamentos.create')) menuActive active @endif" href="#" id="departamentosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Departamentos
                             </a>
                             <div class="dropdown-menu" aria-labelledby="departamentosDropdown">
@@ -90,7 +97,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @if(request()->routeIs('funcionarios.index')||request()->routeIs('funcionarios.create')) menuActive @endif" href="#" id="funcionariosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle @if(request()->routeIs('funcionarios.index')||request()->routeIs('funcionarios.create')) menuActive active @endif" href="#" id="funcionariosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Funcionarios
                             </a>
                             <div class="dropdown-menu" aria-labelledby="funcionariosDropdown">
@@ -150,6 +157,21 @@
         $(document).ready(function() {
             $('.showload').on('click', function() {
                 $(this).html('<i class="fa fa-spinner fa-pulse"></i>');
+            });
+            $(".dropdown").hover(function(){
+                $(this).addClass('show');
+                let navLink = $(this).find('.nav-link');
+                if(!navLink.hasClass('active')) {
+                    navLink.attr('aria-expanded', 'true').addClass('menuActive');
+                }
+                $(this).find('.dropdown-menu').addClass('show');
+            }).mouseleave(function(){
+                $(this).toggleClass('show');
+                let navLink = $(this).find('.nav-link');
+                if(!navLink.hasClass('active')) {
+                    navLink.attr('aria-expanded', 'false').removeClass('menuActive');
+                }
+                $(this).find('.dropdown-menu').toggleClass('show');
             });
         });
     </script>
