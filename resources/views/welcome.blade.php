@@ -1,14 +1,5 @@
 @extends('layouts.sorteio')
 
-@section('css')
-<style>
-    html,
-    body {
-        height: 100vh;
-    }
-</style>
-@endsection
-
 @section('content')
 <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">

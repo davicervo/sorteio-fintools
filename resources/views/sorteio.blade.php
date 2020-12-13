@@ -340,13 +340,16 @@
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </h4>
-                        <div style="width: 50%">
-                            <select class="form-control form-control-lg" v-model="brindeModel" :disabled="brindes.length < 1">
-                                <option v-for="(opt, index) in brindes" :key="index" :value="opt.value">[[ opt.text ]]</option>
-                            </select>
-                            <small class="form-text text-white">Selecione um Prêmio para ser sorteado.</small>
+                        <div class="w-100 d-flex flex-column justify-content-center align-items-center" v-if="mostraBtnVencedores==false">
+                            <div class="w-50">
+                                <select class="form-control form-control-lg" v-model="brindeModel" :disabled="brindes.length < 1">
+                                    <option v-for="(opt, index) in brindes" :key="index" :value="opt.value">[[ opt.text ]]</option>
+                                </select>
+                                <small class="form-text text-white">Selecione um Prêmio para ser sorteado.</small>
+                            </div>
+                            <button :disabled="brindeModel === undefined" @click="getGiftWinner()" class="btn btn-light btn-lg mt-3">Começar</button>
                         </div>
-                        <button :disabled="brindeModel === undefined" @click="getGiftWinner()" class="btn btn-light btn-lg mt-3">Começar</button>
+                        <button v-if="mostraBtnVencedores==true" @click="goToWinnersPage()" class="btn btn-light btn-lg mt-3">Mostrar Vencedores</button>
                     </div>
                 </div>
             </div>
@@ -429,7 +432,8 @@
             brindeModel: undefined,
             brindeExibicao: {},
             winner: {},
-            sorteio: null
+            sorteio: null,
+            mostraBtnVencedores: false
         }),
         watch: {
             exibeVencedor() {
@@ -476,6 +480,8 @@
                                 text: data.brindes[b]
                             })
                         })
+                    } else {
+                        this.mostraBtnVencedores = true
                     }
                 } catch (e) {}
             },
@@ -575,6 +581,9 @@
             },
             draftNextAward() {
                 window.location.reload();
+            },
+            goToWinnersPage() {
+                window.location.href = window.location.origin + '/sorteio/' + this.sorteioUid + '/vencedores';
             }
         }
     })

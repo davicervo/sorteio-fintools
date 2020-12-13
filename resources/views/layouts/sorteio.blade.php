@@ -27,6 +27,11 @@
             background-attachment: fixed;
             height: 100vh;
         }
+
+        html,
+        body {
+            height: 100vh;
+        }
     </style>
 
     @yield('css')
