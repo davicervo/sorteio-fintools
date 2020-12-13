@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Funcionario;
 use App\Models\Departamento;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -162,21 +163,37 @@ class FuncionarioController extends Controller
      */
     public function getByChunk(int $qtd, string $sorteioUid)
     {
-        $funcionarios = new Funcionario();
-        $qtd = $qtd > 1 ? $qtd : 1;
+        try {
+            $funcionarios = new Funcionario();
+            $qtd = $qtd > 1 ? $qtd : 1;
 
-        $result = $funcionarios->with(['departamento' => function ($query) {
-            $query->selectRaw('departamento_uid, nome_exibicao');
-        }])
-            ->whereNotIn('funcionario_uid', function($query) use($funcionarios, $sorteioUid){
-            $query->select('funcionario_uid')
-                ->from($funcionarios->brinde()->getRelated()->getTable())
-                ->where('sorteio_uid', $sorteioUid)
-                ->whereRaw('funcionario_uid is not null');
-        })
-        ->selectRaw('funcionario_uid, nome, departamento_uid, username')
-        ->where('elegivel', '=', true)
-        ->orderBy('nome')->get();
-        return array_chunk($result->toArray(), $qtd);
+            $result = $funcionarios->with(['departamento' => function ($query) {
+                $query->selectRaw('departamento_uid, nome_exibicao');
+            }])
+                ->whereNotIn('funcionario_uid', function ($query) use ($funcionarios, $sorteioUid) {
+                    $query->select('funcionario_uid')
+                        ->from($funcionarios->brinde()->getRelated()->getTable())
+                        ->where('sorteio_uid', $sorteioUid)
+                        ->whereRaw('funcionario_uid is not null');
+                })
+                ->selectRaw('funcionario_uid, nome, departamento_uid, username')
+                ->where('elegivel', '=', true)
+                ->orderBy('nome')->get();
+            $chunk = array_chunk($result->shuffle()->toArray(), $qtd);
+            return $this->jsonResponse(
+                true,
+                'Dados retornados com sucesso.',
+                [
+                    "chunk" => $chunk
+                ]
+            );
+        } catch (Exception $e) {
+            return $this->jsonResponse(false, 'Não foi possível retornar o chunk de funcionários.', [
+                'exception' => [
+                    'message' => $e->getMessage(),
+                    'code' => $e->getCode()
+                ]
+            ], 500);
+        }
     }
 }

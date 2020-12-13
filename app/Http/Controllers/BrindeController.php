@@ -5,38 +5,59 @@ namespace App\Http\Controllers;
 use App\Models\Brinde;
 use App\Models\Funcionario;
 use App\Models\Sorteio;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BrindeController extends Controller
 {
-
-    public function __construct() {
-        $this->upload_path = 'imagens/brindes';
-    }
-
     public function index(Request $request)
     {
         $resource = Brinde::with('sorteio')->orderBy('nome');
-        if($request->get('search')){
-            $resource->where('nome', 'like', '%' . trim($request->get('search')) . '%');
+        if ($request->get('search')) {
+            $resource->where('nome', 'like', '%' . trim($request->get('search')) . '%')
+                    ->orWhereHas('sorteio', function ($query) use ($request) {
+                        return $query->where('titulo', 'like', '%' . trim($request->get('search')) . '%');
+                    });
         }
+        $noWinners = $request->get('no_winners');
+        if(!empty($noWinners)){$resource->whereNull('funcionario_uid');}
+
+        $noPicture = $request->get('no_picture');
+        if(!empty($noPicture)){$resource->whereNull('image');}
+
         $brindes = $resource->paginate();
-        return view('brindes.index', compact('brindes'));
+        return view('brindes.index', [
+            'brindes' => $brindes,
+            'camposExtrasBusca' => [
+                [
+                    'label' => 'Não sorteado',
+                    'name' => 'no_winners',
+                    'type' => 'radio',
+                    'col' => 2,
+                    'defaultValue' => empty($noWinners) ? 0 : 1,
+                    'options' => [
+                        ['label' => 'Sim', 'value' => 1],
+                        ['label' => 'Não', 'value' => 0]
+                    ]
+                ]
+            ]
+        ]);
     }
 
     public function create()
     {
-        $sorteios = Sorteio::select('sorteio_uid','titulo')->where('ativo', 1)->get();
+        $sorteios = Sorteio::select('sorteio_uid', 'titulo')->where('ativo', 1)->get();
         return view('brindes.create')->with(compact('sorteios'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-           'nome' => 'required',
-           'sorteio' => 'required',
-           'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:100'
+            'nome' => 'required',
+            'sorteio' => 'required',
+            'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:100'
         ]);
 
         $brinde = new Brinde;
@@ -46,12 +67,7 @@ class BrindeController extends Controller
             "created_by" => Auth::user()->name
         ]);
 
-        if ($request->has('imagem') ) {
-            $timestamp = time();
-            $nomeImagem = "{$timestamp}.{$request->imagem->extension()}";
-            $brinde->imagem = $nomeImagem;
-            $request->imagem->move(public_path($this->upload_path), $nomeImagem);
-        }
+        $brinde = $this->saveImage($request, $brinde);
 
         $brinde->sorteio()->associate($request->sorteio);
         $brinde->save();
@@ -93,15 +109,7 @@ class BrindeController extends Controller
         $brinde->descricao = $request->descricao;
         $brinde->updated_by = Auth::user()->name;
 
-        if ($request->has('imagem') ) {
-
-            $this->removeImage($brinde->imagem);
-
-            $timestamp = time();
-            $nomeImagem = "{$timestamp}.{$request->imagem->extension()}";
-            $brinde->imagem = $nomeImagem;
-            $request->imagem->move(public_path($this->upload_path), $nomeImagem);
-        }
+        $brinde = $this->saveImage($request, $brinde);
 
         $brinde->sorteio()->associate($request->sorteio);
         $brinde->save();
@@ -113,7 +121,7 @@ class BrindeController extends Controller
     {
         $brinde = Brinde::find($uid);
 
-        if( empty( $brinde->funcionario_uid ) ) {
+        if (empty($brinde->funcionario_uid)) {
             $brinde->deleted_by = Auth::user()->name;
             $this->removeImage($brinde->imagem);
             $brinde->imagem = null;
@@ -129,37 +137,58 @@ class BrindeController extends Controller
         return redirect()->to('/brindes')->with($action, $message);
     }
 
+    public function saveImage(Request $request, Brinde $brinde)
+    {
+        if ($request->has('imagem')) {
+
+            $this->removeImage($brinde->imagem);
+
+            $timestamp = time();
+            $nomeImagem = "{$timestamp}.{$request->imagem->extension()}";
+
+            Storage::disk('public_brindes')->put($nomeImagem, $request->file('imagem')->getContent());
+
+            $brinde->imagem = $nomeImagem;
+        }
+
+        return $brinde;
+    }
 
     public function removeImage($img)
     {
-        if(\File::exists(public_path("$this->upload_path/$img"))){
-            \File::delete(public_path("$this->upload_path/$img"));
+        $storage = Storage::disk('public_brindes');
+        if ($storage->exists($img)) {
+            $storage->delete($img);
         }
     }
 
     public function adicionarGanhador(string $brindeUid)
     {
-        $brinde = Brinde::find($brindeUid);
-        $funcionarios = Funcionario::where('elegivel', 1)->get();
+        try {
+            $brinde = Brinde::find($brindeUid);
+            $funcionarios = Funcionario::where('elegivel', 1)->get();
 
-        if (count($funcionarios) > 0) {
-            $funcionario = $funcionarios->random();
-            $brinde->funcionario_uid = $funcionario->funcionario_uid;
-            $brinde->save();
+            if (count($funcionarios) > 0) {
+                $funcionario = $funcionarios->random();
+                $brinde->funcionario_uid = $funcionario->funcionario_uid;
+                $brinde->save();
 
-            return $this->jsonResponse(true, 'Dados retornados com sucesso.',
-                [
-                    "funcionario_uid" => $funcionario->funcionario_uid,
-                    "nome" => $funcionario->nome,
-                    "username" => $funcionario->username,
-                    "departamento_uid" => $funcionario->departamento_uid,
-                    "foto" => $funcionario->foto
-                ]
-            );
-        } else {
-            return $this->jsonResponse(false, 'Não existem funcionários elegíveis.');
+                return $this->jsonResponse(
+                    true,
+                    'Dados retornados com sucesso.',
+                    [
+                        "ganhador" => $funcionario
+                    ]
+                );
+            }
+
+            throw new Exception('Não existem funcionários elegíveis.');
+        } catch (Exception $e) {
+            return $this->jsonResponse(false, 'Não foi possível definir um ganhador para o brinde especificado.', ['exception' => [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ]], 500);
         }
-
     }
 
     /**
@@ -170,23 +199,30 @@ class BrindeController extends Controller
      */
     public function cloneBrinde(string $brindeUid, int $brindes = 0)
     {
-        if ($brindes < 1) {
-            return $this->jsonResponse(true, 'Nenhum prêmio foi gerado.');
-        }
-        $brinde = Brinde::find($brindeUid);
+        try {
+            if ($brindes < 1) {
+                return $this->jsonResponse(true, 'Nenhum prêmio foi gerado.');
+            }
+            $brinde = Brinde::find($brindeUid);
 
-        //clonando os brindes
-        for ($i = 0; $i < $brindes; $i++) {
-            $clone = $brinde->replicate()->fill([
-                'funcionario_uid' => null
+            //clonando os brindes
+            for ($i = 0; $i < $brindes; $i++) {
+                $clone = $brinde->replicate()->fill([
+                    'funcionario_uid' => null
+                ]);
+                $clone->save();
+            }
+
+            return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
+                'brinde_uid' => $brindeUid,
+                'qtd' => $brindes
             ]);
-            $clone->save();
+        } catch (Exception $e) {
+            return $this->jsonResponse(false, 'Não foi possível clonar o brinde.', ['exception' => [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ]], 500);
         }
-
-        return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
-            'brinde_uid' => $brindeUid,
-            'qtd' => $brindes
-        ]);
     }
 
     /**
@@ -196,15 +232,19 @@ class BrindeController extends Controller
      */
     public function listForSelect(string $sorteio_uid)
     {
-        $sorteio = Sorteio::find($sorteio_uid);
-        $brindes = Brinde::orderBy('nome')->where('sorteio_uid', $sorteio_uid)
-            ->whereNull('funcionario_uid')->pluck('nome','brinde_uid')->unique()
-            ->all();
+        try {
+            $brindes = Brinde::orderBy('nome')->where('sorteio_uid', $sorteio_uid)
+                ->whereNull('funcionario_uid')->pluck('nome', 'brinde_uid')->unique()
+                ->all();
 
-        return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
-            'brindes' => $brindes,
-            'sorteio' => $sorteio->titulo ?? null
-        ]);
+            return $this->jsonResponse(true, 'Dados retornados com sucesso.', [
+                'brindes' => $brindes
+            ]);
+        } catch (Exception $e) {
+            return $this->jsonResponse(false, 'Não foi possível retornar a lista de brindes.', ['exception' => [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ]], 500);
+        }
     }
 }
-

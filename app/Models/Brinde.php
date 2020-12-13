@@ -6,7 +6,6 @@ use App\Models\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 class Brinde extends Model
 {
     use UuidTrait;
@@ -27,6 +26,21 @@ class Brinde extends Model
         'updated_by',
         'deleted_by'
     ];
+
+    protected $appends = ['imagem_url'];
+
+    /**
+     * Recupera o atributo url da imagem
+     *
+     * @return string
+     */
+    public function getImagemUrlAttribute()
+    {
+        if (!is_null($this->imagem)) {
+            return url("img/brindes/{$this->imagem}");
+        }
+        return null;
+    }
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
@@ -56,5 +70,4 @@ class Brinde extends Model
             ->join('sorteios', 'sorteios.sorteio_uid', 'brindes.sorteio_uid')
             ->where('sorteios.sorteio_uid', $sorteioUid);
     }
-
 }

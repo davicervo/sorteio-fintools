@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SorteioRequest;
 use App\Models\Brinde;
 use App\Models\Sorteio;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,8 +31,8 @@ class SorteioController extends Controller
     public function vencedores(string $sorteio_uid)
     {
         $data = Brinde::where('sorteio_uid', $sorteio_uid)->with(['funcionario'])
-            ->whereNotNull("funcionario_uid")->get()->toArray();
-        $sorteio = Sorteio::find($sorteio_uid);
+            ->whereNotNull("funcionario_uid")->paginate(5);
+        $sorteio = Sorteio::findOrFail($sorteio_uid);
 
         return view('vencedores', [
             'data' => $data,
@@ -109,7 +110,23 @@ class SorteioController extends Controller
 
     public function find($uid)
     {
-        return Sorteio::find($uid);
+        try {
+            $sorteio = Sorteio::findOrFail($uid);
+            return $this->jsonResponse(
+                true,
+                'Dados retornados com sucesso.',
+                [
+                    "sorteio" => $sorteio
+                ]
+            );
+        } catch (Exception $e) {
+            return $this->jsonResponse(false, 'Não foi possível encontrar o sorteio desejado.', [
+                'exception' => [
+                    'message' => $e->getMessage(),
+                    'code' => $e->getCode()
+                ]
+            ], 404);
+        }
     }
 
     /**

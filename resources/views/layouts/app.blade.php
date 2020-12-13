@@ -5,32 +5,40 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="icon" type="image/png" href="<?= asset('favicon.png') ?>" />
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- sweetalert2 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.12.4/sweetalert2.min.css" integrity="sha512-zEmgzrofH7rifnTAgSqWXGWF8rux/+gbtEQ1OJYYW57J1eEQDjppSv7oByOdvSJfo0H39LxmCyQTLOYFOa8wig==" crossorigin="anonymous" />
-
-    <!-- font-awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+
     <style rel="stylesheet" type="text/css">
-        .menuActive{background: #999999;color: white !important;border-radius: 10px;}
-        .foto{margin-top: 10px;padding: 6px;border: 2px solid #A7A9AB;width: 150px;height: 150px;}
+        .navbar{padding-top: 1.5rem;padding-bottom: 1.5rem;}
+        .navbar-nav li {margin-right: 5px;}
+        .menuActive, .navbar-nav li a:hover {background: #bd0000;color: #FFF !important;border-radius: 6px;font-weight: bold;}
+        .navbar-nav li a{font-size: 1.0rem;}
+        .dropdown-menu{margin: -6px 0 0 0;border: none;background: #bd0000;}
+        .dropdown-menu a{color: #FFF;margin-left: 6px !important;width: 91%;background: none;margin-bottom: 5px;}
+        .dropdown-menu a:hover{background: #ff1a1a !important;border: none !important;}
+
+        .foto {margin-top: 10px;padding: 6px;border: 2px solid #A7A9AB;width: 150px;height: 150px;}
         .pagination {justify-content: center;margin-top: 20px;}
-        .section-search{margin-bottom: 20px;}
+        .section-search {margin-bottom: 20px;}
+        .section-search form {padding: 10px 10px 10px 10px;background: #f2f2f2;}
+        .section-search form label.label {margin:0;font-weight:600;cursor: pointer;}
+        .section-search form input[type=text] {height: 45px;}
+        .section-search div.btn {position: absolute;right: 30px;top: 7px;}
+        .cursor-pointer {cursor: pointer;}
     </style>
 </head>
 
@@ -44,20 +52,25 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                @php
-                    $routerCurrentName = \Route::current()->getName();
-                @endphp
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
 
                     @if(auth()->check())
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link @if(strpos($routerCurrentName, 'home') !== false) menuActive @endif" href="{{ route('home') }}">{{ __('Home') }}</a>
+                            <a class="nav-link @if(request()->routeIs('home')) menuActive @endif" href="{{ route('home') }}">{{ __('Home') }}</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @if(strpos($routerCurrentName, 'brindes.') !== false) menuActive @endif" href="#" id="brindesDropdown"
-                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle @if(request()->routeIs('sorteios.index')||request()->routeIs('sorteios.create')) menuActive active @endif" href="#" id="sorteiosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ __('Sorteio') }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="sorteiosDropdown">
+                                <a class="dropdown-item" href="{{ route('sorteios.index') }}">Listar</a>
+                                <a class="dropdown-item" href="{{ route('sorteios.create') }}">Criar</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @if(request()->routeIs('brindes.index') || request()->routeIs('brindes.create')) menuActive active @endif" href="#" id="brindesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ __('Prêmios') }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="brindesDropdown">
@@ -66,8 +79,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @if(strpos($routerCurrentName, 'usuarios.') !== false) menuActive @endif" href="#" id="brindesDropdown"
-                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle @if(request()->routeIs('usuarios.index')||request()->routeIs('usuarios.create')) menuActive active @endif" href="#" id="brindesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Usuários
                             </a>
                             <div class="dropdown-menu" aria-labelledby="brindesDropdown">
@@ -76,8 +88,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @if(strpos($routerCurrentName, 'departamentos.') !== false) menuActive @endif" href="#" id="departamentosDropdown"
-                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle @if(request()->routeIs('departamentos.index')||request()->routeIs('departamentos.create')) menuActive active @endif" href="#" id="departamentosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Departamentos
                             </a>
                             <div class="dropdown-menu" aria-labelledby="departamentosDropdown">
@@ -86,8 +97,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @if(strpos($routerCurrentName, 'funcionarios.') !== false) menuActive @endif" href="#" id="funcionariosDropdown"
-                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle @if(request()->routeIs('funcionarios.index')||request()->routeIs('funcionarios.create')) menuActive active @endif" href="#" id="funcionariosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Funcionarios
                             </a>
                             <div class="dropdown-menu" aria-labelledby="funcionariosDropdown">
@@ -95,19 +105,8 @@
                                 <a class="dropdown-item" href="{{ route('funcionarios.create') }}">Criar</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @if(strpos($routerCurrentName, 'sorteios.') !== false) menuActive @endif" href="#" id="sorteiosDropdown"
-                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ __('Sorteio') }}
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="sorteiosDropdown">
-                                <a class="dropdown-item" href="{{ route('sorteios.index') }}">Listar</a>
-                                <a class="dropdown-item" href="{{ route('sorteios.create') }}">Criar</a>
-                            </div>
-                        </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(strpos($routerCurrentName, 'vencedor.') !== false) menuActive @endif" id="vencedores"
-                               role="button"  aria-haspopup="true" aria-expanded="false" href="{{ route('vencedor.index') }}">
+                            <a class="nav-link @if(request()->routeIs('vencedor.index')) menuActive @endif" id="vencedores" role="button" aria-haspopup="true" aria-expanded="false" href="{{ route('vencedor.index') }}">
                                 Vencedores
                             </a>
                         </li>
@@ -153,13 +152,26 @@
             @yield('content')
         </main>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.12.4/sweetalert2.all.min.js" integrity="sha512-MeYKISaW+aIBSw7vihX/0BKM2oN6poJwgxQGvq7hzXTBrEPVT1fv/o5f8n1ZYKJCt7XYUOgfZd4PaCcXQtRZ4w==" crossorigin="anonymous"></script>
     @yield('js')
     <script>
-        $(document).ready(function () {
-            $('.showload').on('click', function(){
-                $(this).html('<i class="fas fa-spinner fa-pulse"></i>');
+        $(document).ready(function() {
+            $('.showload').on('click', function() {
+                $(this).html('<i class="fa fa-spinner fa-pulse"></i>');
+            });
+            $(".dropdown").hover(function(){
+                $(this).addClass('show');
+                let navLink = $(this).find('.nav-link');
+                if(!navLink.hasClass('active')) {
+                    navLink.attr('aria-expanded', 'true').addClass('menuActive');
+                }
+                $(this).find('.dropdown-menu').addClass('show');
+            }).mouseleave(function(){
+                $(this).toggleClass('show');
+                let navLink = $(this).find('.nav-link');
+                if(!navLink.hasClass('active')) {
+                    navLink.attr('aria-expanded', 'false').removeClass('menuActive');
+                }
+                $(this).find('.dropdown-menu').toggleClass('show');
             });
         });
     </script>
