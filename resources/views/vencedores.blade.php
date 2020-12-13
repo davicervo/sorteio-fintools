@@ -1,6 +1,7 @@
 @extends('layouts.sorteio')
 
 @section('content')
+    <div></div>
 <canvas id="confeti" width="100%" height="100%" style="position:absolute;"></canvas>
 <div class="container-fluid">
     <div class="row no-gutters d-flex justify-content-center" style="height:100%;width:100%;position: relative;z-index: 10;" ref="gridCards">
@@ -36,6 +37,7 @@
 
 @section('js')
 <script>
+
     class Progress {
         constructor(param = {}) {
             this.timestamp = null;
@@ -363,5 +365,18 @@
         width: 50px;
         height: 50px;
     }
+    .page nav{
+        position: absolute;
+        top: 600px;
+    }
+    .page-link {
+        color: #d40000 !important;
+    }
+    .page-item.active .page-link {
+        color: white !important;
+        background-color: #d40000 !important;
+        border-color: #d40000 !important;
+    }
+
 </style>
 @endsection

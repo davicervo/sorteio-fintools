@@ -2,6 +2,11 @@
 
 @section('css')
 <style>
+
+    .modal-body .btn:not(:disabled):not(.disabled) {
+        box-shadow: 5px 5px 5px 2px #690101;
+    }
+
     .item-func {
         margin: 10px;
         width: 160px;
@@ -333,15 +338,15 @@
                     <div class="d-flex justify-content-center align-items-center" style="height: 200px">
                         <img src="<?= asset('img/logo.png') ?>" width="250">
                     </div>
-                    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 200px; background: #ad0000; color: white">
-                        <h4 v-if="this.sorteio !== null">[[ this.sorteio.titulo ]]</h4>
-                        <h4 v-if="this.sorteio === null">
+                    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 250px; background: #ad0000; color: white">
+                        <h4 v-if="this.sorteio !== null" style="padding-bottom: 20px">[[ this.sorteio.titulo ]]</h4>
+                        <h4 v-if="this.sorteio === null" style="padding-bottom: 20px">
                             <div class="spinner-border text-light" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </h4>
                         <div class="w-100 d-flex flex-column justify-content-center align-items-center" v-if="mostraBtnVencedores==false">
-                            <div class="w-50">
+                            <div class="w-50" style="padding-bottom: 10px">
                                 <select class="form-control form-control-lg" v-model="brindeModel" :disabled="brindes.length < 1">
                                     <option v-for="(opt, index) in brindes" :key="index" :value="opt.value">[[ opt.text ]]</option>
                                 </select>
@@ -380,7 +385,7 @@
                         <img class="winner-logo" src="<?= asset('img/logo.png') ?>" width="200">
                     </div>
                     <div class="d-flex flex-column justify-content-center align-items-center" style="height: 150px; background: #ad0000; color: white">
-                        <button @click="draftNextAward()" class="btn btn-light btn-lg mt-3">Sortear próximo Prêmio</button>
+                        <button @click="draftNextAward()" class="btn btn-light btn-lg" style="box-shadow: 5px 5px 5px 3px #730000;">Sortear Próximo Prêmio</button>
                     </div>
                 </div>
             </div>
@@ -409,6 +414,7 @@
 
 @section('js')
 <script type="text/javascript">
+
     new Vue({
         el: '#sorteio',
         delimiters: ['[[', ']]'],
@@ -527,7 +533,7 @@
 
                     // Passa no loop de acordo com o tempo definido em sleepTime
                     this.loop = setInterval(() => {
-                        // Define variavel pra guardar funcionario com card selecionado da vez 
+                        // Define variavel pra guardar funcionario com card selecionado da vez
                         let indexFuncAtual = iterator[indexIterator]
 
                         // Se funcionarioAtual for diferente de null tira ele da selecao
