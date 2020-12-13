@@ -23,6 +23,8 @@
             background: url('<?= asset('img/fundo-marca-dagua-ot.png') ?>');
             background-repeat: no-repeat;
             background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
             height: 100vh;
         }
     </style>

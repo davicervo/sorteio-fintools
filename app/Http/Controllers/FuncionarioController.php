@@ -179,7 +179,7 @@ class FuncionarioController extends Controller
                 ->selectRaw('funcionario_uid, nome, departamento_uid, username')
                 ->where('elegivel', '=', true)
                 ->orderBy('nome')->get();
-            $chunk = array_chunk($result->toArray(), $qtd);
+            $chunk = array_chunk($result->shuffle()->toArray(), $qtd);
             return $this->jsonResponse(
                 true,
                 'Dados retornados com sucesso.',

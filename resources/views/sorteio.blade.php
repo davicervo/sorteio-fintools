@@ -384,12 +384,18 @@
         </div>
     </div>
     <!-- modal selecionado -->
-    <div class="container-fluid page">
-        <div class="row no-gutters d-flex justify-content-center" ref="gridCards">
-            <div v-for="(func, indexFunc) in funcionarios" :key="func.funcionario_id" class="item-func" :ref="`func_${indexFunc}`">
-                <div class="card shadow-lg" style="height: 150px">
-                    <div class="card-body d-flex justify-content-center align-items-center flex-column">
-                        <div :style="'border-radius: 50%;border:3px solid #D40000;width: 100px;height: 100px;background-color: #E9E9E9;background-image: url(' + func.foto + '), url(<?= config('app.url') . '/' . config('picture.img_default')  ?>);background-position: center, center;background-repeat: no-repeat, no-repeat;background-size: cover, cover;'"></div>
+    <div class="container-fluid d-none" id="funcs_carousel_div">
+        <div id="sorteioFuncionariosOt" class="carousel slide" data-ride="carousel" data-interval="0">
+            <div class="carousel-inner">
+                <div :class="'carousel-item' + (indexChunck==0?' active':'')" v-for="(funcionarios,indexChunck) in chunck" :key="indexChunck">
+                    <div class="row no-gutters d-flex justify-content-center" :ref="`gridCards_${indexChunck}`">
+                        <div v-for="(func, indexFunc) in funcionarios" :key="func.funcionario_id" class="item-func" :ref="`func_${indexChunck}_${indexFunc}`">
+                            <div class="card shadow-sm" style="height: 150px">
+                                <div class="card-body d-flex justify-content-center align-items-center flex-column">
+                                    <div :style="'border-radius: 50%;border:3px solid #D40000;width: 100px;height: 100px;background-color: #E9E9E9;background-image: url(' + func.foto + '), url(<?= config('app.url') . '/' . config('picture.img_default')  ?>);background-position: center, center;background-repeat: no-repeat, no-repeat;background-size: cover, cover;'"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -415,15 +421,10 @@
             sorteioUid: "<?= request()->route()->parameter('uid') ?>",
             numFuncionariosPorExibicao: 32,
             sleepTime: 100,
-            funcionarios: [],
-            chunckIndex: 0,
             loop: null,
-            funcionariosTotal: 0,
-            funcionariosLeitura: 0,
             chunck: [],
-            funcionarioSelecionado: {},
+            chunckIndex: 0,
             exibeVencedor: false,
-            lastIndexSelected: undefined,
             brindes: [],
             brindeModel: undefined,
             brindeExibicao: {},
@@ -431,27 +432,19 @@
             sorteio: null
         }),
         watch: {
-            funcionarioSelecionado() {
-                if (Object.keys(this.funcionarioSelecionado).length > 0) {
-                    $('#modalSelecionado').modal('show')
-                }
-            },
-            funcionariosLeitura() {
-                if (this.funcionariosLeitura === this.funcionariosTotal) {
-                    this.exibeVencedor = true
-                }
-            },
             exibeVencedor() {
                 setTimeout(() => {
-                    clearInterval(this.loop);
+                    // Finaliza o loop
+                    clearInterval(this.loop)
+
+                    // bota carrosel na aba atual definida
+                    $('#sorteioFuncionariosOt').carousel(this.chunckIndex)
+
                     $("#modalSelecionado").modal('show')
-                    $("#modalSelecionado").find('.modal-dialog').addClass('pyro');
-                    let gridCards = this.$refs['gridCards']
+                    $("#modalSelecionado").find('.modal-dialog').addClass('pyro')
+
+                    let gridCards = this.$refs['gridCards_' + this.chunckIndex][0]
                     gridCards.classList.add('row-effect')
-                    if (this.$refs[`func_${this.lastIndexSelected}`][0]) {
-                        let cardItem = this.$refs[`func_${this.lastIndexSelected}`][0]
-                        cardItem.classList.remove('select-card')
-                    }
                 }, 1000)
             },
         },
@@ -461,11 +454,7 @@
                     axios.get(window.location.origin + '/api/brindes/ganhador/' + this.brindeModel).then(response => {
                             this.winner = response.data.data.ganhador
                             this.brindeExibicao = this.brindes.find(b => b.value === this.brindeModel)
-                            try {
-                                this.selectItemGrid()
-                            } catch (e) {
-                                console.log(e)
-                            }
+                            this.startGiftDraw()
                         })
                         .catch(error => {
                             alert(error.response.data.message)
@@ -504,56 +493,85 @@
                     const data = await axios.get(window.location.origin + '/api/funcionarios/chunk/' + this.numFuncionariosPorExibicao + '/' + this.sorteioUid)
                     if (data && Array.isArray(data.data.data.chunk)) {
                         this.chunck = data.data.data.chunk
-                        this.countChunks()
                     }
                 } catch (e) {}
             },
-            countChunks() {
-                let counter = 0
-                for (let arrayItem in this.chunck) {
-                    for (let fnc in this.chunck[arrayItem]) {
-                        counter++
-                    }
-                }
-                this.funcionariosTotal = counter
+            startGiftDraw() {
+                $('#modalComecar').modal('hide')
+                $('#funcs_carousel_div').removeClass('d-none')
+                this.selectItemGrid()
             },
             selectItemGrid() {
-                $('#modalComecar').modal('hide')
-                this.funcionarios = this.chunck[this.chunckIndex]
-                const funcLength = this.funcionarios.length
-                let i = 0;
-                this.loop = setInterval(() => {
-                    let prevEl = undefined
-                    if (this.$refs[`func_${i}`]) {
-                        let nextEl = this.$refs[`func_${i}`][0]
-                        if (nextEl) {
-                            nextEl.classList.add('select-card')
-                            this.lastIndexSelected = i
+                // bota carrosel na aba atual definida
+                $('#sorteioFuncionariosOt').carousel(this.chunckIndex)
+
+                // Recupera lista de funcionarios da aba atual
+                const funcionarios = this.chunck[this.chunckIndex]
+
+                // se funcionarios for diferente de undefined mostra animacao aleatoria de passar por funcionarios
+                if (funcionarios !== undefined) {
+                    // Embaralha as chaves da lista de funcionarios da aba atual para animacao ser aleatoria
+                    const iterator = this.shuffle(Object.keys(funcionarios))
+
+                    // Define um index pra percorrer o iterator embaralhado dos indexes dos funcionarios
+                    let indexIterator = 0
+
+                    // Define variavel que vai guardar ultimo funcionario selecionado
+                    let funcionarioAtual = null
+
+                    // Passa no loop de acordo com o tempo definido em sleepTime
+                    this.loop = setInterval(() => {
+                        // Define variavel pra guardar funcionario com card selecionado da vez 
+                        let indexFuncAtual = iterator[indexIterator]
+
+                        // Se funcionarioAtual for diferente de null tira ele da selecao
+                        if (funcionarioAtual !== null) {
+                            funcionarioAtual.classList.remove('select-card')
                         }
-                        this.funcionariosLeitura++
-                        if (i > 0) {
-                            prevEl = this.$refs[`func_${i-1}`][0]
-                            prevEl.classList.remove('select-card')
-                        }
-                    }
-                    if (i == funcLength) {
-                        prevEl = this.$refs[`func_${funcLength-1}`][0]
-                        if (prevEl) {
-                            prevEl.classList.remove('select-card')
-                        }
-                        this.funcionarios = []
-                        this.chunckIndex++
-                        clearInterval(this.loop);
-                        if (this.chunck[this.chunckIndex]) {
-                            this.funcionarios = this.chunck[this.chunckIndex]
-                            this.selectItemGrid()
+
+                        // Se indexFuncAtual nao for undefined seleciona card caso contrario interrompe o loop e vai pra proxima aba
+                        if (indexFuncAtual !== undefined) {
+
+                            // Define funcionarioAtual
+                            funcionarioAtual = this.$refs[`func_${this.chunckIndex}_${indexFuncAtual}`][0]
+
+                            // Insere funcionarioAtual na selecao
+                            funcionarioAtual.classList.add('select-card')
+
+                            // Incrementa index de iteracao
+                            indexIterator++
                         } else {
-                            this.chunckIndex = 0
+                            // Finaliza o loop
+                            clearInterval(this.loop)
+
+                            // Vai para proxima aba
+                            this.chunckIndex++
+
+                            // Inicia animacao aleatoria de selecionar usuarios
                             this.selectItemGrid()
                         }
-                    }
-                    i++;
-                }, this.sleepTime);
+                    }, this.sleepTime)
+                } else {
+                    // Volta pra 1a aba
+                    this.chunckIndex = 0
+
+                    this.exibeVencedor = true
+                }
+            },
+            shuffle(array) {
+                var currentIndex = array.length,
+                    temporaryValue, randomIndex;
+                // Enquanto ainda houver elementos para embaralhar...
+                while (0 !== currentIndex) {
+                    // Pega o elemento restante...
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+                    // Troca com o elemento atual.
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+                return array;
             },
             draftNextAward() {
                 window.location.reload();
