@@ -1,8 +1,8 @@
 @extends('layouts.sorteio')
 
 @section('content')
-<canvas id="confeti" class="active page" width="100%" height="100%" style="position:absolute;"></canvas>
-<div class="container-fluid ">
+<canvas id="confeti" width="100%" height="100%" style="position:absolute;"></canvas>
+<div class="container-fluid">
     <div class="row no-gutters d-flex justify-content-center" style="height:100%;width:100%;position: relative;z-index: 10;" ref="gridCards">
         <div class="col-12">
             <h2 class="card-title mt-5" style="color:white;text-align: center;font-family: monospace;font-size: 2.5rem;font-weight: 500; width: fit-content;margin: auto;background-color: #e60000;padding: 15px 20px;border-radius: 100px;box-shadow: 5px 5px 5px -2px #acacac;">{{$sorteio->titulo}} - Vencedores</h2>
@@ -199,7 +199,7 @@
 
     (() => {
         const DURATION = 8000,
-            LENGTH = 200;
+            LENGTH = 800;
 
         new Confetti({
             width: window.innerWidth,
@@ -207,22 +207,12 @@
             length: LENGTH,
             duration: DURATION
         });
-
-        setTimeout(() => {
-            new Confetti({
-                width: window.innerWidth,
-                height: window.innerHeight,
-                length: LENGTH,
-                duration: DURATION
-            });
-        }, DURATION / 2);
     })();
 
     let telah = $(document).height();
     let telaw = $(document).width();
     $("canvas").height(telah);
     $("canvas").width(telaw);
-    $("canvas").addClass("page");
 </script>
 <script>
     var COLORS, Confetti, NUM_CONFETTI, PI_2, canvas, confetti, context, drawCircle, drawCircle2, drawCircle3, i, range, xpos;
