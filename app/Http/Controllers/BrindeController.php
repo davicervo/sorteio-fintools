@@ -16,12 +16,34 @@ class BrindeController extends Controller
     {
         $resource = Brinde::with('sorteio')->orderBy('nome');
         if ($request->get('search')) {
-            $resource->where('nome', 'like', '%' . trim($request->get('search')) . '%')->orWhereHas('sorteio', function ($query) use ($request) {
-                return $query->where('titulo', 'like', '%' . trim($request->get('search')) . '%');
-            });
+            $resource->where('nome', 'like', '%' . trim($request->get('search')) . '%')
+                    ->orWhereHas('sorteio', function ($query) use ($request) {
+                        return $query->where('titulo', 'like', '%' . trim($request->get('search')) . '%');
+                    });
         }
+        $noWinners = $request->get('no_winners');
+        if(!empty($noWinners)){$resource->whereNull('funcionario_uid');}
+
+        $noPicture = $request->get('no_picture');
+        if(!empty($noPicture)){$resource->whereNull('image');}
+
         $brindes = $resource->paginate();
-        return view('brindes.index', compact('brindes'));
+        return view('brindes.index', [
+            'brindes' => $brindes,
+            'camposExtrasBusca' => [
+                [
+                    'label' => 'Não sorteado',
+                    'name' => 'no_winners',
+                    'type' => 'radio',
+                    'col' => 2,
+                    'defaultValue' => empty($noWinners) ? 0 : 1,
+                    'options' => [
+                        ['label' => 'Sim', 'value' => 1],
+                        ['label' => 'Não', 'value' => 0]
+                    ]
+                ]
+            ]
+        ]);
     }
 
     public function create()

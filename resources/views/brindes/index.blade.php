@@ -4,7 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm-12 section-search">
-            @include('partials.search')
+            @include('partials.search', [
+                'camposExtrasBusca' => $camposExtrasBusca ? $camposExtrasBusca : []
+            ])
         </div>
         <div class="col-sm-12">
 

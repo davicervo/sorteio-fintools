@@ -23,28 +23,15 @@
     <script src="{{ asset('js/app.js') }}"></script>
 
     <style rel="stylesheet" type="text/css">
-        .menuActive {
-            background: #999999;
-            color: white !important;
-            border-radius: 10px;
-        }
-
-        .foto {
-            margin-top: 10px;
-            padding: 6px;
-            border: 2px solid #A7A9AB;
-            width: 150px;
-            height: 150px;
-        }
-
-        .pagination {
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .section-search {
-            margin-bottom: 20px;
-        }
+        .menuActive {background: #999999;color: white !important;border-radius: 10px;}
+        .foto {margin-top: 10px;padding: 6px;border: 2px solid #A7A9AB;width: 150px;height: 150px;}
+        .pagination {justify-content: center;margin-top: 20px;}
+        .section-search {margin-bottom: 20px;}
+        .section-search form {padding: 10px 10px 10px 10px;background: #f2f2f2;}
+        .section-search form label.label {margin:0;font-weight:600;cursor: pointer;}
+        .section-search form input[type=text] {height: 45px;}
+        .section-search div.btn {position: absolute;right: 30px;top: 7px;}
+        .cursor-pointer {cursor: pointer;}
     </style>
 </head>
 
@@ -65,6 +52,15 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a class="nav-link @if(request()->routeIs('home')) menuActive @endif" href="{{ route('home') }}">{{ __('Home') }}</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @if(request()->routeIs('sorteios.index')||request()->routeIs('sorteios.create')) menuActive @endif" href="#" id="sorteiosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ __('Sorteio') }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="sorteiosDropdown">
+                                <a class="dropdown-item" href="{{ route('sorteios.index') }}">Listar</a>
+                                <a class="dropdown-item" href="{{ route('sorteios.create') }}">Criar</a>
+                            </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle @if(request()->routeIs('brindes.index') || request()->routeIs('brindes.create')) menuActive @endif" href="#" id="brindesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -100,15 +96,6 @@
                             <div class="dropdown-menu" aria-labelledby="funcionariosDropdown">
                                 <a class="dropdown-item" href="{{ route('funcionarios.index') }}">Listar</a>
                                 <a class="dropdown-item" href="{{ route('funcionarios.create') }}">Criar</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @if(request()->routeIs('sorteios.index')||request()->routeIs('sorteios.create')) menuActive @endif" href="#" id="sorteiosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ __('Sorteio') }}
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="sorteiosDropdown">
-                                <a class="dropdown-item" href="{{ route('sorteios.index') }}">Listar</a>
-                                <a class="dropdown-item" href="{{ route('sorteios.create') }}">Criar</a>
                             </div>
                         </li>
                         <li class="nav-item">
