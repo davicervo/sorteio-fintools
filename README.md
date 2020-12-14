@@ -17,5 +17,6 @@ Laravel Versão 7.*
 2. criar arquivo .env com base no arquivo .env.example
 3. php artisan key:generate
 4. php artisan migrate --seed
+5. php artisan funcionarios:sync
 
 Obs.: Executar apenas na primeira vez que baixar o projeto
