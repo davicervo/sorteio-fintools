@@ -351,7 +351,7 @@
                                 </select>
                                 <small class="form-text text-white">Selecione um Prêmio para ser sorteado.</small>
                             </div>
-                            <button :disabled="brindeModel === undefined" @click="getGiftWinner()" class="btn btn-light btn-lg mt-3">Começar</button>
+                            <button :disabled="brindeModel === undefined" @click="getGiftWinner" class="btn btn-light btn-lg mt-3">Começar</button>
                         </div>
                         <button v-if="mostraBtnVencedores==true" @click="goToWinnersPage()" class="btn btn-light btn-lg mt-3">Mostrar Vencedores</button>
                     </div>
@@ -461,15 +461,18 @@
             },
         },
         methods: {
-            getGiftWinner() {
+            getGiftWinner(event) {
                 if (this.brindeModel !== undefined) {
+                    const textHtml = event.target.innerHTML;
+                    event.target.innerHTML = '<div class="spinner-border" style="color: #D40000" role="status"><span class="sr-only">Loading...</span></div>';
                     axios.get(window.location.origin + '/api/brindes/ganhador/' + this.brindeModel).then(response => {
                             this.winner = response.data.data.ganhador
                             this.brindeExibicao = this.brindes.find(b => b.value === this.brindeModel)
                             this.startGiftDraw()
                         })
                         .catch(error => {
-                            alert(error.response.data.message)
+                            event.target.innerHTML = textHtml;
+                                alert(error.response.data.message)
                         })
                 }
             },
