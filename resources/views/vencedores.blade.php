@@ -5,9 +5,9 @@
 <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">
         <div class="col-12" style="z-index: 10;">
-            <h2 class="card-title mt-5 text-center m-auto" style="color:white;font-family: monospace;font-size: 2.5rem;font-weight: 500; width: fit-content;background-color: #e60000;padding: 15px 35px;border-radius: 100px;box-shadow: 5px 5px 5px -2px #acacac;">{{$sorteio->titulo}} - Vencedores</h2>
-            <div class="row justify-content-center align-items-center">
-                <table class="table col-md-6 text-center" style="margin: 50px 10% 10% 10%;background: linear-gradient(to right, #ff7171 , #ffd6d6);border-radius: 12px;">
+            <h2 class="card-title mt-5 text-center m-auto" style="color:white;font-family: monospace;font-size: 2.5rem;font-weight: 500; width: fit-content;background-color: #d10101;padding: 15px 35px;border-radius: 100px;box-shadow: 5px 5px 5px 2px #acacac;">{{$sorteio->titulo}} - Vencedores</h2>
+            <div class="vencedores row justify-content-center align-items-center">
+                <table class="table col-md-6 text-center" style="margin: 50px 10% 10% 10%;background: linear-gradient(to right, #d6d6d6 , #ffffff);border-radius: 12px;box-shadow: 5px 5px 5px 2px #acacac;">
                     <thead>
                         <tr>
                             <th width="20%" scope="col">Foto</th>
@@ -250,7 +250,7 @@
     }
 
     thead {
-        background: linear-gradient(to right, #cd3737, #ff8282);
+    background: linear-gradient(to right, #d30000, #e14545);
         color: white;
     }
 
@@ -260,8 +260,11 @@
 
     .page-item.active .page-link {
         color: white !important;
-        background-color: #d40000 !important;
-        border-color: #d40000 !important;
+        background-color: #d10101 !important;
+        border-color: #d10101 !important;
+    }
+    .vencedores nav{
+        box-shadow: 5px 5px 5px -2px #acacac;
     }
 </style>
 @endsection
