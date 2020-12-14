@@ -465,6 +465,7 @@
                 if (this.brindeModel !== undefined) {
                     const textHtml = event.target.innerHTML;
                     event.target.innerHTML = '<div class="spinner-border" style="color: #D40000" role="status"><span class="sr-only">Loading...</span></div>';
+                    event.target.disabled = true;
                     axios.get(window.location.origin + '/api/brindes/ganhador/' + this.brindeModel).then(response => {
                             this.winner = response.data.data.ganhador
                             this.brindeExibicao = this.brindes.find(b => b.value === this.brindeModel)
