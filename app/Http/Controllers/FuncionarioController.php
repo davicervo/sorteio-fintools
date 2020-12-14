@@ -157,6 +157,27 @@ class FuncionarioController extends Controller
     }
 
     /**
+     * Retorna funcionarios que ainda nao foram sorteados em um determinado sorteio
+     * @param string $sorteioUid
+     */
+    public function getFuncionariosDisponiveis(string $sorteioUid)
+    {
+        $funcionarios = new Funcionario();
+        return $funcionarios->with(['departamento' => function ($query) {
+            $query->selectRaw('departamento_uid, nome_exibicao');
+        }])
+            ->whereNotIn('funcionario_uid', function ($query) use ($funcionarios, $sorteioUid) {
+                $query->select('funcionario_uid')
+                    ->from($funcionarios->brinde()->getRelated()->getTable())
+                    ->where('sorteio_uid', $sorteioUid)
+                    ->whereRaw('funcionario_uid is not null');
+            })
+            ->selectRaw('funcionario_uid, nome, departamento_uid, username')
+            ->where('elegivel', '=', true)
+            ->orderBy('nome')->get();
+    }
+
+    /**
      * @param int $qtd
      * @param string $sorteioUid
      * @return array
@@ -164,21 +185,9 @@ class FuncionarioController extends Controller
     public function getByChunk(int $qtd, string $sorteioUid)
     {
         try {
-            $funcionarios = new Funcionario();
             $qtd = $qtd > 1 ? $qtd : 1;
 
-            $result = $funcionarios->with(['departamento' => function ($query) {
-                $query->selectRaw('departamento_uid, nome_exibicao');
-            }])
-                ->whereNotIn('funcionario_uid', function ($query) use ($funcionarios, $sorteioUid) {
-                    $query->select('funcionario_uid')
-                        ->from($funcionarios->brinde()->getRelated()->getTable())
-                        ->where('sorteio_uid', $sorteioUid)
-                        ->whereRaw('funcionario_uid is not null');
-                })
-                ->selectRaw('funcionario_uid, nome, departamento_uid, username')
-                ->where('elegivel', '=', true)
-                ->orderBy('nome')->get();
+            $result = $this->getFuncionariosDisponiveis($sorteioUid);
             $chunk = array_chunk($result->shuffle()->toArray(), $qtd);
             return $this->jsonResponse(
                 true,

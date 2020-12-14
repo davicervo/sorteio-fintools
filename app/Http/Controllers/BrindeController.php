@@ -169,7 +169,7 @@ class BrindeController extends Controller
     {
         try {
             $brinde = Brinde::find($brindeUid);
-            $funcionarios = Funcionario::where('elegivel', 1)->get();
+            $funcionarios = (new FuncionarioController)->getFuncionariosDisponiveis($brinde->sorteio_uid);
 
             if (count($funcionarios) > 0) {
                 $funcionario = $funcionarios->random();
