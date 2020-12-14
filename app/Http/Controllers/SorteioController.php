@@ -30,9 +30,7 @@ class SorteioController extends Controller
      */
     public function vencedores(string $sorteio_uid)
     {
-        $data = Brinde::where('sorteio_uid', $sorteio_uid)->with(['funcionario' => function ($query) {
-            $query->orderBy('nome');
-        }])
+        $data = Brinde::where('sorteio_uid', $sorteio_uid)->with(['funcionario'])
             ->whereNotNull("funcionario_uid")->paginate(5);
         $sorteio = Sorteio::findOrFail($sorteio_uid);
 
