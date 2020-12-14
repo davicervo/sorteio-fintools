@@ -14,9 +14,10 @@ Laravel Versão 7.*
 ### Instruções para rodar o projeto (dentro da pasta do projeto):
 
 1. composer install (pode levar alguns minutos)
-2. criar arquivo .env com base no arquivo .env.example
-3. php artisan key:generate
-4. php artisan migrate --seed
-5. php artisan funcionarios:sync
+2. criar um banco de dados "sorteio" (igual a variavel DB_DATABASE do .env)
+3. criar arquivo .env com base no arquivo .env.example
+4. php artisan key:generate
+5. php artisan migrate --seed
+6. php artisan funcionarios:sync
 
 Obs.: Executar apenas na primeira vez que baixar o projeto
