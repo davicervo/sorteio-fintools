@@ -2,7 +2,6 @@
 
 @section('css')
 <style>
-
     .modal-body .btn:not(:disabled):not(.disabled) {
         box-shadow: 5px 5px 5px 2px #690101;
     }
@@ -329,7 +328,7 @@
 @endsection
 
 @section('content')
-<div id="sorteio">
+<div id="sorteio" class="h-100 d-flex">
     <!-- modal comecar -->
     <div data-backdrop="static" data-keyboard="false" class="modal fade" id="modalComecar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -392,8 +391,8 @@
         </div>
     </div>
     <!-- modal selecionado -->
-    <div class="container-fluid d-none" id="funcs_carousel_div">
-        <div id="sorteioFuncionariosOt" class="carousel slide" data-ride="carousel" data-interval="0">
+    <div class="container-fluid d-none m-auto" id="funcs_carousel_div">
+        <div id="sorteioFuncionariosOt" class="carousel slide">
             <div class="carousel-inner">
                 <div :class="'carousel-item' + (indexChunck==0?' active':'')" v-for="(funcionarios,indexChunck) in chunck" :key="indexChunck">
                     <div class="row no-gutters d-flex justify-content-center" :ref="`gridCards_${indexChunck}`">
@@ -414,7 +413,6 @@
 
 @section('js')
 <script type="text/javascript">
-
     new Vue({
         el: '#sorteio',
         delimiters: ['[[', ']]'],
@@ -425,6 +423,10 @@
         },
         mounted() {
             $('#modalComecar').modal('show')
+            $('#sorteioFuncionariosOt').carousel({
+                interval: 0,
+                keyboard: false
+            })
         },
         data: () => ({
             sorteioUid: "<?= request()->route()->parameter('uid') ?>",
