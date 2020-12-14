@@ -6,7 +6,7 @@
             <i class="fa fa-cogs"></i>
         </span>
         <span class="btn btn-light btn-lg text-white text">
-            Ir para o Sorteio
+            Painel de Controle
         </span>
     </a>
 <div class="container h-100">
