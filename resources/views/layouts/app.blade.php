@@ -23,6 +23,14 @@
     <script src="{{ asset('js/app.js') }}"></script>
 
     <style rel="stylesheet" type="text/css">
+        .page {
+            background: url('<?= asset('img/fundo-marca-dagua-ot.png') ?>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100vh;
+        }
         .navbar{padding-top: 1.5rem;padding-bottom: 1.5rem;}
         .navbar-nav li {margin-right: 5px;}
         .menuActive, .navbar-nav li a:hover {background: #bd0000;color: #FFF !important;border-radius: 6px;font-weight: bold;}
@@ -42,7 +50,7 @@
     </style>
 </head>
 
-<body>
+<body class="page">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
