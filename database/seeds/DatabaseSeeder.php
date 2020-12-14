@@ -10,8 +10,8 @@ class DatabaseSeeder extends Seeder
             // DepartamentoSeeder::class,
             // FuncionarioSeeder::class,
             UsuarioSeeder::class,
-            SorteiosSeeder::class,
-            BrindeSeeder::class
+            // SorteiosSeeder::class,
+            // BrindeSeeder::class
         ]);
     }
 }

@@ -12,20 +12,31 @@ use Illuminate\Support\Facades\Storage;
 
 class BrindeController extends Controller
 {
+    private $rules = [
+        'nome' => 'required|max:255',
+        'descricao' => 'max:65535',
+        'sorteio' => 'required',
+        'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:100'
+    ];
+
     public function index(Request $request)
     {
         $resource = Brinde::with('sorteio')->orderBy('nome');
         if ($request->get('search')) {
             $resource->where('nome', 'like', '%' . trim($request->get('search')) . '%')
-                    ->orWhereHas('sorteio', function ($query) use ($request) {
-                        return $query->where('titulo', 'like', '%' . trim($request->get('search')) . '%');
-                    });
+                ->orWhereHas('sorteio', function ($query) use ($request) {
+                    return $query->where('titulo', 'like', '%' . trim($request->get('search')) . '%');
+                });
         }
         $noWinners = $request->get('no_winners');
-        if(!empty($noWinners)){$resource->whereNull('funcionario_uid');}
+        if (!empty($noWinners)) {
+            $resource->whereNull('funcionario_uid');
+        }
 
         $noPicture = $request->get('no_picture');
-        if(!empty($noPicture)){$resource->whereNull('image');}
+        if (!empty($noPicture)) {
+            $resource->whereNull('image');
+        }
 
         $brindes = $resource->paginate();
         return view('brindes.index', [
@@ -54,11 +65,7 @@ class BrindeController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nome' => 'required',
-            'sorteio' => 'required',
-            'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:100'
-        ]);
+        $request->validate($this->rules);
 
         $brinde = new Brinde;
         $brinde->fill([
@@ -93,11 +100,7 @@ class BrindeController extends Controller
 
     public function update(string $uid, Request $request)
     {
-        $request->validate([
-            'nome' => 'required',
-            'sorteio' => 'required',
-            'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
+        $request->validate($this->rules);
 
         $brinde = Brinde::find($uid);
 

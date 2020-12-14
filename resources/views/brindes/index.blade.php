@@ -5,10 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-sm-12 section-search">
             @include('partials.search', [
-                'camposExtrasBusca' => $camposExtrasBusca ? $camposExtrasBusca : []
+            'camposExtrasBusca' => $camposExtrasBusca ? $camposExtrasBusca : []
             ])
         </div>
-        <div class="col-sm-12">
+        <div class="col-sm-12 table-responsive">
 
             @include('messages')
 
@@ -32,7 +32,7 @@
                             @endif
                         </td>
                         <td class="align-middle"><a href="{{ route('brindes.show', $brinde->brinde_uid) }}">{{ $brinde->nome }}</a></td>
-                        <td class="align-middle">{{ $brinde->descricao }}</td>
+                        <td class="align-middle">{!! nl2br($brinde->descricao) !!}</td>
                         <td class="align-middle"><a href="/sorteios/{{ $brinde->sorteio_uid }}/visualizar">{{ $brinde->sorteio->titulo ?? '--' }}</a></td>
                         <td class="align-middle">{{ $brinde->funcionario->nome ?? '--' }}</td>
                         <td class="align-middle text-center">
