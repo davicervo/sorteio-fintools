@@ -39,6 +39,7 @@
     .brinde-texto {
         font-size: 4.0rem;
         margin-top: 100px;
+        overflow: auto;
     }
 
     .pyro>.after,
