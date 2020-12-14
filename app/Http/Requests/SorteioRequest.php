@@ -26,7 +26,7 @@ class SorteioRequest extends FormRequest
     {
         return [
             'titulo' => ['required', 'max:255'],
-            'descricao' => ['required'],
+            'descricao' => ['required', 'max:65535'],
             'data_sorteio' => ['required'],
         ];
     }
