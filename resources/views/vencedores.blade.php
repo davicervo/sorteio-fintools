@@ -7,7 +7,7 @@
         <div class="col-12" style="z-index: 10;">
             <h2 class="card-title mt-5 text-center m-auto" style="color:white;font-family: monospace;font-size: 2.5rem;font-weight: 500; width: fit-content;background-color: #e60000;padding: 15px 35px;border-radius: 100px;box-shadow: 5px 5px 5px -2px #acacac;">{{$sorteio->titulo}} - Vencedores</h2>
             <div class="row justify-content-center align-items-center">
-                <table class="table" style="margin: 50px 10% 10% 10%;width: 50%;background: linear-gradient(to right, #ff7171 , #ffd6d6);border-radius: 12px;text-align:center;">
+                <table class="table col-md-6 text-center" style="margin: 50px 10% 10% 10%;background: linear-gradient(to right, #ff7171 , #ffd6d6);border-radius: 12px;">
                     <thead>
                         <tr>
                             <th width="20%" scope="col">Foto</th>
@@ -26,10 +26,12 @@
                         </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
-                        {{$data->links()}}
-                    </tfoot>
                 </table>
+                <div class="col-12 d-flex">
+                    <div class="m-auto">
+                        {{$data->links()}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -250,16 +252,6 @@
     thead {
         background: linear-gradient(to right, #cd3737, #ff8282);
         color: white;
-    }
-
-    td img {
-        width: 50px;
-        height: 50px;
-    }
-
-    .page nav {
-        position: absolute;
-        top: 610px;
     }
 
     .page-link {
