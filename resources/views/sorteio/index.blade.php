@@ -23,7 +23,7 @@
                     @foreach($sorteios as $sorteio)
                     <tr>
                         <td><a href="{{ route('sorteios.show', $sorteio->sorteio_uid) }}">{{ $sorteio->titulo }}</a></td>
-                        <td style="max-width: 80px;" class="overflow-auto">{{ nl2br($sorteio->descricao) }}</td>
+                        <td style="max-width: 80px;" class="overflow-auto">{!! nl2br($sorteio->descricao) !!}</td>
                         <td>{{ \Carbon\Carbon::parse($sorteio->data_sorteio)->format('d/m/Y') }}</td>
                         <td>{{ $sorteio->isAtivo }}</td>
                         <td>

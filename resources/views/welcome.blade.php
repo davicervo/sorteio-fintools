@@ -21,7 +21,7 @@
                     <div class="card" style="background: #ad0000; color: white;">
                         <div class="card-body">
                             <h5 class="card-title overflow-auto" style="height: 25px;">{{$sorteio->titulo}}</h5>
-                            <p class="card-text overflow-auto" style="height: 70px;">{{$sorteio->descricao}}</p>
+                            <p class="card-text overflow-auto" style="height: 70px;">{!! nl2br($sorteio->descricao) !!}</p>
                             <div class="text-center">
                                 <a href="{{route('sorteio',[$sorteio->sorteio_uid])}}" class="btn btn-light btn-lg mt-3">
                                     Ir para o Sorteio

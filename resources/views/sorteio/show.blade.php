@@ -6,7 +6,7 @@
         <div class="col-sm-8">
             <div class="w-100 overflow-auto">
                 Título: <strong><a href="{{ route('sorteios.edit', ['sorteio' => $dados->sorteio_uid]) }}">{{ $dados->titulo }}</a></strong><br>
-                Descrição: <strong>{{ nl2br($dados->descricao) }}</a></strong><br>
+                Descrição: <strong>{!! nl2br($dados->descricao) !!}</a></strong><br>
                 Data sorteio: <strong>{{ \Carbon\Carbon::parse($dados->data_sorteio)->format('d/m/Y') }}</a></strong><br>
                 Ativo: <strong>{{ $dados->ativo ? 'Ativo' : 'Inativo' }}</a></strong><br>
             </div>
