@@ -1,9 +1,14 @@
 @extends('layouts.sorteio')
 
 @section('content')
-<a href="{{route('home')}}" class="btn btn-danger btn-lg" style="background: #ad0000; position: fixed; top: 10px; right: 10px; color: white;">
-    <i class="fa fa-cogs"></i>&nbsp;Painel de Controle
-</a>
+    <a href="{{route('home')}}" class="text-center sombra mt-3">
+        <span class="btn btn-light btn-lg text-white icon">
+            <i class="fa fa-cogs"></i>
+        </span>
+        <span class="btn btn-light btn-lg text-white text">
+            Painel de Controle
+        </span>
+    </a>
 <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">
         <div class="col-12">
