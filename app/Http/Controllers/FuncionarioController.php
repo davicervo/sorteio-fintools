@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Funcionario;
 use App\Models\Departamento;
+use App\Models\Funcionario;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FuncionarioController extends Controller
@@ -30,7 +30,7 @@ class FuncionarioController extends Controller
                 'options' => Departamento::orderBy('nome_exibicao')->get()
             ],
             [
-                'label' => 'Elegível',
+                'label' => 'Participa do sorteio?',
                 'name' => 'elegivel',
                 'type' => 'radio',
                 'options' => [
