@@ -374,7 +374,7 @@
     }
     .page nav{
         position: absolute;
-        top: 600px;
+        top: 610px;
     }
     .page-link {
         color: #d40000 !important;
